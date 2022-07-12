@@ -1,3 +1,11 @@
 {
-  "recommendations": ["Vue.volar"]
+  "recommendations": [
+    "vue.volar",
+    "vadimcn.vscode-lldb",
+    "serayuzgur.crates",
+    "dbaeumer.vscode-eslint",
+    "tamasfe.even-better-toml",
+    "rust-lang.rust-analyzer",
+    "Gruntfuggly.todo-tree"
+  ]
 }
