@@ -3,6 +3,8 @@ on: [pull_request]
 
 jobs:
   test-tauri:
+    if: |
+      !contains(github.event.pull_request.title, '[skip ci]')
     strategy:
       fail-fast: false
       matrix:
