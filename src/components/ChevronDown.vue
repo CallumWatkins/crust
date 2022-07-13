@@ -1,10 +1,11 @@
 <script setup lang="ts">
-    interface Props {
+    const props = defineProps<{
         dark_theme?: boolean
         width?: string
-    }
+    }>()
 
-    const { dark_theme = true, width = "24px" } = defineProps<Props>()
+    const dark_theme = props.dark_theme ?? true;
+    const width = props.width ?? "24px";
 </script>
 
 <template>

@@ -114,11 +114,6 @@ onBeforeUnmount(() => {
   width: 100%;
 }
 
-.chevron-down {
-  fill: $text-color-dark;
-  width: 24px;
-}
-
 #dropdown-button {
   border-bottom-right-radius: $large-radius;
   border-top-right-radius: $large-radius;
