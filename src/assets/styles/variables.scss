@@ -1,1 +1,38 @@
+// Custom variables
+$background-color-dark: rgb(38, 38, 38);
+$background-color-secondary-dark: rgb(51, 51, 51);
+$border-box-shadow-size: 0 0 1px 1px;
+$border-color-dark: rgb(140, 140, 140);
+$large-radius: 24px;
+$primary-color: rgb(173, 92, 4);
+$spacing: 8px;
+$text-color-dark: rgb(230, 230, 230);
+$text-color-light: rgb(10, 10, 10);
+
+// Variables that rely on other variables
+$border-box-shadow-color: bulmaRgba($primary-color, 0.25);
+
+// Bulma variables
+$body-background-color: $background-color-dark;
+$body-overflow-y: hidden;
+$button-background-color: $background-color-dark;
+$button-border-color: $border-color-dark;
+$button-color: $text-color-dark;
+$button-focus-border-color: $primary-color;
+$button-focus-box-shadow-color: $border-box-shadow-color;
+$button-focus-box-shadow-size: $border-box-shadow-size;
+$dropdown-content-background-color: $background-color-secondary-dark;
+$dropdown-content-radius: $large-radius;
+$dropdown-content-shadow: 0px 5px 8px 3px rgba(0,0,0,0.2);
+$dropdown-divider-background-color: $border-color-dark;
+$dropdown-item-color: $text-color-dark;
+$dropdown-item-hover-background-color: $primary-color;
+$dropdown-item-hover-color: $text-color-dark;
 $family-sans-serf: "Roboto";
+$input-background-color: $background-color-dark;
+$input-border-color: $border-color-dark;
+$input-color: $text-color-dark;
+$input-focus-border-color: $primary-color;
+$input-focus-box-shadow-color: $border-box-shadow-color;
+$input-focus-box-shadow-size: $border-box-shadow-size;
+$input-radius: 6px;
