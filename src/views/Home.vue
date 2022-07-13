@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { BindingTypes } from '@vue/compiler-core';
-import { Directive, onBeforeUnmount, onMounted, reactive } from 'vue';
-import ChevronDown from '../components/ChevronDown.vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
+import ChevronDown from '@/components/ChevronDown.vue';
 
 interface Connection {
   alias?: string;
@@ -9,58 +8,54 @@ interface Connection {
 }
 
 //TODO: Fetch actual data
-const data: Connection[] = [
-    {
-      alias: "John Doe",
-      ip: "206.15.168.235",
-    },
-    {
-      alias: "James Smith",
-      ip: "3.66.149.79",
-    },
-    {
-      alias: undefined,
-      ip: "62.109.37.164",
-    },
-    {
-      alias: undefined,
-      ip: "34.61.123.222",
-    },
-    {
-      alias: undefined,
-      ip: "215.4.207.51",
-    },
+const saved_connections: Connection[] = [
+  {
+    alias: "John Doe",
+    ip: "206.15.168.235",
+  },
+  {
+    alias: "James Smith",
+    ip: "3.66.149.79",
+  },
+  {
+    alias: undefined,
+    ip: "62.109.37.164",
+  },
+  {
+    alias: undefined,
+    ip: "34.61.123.222",
+  },
+  {
+    alias: undefined,
+    ip: "215.4.207.51",
+  },
 ];
 
-const state = reactive({ 
-    show_dropdown: false,
-})
+let show_dropdown = ref(false);
+let input_ip = ref("");
 
 function toggle_dropdown() {
-  state.show_dropdown = !state.show_dropdown;
+  show_dropdown.value = !show_dropdown.value;
 }
 
-function close_dropdown(e: Event) {
+function window_click(e: Event) {
   const dropdown = document.getElementById("dropdown");
-  if(dropdown && !dropdown.contains(e.target as Element)) {
-    state.show_dropdown = false;
+  if (dropdown && !dropdown.contains(e.target as Element)) {
+    show_dropdown.value = false;
   }
 }
 
-function fill_input(e: Event) {
-  const input = document.getElementById("ip-input") as HTMLInputElement;
-  if(input) {
-    input.value = (e.target as HTMLElement).dataset.ip ?? "";
-    toggle_dropdown();
-  }
+function fill_input(conn: Connection) {
+  input_ip.value = conn.ip;
+  show_dropdown.value = false;
 }
 
 onMounted(() => {
-  window.addEventListener('click', close_dropdown);
+  window.addEventListener('click', window_click);
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('click', close_dropdown);
+  window.removeEventListener('click', window_click);
 })
 </script>
 
@@ -70,11 +65,11 @@ onBeforeUnmount(() => {
 
     <div class="field has-addons has-addons-centered">
       <p class="control">
-        <input id="ip-input" class="input is-large" type="text" placeholder="IP Address">
+        <input id="ip-input" v-model="input_ip" class="input is-large" type="text" placeholder="IP Address">
       </p>
       
       <p class="control">
-        <div id="dropdown" class="dropdown" :class="{'is-active': state.show_dropdown}">
+        <div id="dropdown" class="dropdown" :class="{'is-active': show_dropdown}">
           <div class="dropdown-trigger">
             <button id="dropdown-button" class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu" @click="toggle_dropdown">
               <span id="dropdown-icon" class="icon">
@@ -85,7 +80,7 @@ onBeforeUnmount(() => {
 
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a v-for="item in data" class="dropdown-item" role="button" :data-ip="item.ip" @click="fill_input">{{ item.alias ?? item.ip }}</a>
+              <a v-for="conn in saved_connections" :key="conn.ip" class="dropdown-item" role="button" @click="fill_input(conn)">{{ conn.alias ?? conn.ip }}</a>
 
               <hr class="dropdown-divider">
 
