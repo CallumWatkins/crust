@@ -1,11 +1,9 @@
 <script setup lang="ts">
-    const props = defineProps<{
-        dark_theme?: boolean
-        width?: string
-    }>()
+const props = defineProps<{
+    width?: string
+}>();
 
-    const dark_theme = props.dark_theme ?? true;
-    const width = props.width ?? "24px";
+const width = props.width ?? "24px";
 </script>
 
 <template>
@@ -15,13 +13,8 @@
 </template>
 
 <style scoped lang="scss">
-    .chevron-down {
-        @if v-bind(dark_theme) {
-            fill: $text-color-dark;
-        } @else {
-            fill: $text-color-light;
-        }
-
-        width: v-bind(width);
-    }
+.chevron-down {
+    fill: var(--text-color);
+    width: v-bind(width);
+}
 </style>

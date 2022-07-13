@@ -3,7 +3,9 @@ import Home from './views/Home.vue'
 </script>
 
 <template>
-  <Home/>
+  <div id="root" class="dark">
+    <Home/>
+  </div>
 </template>
 
 <style lang="scss">

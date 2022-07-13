@@ -99,15 +99,13 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped lang="scss">
-@import "@/assets/styles/styles.scss";
-
 #logo {
-    width: 270px;
-    margin-bottom: $spacing*5;
+  width: 270px;
+  margin-bottom: calc(var(--spacing) * 5);
 }
 
 #ip-input {
-  border-radius: $large-radius 0px 0px $large-radius;
+  border-radius: var(--large-radius) 0px 0px var(--large-radius);
 }
 
 #view-more {
@@ -115,12 +113,12 @@ onBeforeUnmount(() => {
 }
 
 #dropdown-button {
-  border-bottom-right-radius: $large-radius;
-  border-top-right-radius: $large-radius;
-  border-left-color: $black;
+  border-bottom-right-radius: var(--large-radius);
+  border-top-right-radius: var(--large-radius);
+  border-left-color: #111111;
 
   &:hover, &:focus {
-    background-color: bulmaRgba($primary-color, 0.6);
+    background-color: bulmaRgba(var(--primary-color), 0.6);
   }
 
   &:focus {
@@ -137,12 +135,12 @@ onBeforeUnmount(() => {
 }
 
 .dropdown-content {
-    padding: $spacing*2 $spacing*2 $spacing;
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2) var(--spacing);
 
-    hr {
-        margin-left: -$spacing*2;
-        margin-right: -$spacing*2;
-    }
+  hr {
+    margin-left: calc(var(--spacing) * -2);
+    margin-right: calc(var(--spacing) * -2);
+  }
 }
 
 .dropdown-item {
