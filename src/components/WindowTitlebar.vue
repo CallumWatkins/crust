@@ -1,7 +1,13 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { appWindow } from '@tauri-apps/api/window';
 
 const emit = defineEmits(['toggleTheme']);
+const isMaximized = ref(await appWindow.isMaximized());
+
+appWindow.onResized(async (_) => {
+  isMaximized.value = await appWindow.isMaximized();
+});
 </script>
 
 <template>
@@ -13,8 +19,9 @@ const emit = defineEmits(['toggleTheme']);
       <div class="window-control-button" @click="appWindow.minimize">
         <font-awesome-icon icon="fa-solid fa-window-minimize" alt="minimize" />
       </div>
-      <div class="window-control-button" @click="appWindow.maximize">
-        <font-awesome-icon icon="fa-solid fa-window-maximize" alt="maximize" />
+      <div class="window-control-button" @click="appWindow.toggleMaximize">
+        <font-awesome-icon icon="fa-solid fa-window-restore" alt="restore" v-if="isMaximized" />
+        <font-awesome-icon icon="fa-solid fa-window-maximize" alt="maximize" v-else />
       </div>
       <div class="window-control-button" @click="appWindow.close">
         <font-awesome-icon icon="fa-solid fa-xmark" size="lg" alt="close" />
