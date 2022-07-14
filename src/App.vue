@@ -23,9 +23,4 @@ const theme = ref(Theme.Dark);
 
 <style lang="scss">
 @import "@/assets/styles/styles.scss";
-
-#root {
-  width: 100vw;
-  height: 100vh;
-}
 </style>

@@ -33,12 +33,7 @@ const emit = defineEmits(['toggleTheme']);
   justify-content: space-between;
   flex-wrap: nowrap;
 
-  &__start {
-    display: flex;
-    flex-wrap: nowrap;
-  }
-
-  &__end {
+  &__start, &__end {
     display: flex;
     flex-wrap: nowrap;
   }
