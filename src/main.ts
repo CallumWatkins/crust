@@ -5,9 +5,9 @@ import Popper from 'vue3-popper'
 
 import { library as fontAwesomeLibrary } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faWindowMinimize, faWindowMaximize, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark } from '@fortawesome/free-solid-svg-icons'
 
-fontAwesomeLibrary.add(faWindowMinimize, faWindowMaximize, faXmark)
+fontAwesomeLibrary.add(faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark)
 
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
