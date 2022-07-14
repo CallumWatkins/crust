@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import ChevronDown from '@/components/ChevronDown.vue';
 
 interface Connection {
@@ -31,32 +31,11 @@ const saved_connections: Connection[] = [
   },
 ];
 
-let show_dropdown = ref(false);
 let input_ip = ref("");
-
-function toggle_dropdown() {
-  show_dropdown.value = !show_dropdown.value;
-}
-
-function window_click(e: Event) {
-  const dropdown = document.getElementById("dropdown");
-  if (dropdown && !dropdown.contains(e.target as Element)) {
-    show_dropdown.value = false;
-  }
-}
 
 function fill_input(conn: Connection) {
   input_ip.value = conn.ip;
-  show_dropdown.value = false;
 }
-
-onMounted(() => {
-  window.addEventListener('click', window_click);
-})
-
-onBeforeUnmount(() => {
-  window.removeEventListener('click', window_click);
-})
 </script>
 
 <template>
@@ -65,28 +44,41 @@ onBeforeUnmount(() => {
 
     <div class="field has-addons has-addons-centered">
       <p class="control">
-        <input id="ip-input" v-model="input_ip" class="input is-large" type="text" placeholder="IP Address">
+        <input id="ip-input" v-model="input_ip" class="input is-large btn-large" type="text" placeholder="IP Address">
       </p>
       
       <p class="control">
-        <div id="dropdown" class="dropdown" :class="{'is-active': show_dropdown}">
-          <div class="dropdown-trigger">
-            <button id="dropdown-button" class="button is-large" aria-haspopup="true" aria-controls="dropdown-menu" @click="toggle_dropdown">
-              <span id="dropdown-icon" class="icon">
-                <ChevronDown></ChevronDown>
-              </span>
-            </button>
-          </div>
-
-          <div class="dropdown-menu" id="dropdown-menu" role="menu">
-            <div class="dropdown-content">
-              <a v-for="conn in saved_connections" :key="conn.ip" class="dropdown-item" role="button" @click="fill_input(conn)">{{ conn.alias ?? conn.ip }}</a>
-
-              <hr class="dropdown-divider">
-
-              <a id="view-more" class="dropdown-item">View more</a>
+        <div id="dropdown" class="dropdown is-active">
+          <Popper offsetDistance="6" offsetSkid="45" placement="bottom">
+            <div class="dropdown-trigger">
+              <button id="dropdown-button" 
+                class="button is-large btn-outlined btn-color-rusty btn-large" 
+                aria-haspopup="true" 
+                aria-controls="dropdown-menu">
+                <span id="dropdown-icon" class="icon">
+                  <ChevronDown></ChevronDown>
+                </span>
+              </button>
             </div>
-          </div>
+
+            <template #content="{ close }">
+              <div id="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                  <a v-for="conn in saved_connections" 
+                    :key="conn.ip" 
+                    class="dropdown-item" 
+                    role="button" 
+                    @click="fill_input(conn); close();">
+                    {{ conn.alias ?? conn.ip }}
+                  </a>
+
+                  <hr class="dropdown-divider">
+
+                  <a id="view-more" class="dropdown-item">View more</a>
+                </div>
+              </div>
+            </template>
+          </Popper>
         </div>
       </p>
     </div>
@@ -99,26 +91,12 @@ onBeforeUnmount(() => {
   margin-bottom: calc(var(--spacing) * 5);
 }
 
-#ip-input {
-  border-radius: var(--large-radius) 0px 0px var(--large-radius);
-}
-
 #view-more {
   width: 100%;
 }
 
 #dropdown-button {
-  border-bottom-right-radius: var(--large-radius);
-  border-top-right-radius: var(--large-radius);
-  border-left-color: #111111;
-
-  &:hover, &:focus {
-    background-color: bulmaRgba(var(--primary-color), 0.6);
-  }
-
-  &:focus {
-    filter: saturate(50%);
-  }
+  border-left-color: #545454;
 }
 
 .container {
@@ -130,7 +108,7 @@ onBeforeUnmount(() => {
 }
 
 .dropdown-content {
-  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2) var(--spacing);
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2);
 
   hr {
     margin-left: calc(var(--spacing) * -2);
@@ -140,5 +118,11 @@ onBeforeUnmount(() => {
 
 .dropdown-item {
   border-radius: 8px;
+  min-width: 150px; 
+  padding-right: 1rem;
+
+  &:last-child {
+    text-align: center;
+  }
 }
 </style>

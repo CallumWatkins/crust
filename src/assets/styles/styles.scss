@@ -63,22 +63,26 @@
 
 :root {
   --border-box-shadow-color: bulmaRgba(var(--primary-color), 0.25);
-  --border-box-shadow-size: 0 0 1px 1px;
+  --border-box-shadow-size: 0;
   --large-radius: 24px;
   --spacing: 8px;
 
   #root.dark {
-    --background-color: rgb(38, 38, 38);
     --background-color-secondary: rgb(51, 51, 51);
-    --border-color: rgb(140, 140, 140);
+    --background-color: rgb(38, 38, 38);
+    --border-color-focus: hsl(0, 30%, 35%);
+    --border-color-hover: hsl(0, 0%, 52%);
+    --border-color: rgb(101, 100, 100);
     --border-color-dark: rgb(20, 20, 20);
+    --button-color-focus: hsl(31, 38%, 35%);
+    --button-color-hover: hsl(31, 38%, 25%);
     --primary-color: rgb(173, 92, 4);
     --text-color: rgb(230, 230, 230);
   }
 
   #root.light {
-    --background-color: rgb(255, 0, 0);
     --background-color-secondary: rgb(255, 0, 0);
+    --background-color: rgb(255, 0, 0);
     --border-color: rgb(255, 0, 0);
     --primary-color: rgb(255, 0, 0);
     --text-color: rgb(10, 10, 10);
@@ -90,4 +94,26 @@
   background-color: var(--background-color);
   width: 100vw;
   height: 100vh;
+}
+
+
+.btn-outlined {
+  background-color: transparent;
+  border-color: var(--border-color);
+}
+
+.btn-large {
+  border-radius: var(--large-radius);
+}
+
+.btn-color-rusty {
+  &:hover {
+    background-color: var(--button-color-hover);
+    border-color: var(--button-color-hover);
+  }
+
+  &:focus {
+    background-color: var(--button-color-focus);
+    border-color: var(--button-color-focus);
+  }
 }

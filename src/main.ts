@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
+import Popper from 'vue3-popper'
 
 import { library as fontAwesomeLibrary } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -11,4 +12,5 @@ fontAwesomeLibrary.add(faWindowMinimize, faWindowMaximize, faXmark)
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
   .use(router)
+  .component("Popper", Popper)
   .mount('#app')
