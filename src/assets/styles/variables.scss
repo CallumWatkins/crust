@@ -1,6 +1,7 @@
 // Bulma variables
 $body-background-color: var(--background-color);
 $body-overflow-y: hidden;
+$border-hover: None;
 $button-background-color: var(--background-color);
 $button-border-color: var(--border-color);
 $button-color: var(--text-color);
@@ -18,7 +19,13 @@ $family-sans-serf: "Roboto";
 $input-background-color: var(--background-color);
 $input-border-color: var(--border-color);
 $input-color: var(--text-color);
-$input-focus-border-color: var(--primary-color);
+$input-focus-border-color: var(--border-color-focus);
 $input-focus-box-shadow-color: var(--border-box-shadow-color);
 $input-focus-box-shadow-size: var(--border-box-shadow-size);
+$input-hover-border-color: var(--border-color-hover);
 $input-radius: 6px;
+
+// Custom Bulma Colours
+$rusty: hsl(31, 38%, 25%);
+$rusty-invert: findColorInvert($rusty);
+$custom-colors: ("rusty": ($rusty, $rusty-invert));
