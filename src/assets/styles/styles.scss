@@ -48,14 +48,14 @@
 // @import "/node_modules/bulma/sass/grid/tiles";
 
 // @import "/node_modules/bulma/sass/helpers/color";
-// @import "/node_modules/bulma/sass/helpers/flexbox";
+@import "/node_modules/bulma/sass/helpers/flexbox";
 // @import "/node_modules/bulma/sass/helpers/float";
 // @import "/node_modules/bulma/sass/helpers/other";
 // @import "/node_modules/bulma/sass/helpers/overflow";
 // @import "/node_modules/bulma/sass/helpers/position";
 // @import "/node_modules/bulma/sass/helpers/spacing";
 @import "/node_modules/bulma/sass/helpers/typography";
-// @import "/node_modules/bulma/sass/helpers/visibility";
+@import "/node_modules/bulma/sass/helpers/visibility";
 
 // @import "/node_modules/bulma/sass/layout/hero";
 @import "/node_modules/bulma/sass/layout/section";
@@ -73,6 +73,7 @@
     --border-color-focus: hsl(0, 30%, 35%);
     --border-color-hover: hsl(0, 0%, 52%);
     --border-color: rgb(101, 100, 100);
+    --border-color-dark: rgb(20, 20, 20);
     --button-color-focus: hsl(31, 38%, 35%);
     --button-color-hover: hsl(31, 38%, 25%);
     --primary-color: rgb(173, 92, 4);
@@ -89,7 +90,10 @@
 }
 
 #root {
+  color: var(--text-color);
   background-color: var(--background-color);
+  width: 100vw;
+  height: 100vh;
 }
 
 
