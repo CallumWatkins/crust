@@ -98,7 +98,9 @@ function changes(areChanges: boolean) {
           </div>
           <div class="column">
             <h1 class="title">{{ current_tab.name }}</h1>
-            <component :is="current_tab.component" @changes="changes"></component>
+            <KeepAlive include="SettingsUpdate">
+              <component :is="current_tab.component" @changes="changes"></component>
+            </KeepAlive>
           </div>
         </div>
       </section>
