@@ -34,7 +34,7 @@ appWindow.onResized(async (_) => {
 .titlebar {
   border-bottom: 1px solid var(--border-color-dark);
   z-index: 999;
-  height: 50px;
+  height: var(--titlebar-height);
   user-select: none;
   display: flex;
   justify-content: space-between;
@@ -47,7 +47,7 @@ appWindow.onResized(async (_) => {
 }
 
 #titlebar-logo {
-  padding: 0.3rem;
+  padding: calc(var(--titlebar-height) * 0.1);
   height: 100%;
   max-width: unset;
 }
@@ -56,7 +56,7 @@ appWindow.onResized(async (_) => {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
+  width: var(--titlebar-height);
   height: 100%;
 
   &:hover {
