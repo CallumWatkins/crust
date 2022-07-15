@@ -9,6 +9,9 @@
 // Transitions
 @import "transitions.scss";
 
+// Scrollbar
+@import "scrollbar.scss";
+
 // Bulma
 @import "/node_modules/bulma/sass/utilities/_all";
 @import "/node_modules/bulma/sass/base/_all";
@@ -38,7 +41,7 @@
 @import "/node_modules/bulma/sass/components/dropdown";
 // @import "/node_modules/bulma/sass/components/level";
 // @import "/node_modules/bulma/sass/components/media";
-// @import "/node_modules/bulma/sass/components/menu";
+@import "/node_modules/bulma/sass/components/menu";
 // @import "/node_modules/bulma/sass/components/message";
 @import "/node_modules/bulma/sass/components/modal";
 // $navbar-breakpoint: $tablet;
@@ -68,6 +71,8 @@
   --border-box-shadow-color: bulmaRgba(var(--primary-color), 0.25);
   --border-box-shadow-size: 0;
   --large-radius: 24px;
+  --radius: 8px;
+  --small-radius: 6px;
   --spacing: 8px;
   --titlebar-height: 50px;
 
@@ -81,7 +86,7 @@
     --button-color-focus: hsl(31, 38%, 35%);
     --button-color-hover: hsl(31, 38%, 25%);
     --primary-color: rgb(173, 92, 4);
-    --text-color: rgb(230, 230, 230);
+    --text-color: rgb(200, 200, 200);
     --text-color-dark: rgb(250, 250, 250);
   }
 

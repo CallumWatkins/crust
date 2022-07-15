@@ -18,12 +18,4 @@ const router = createRouter({
   routes,
 });
 
-router.afterEach((to, from) => {
-  if(from.name == "Settings") {
-    to.meta.transition = "slide-settings";
-  } else {
-    to.meta.transition = "slide";
-  }
-});
-
 export default router;

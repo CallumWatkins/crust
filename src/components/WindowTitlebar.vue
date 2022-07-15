@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 import { appWindow } from '@tauri-apps/api/window';
+import { ref } from 'vue';
 
-const emit = defineEmits(['toggleTheme']);
+const emit = defineEmits(['toggleTheme', 'toggleSettings']);
 const isMaximized = ref(await appWindow.isMaximized());
 
 appWindow.onResized(async (_) => {
@@ -12,8 +12,13 @@ appWindow.onResized(async (_) => {
 
 <template>
   <div class="titlebar" data-tauri-drag-region>
-    <div class="titlebar__start" data-tauri-drag-region>
-      <img id="titlebar-logo" alt="Crust logo" src="@/assets/logo.svg" @click="emit('toggleTheme')" />
+    <div class="titlebar__start">
+      <div class="window-control-button" @click="emit('toggleSettings')">
+        <font-awesome-icon icon="fa-solid fa-bars" alt="settings" />
+      </div>
+      <div class="window-control-button" @click="emit('toggleTheme')">
+        <font-awesome-icon icon="fa-solid fa-bars" alt="settings" />
+      </div>
     </div>
     <div class="titlebar__end">
       <div class="window-control-button" @click="appWindow.minimize">
@@ -33,12 +38,12 @@ appWindow.onResized(async (_) => {
 <style scoped lang="scss">
 .titlebar {
   border-bottom: 1px solid var(--border-color-dark);
-  z-index: 999;
-  height: var(--titlebar-height);
-  user-select: none;
   display: flex;
-  justify-content: space-between;
   flex-wrap: nowrap;
+  height: var(--titlebar-height);
+  justify-content: space-between;
+  user-select: none;
+  z-index: 999;
 
   &__start, &__end {
     display: flex;
@@ -47,17 +52,18 @@ appWindow.onResized(async (_) => {
 }
 
 #titlebar-logo {
-  padding: calc(var(--titlebar-height) * 0.1);
   height: 100%;
   max-width: unset;
+  padding: calc(var(--titlebar-height) * 0.1);
 }
 
 .window-control-button {
-  display: inline-flex;
-  justify-content: center;
   align-items: center;
-  width: var(--titlebar-height);
+  color: var(--text-color);
+  display: inline-flex;
   height: 100%;
+  justify-content: center;
+  width: var(--titlebar-height);
 
   &:hover {
     background-color: var(--background-color-secondary);
