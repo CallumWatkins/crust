@@ -1,0 +1,23 @@
+.transition-wrapper {
+  height: 100%;
+  width: 100%;
+}
+
+// Slide
+.slide-enter-active {
+  position: absolute;
+  transition: all 0.3s ease-out;
+}
+
+.slide-leave-active {
+  position: absolute;
+  transition: all 0.3s ease-in;
+}
+
+.slide-enter-from {
+  transform: translateX(-100%);
+}
+
+.slide-leave-to {
+  transform: translateX(-100%)
+}

@@ -1,0 +1,129 @@
+<script setup lang="ts">
+import { shallowRef, ref } from 'vue'
+import HelloWorldVue from '../components/HelloWorld.vue';
+
+interface MenuElement {
+  name: string;
+  tabs: Tab[];
+}
+
+interface Tab {
+  name: string;
+  component: any;
+}
+
+const menu_elements: MenuElement[] = [
+  {
+    name: "General",
+    tabs: [
+      {
+        name: "User Settings",
+        component: HelloWorldVue
+      },
+      {
+        name: "User Settings",
+        component: HelloWorldVue
+      },
+    ]
+  },
+    {
+    name: "Administration",
+    tabs: [
+      {
+        name: "User Settings",
+        component: HelloWorldVue
+      },
+      {
+        name: "User Settings",
+        component: HelloWorldVue
+      },
+      {
+        name: "User Settings",
+        component: HelloWorldVue
+      },
+      {
+        name: "User Settings",
+        component: HelloWorldVue
+      },
+    ]
+  },
+  {
+    name: "Transactions",
+    tabs: [
+      {
+        name: "User Settings",
+        component: HelloWorldVue
+      },
+      {
+        name: "User Settings",
+        component: HelloWorldVue
+      },
+    ]
+  }
+]
+
+const current_tab = shallowRef(menu_elements[0].tabs[0]);
+const are_changes = ref(false);
+
+function setTab(tab: Tab) {
+  if (are_changes.value) {
+    return;
+  }
+  current_tab.value = tab;
+}
+
+function changes(areChanges: boolean) {
+  are_changes.value = areChanges;
+}
+</script>
+
+<template>
+  <div class="settings-container">
+    <div class="container">
+      <section class="section">
+        <div class="columns">
+          <div class="column is-one-third settings-tabs">
+            <aside class="menu">
+              <template v-for="menu_element in menu_elements">
+                <p class="menu-label">{{ menu_element.name }}</p>
+                <ul class="menu-list">
+                  <li v-for="tab in menu_element.tabs">
+                    <a @click="setTab(tab)" :class="{ 'is-active': tab == current_tab }">{{ tab.name }}</a>
+                  </li>
+                </ul>
+              </template>
+            </aside>
+          </div>
+          <div class="column">
+            <component :is="current_tab.component" @changes="changes"></component>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</template>
+
+<style scoped lang="scss">
+.settings-container {
+  background-color: var(--background-color);
+  height: 100%;
+  width: 100%;
+}
+
+.settings-tabs {
+  overflow-y: auto;
+}
+
+.section, .columns {
+  height: 100%;
+}
+
+.section {
+  flex-grow: 1;
+}
+
+.container {
+  display: flex;
+  height: 100%;
+}
+</style>

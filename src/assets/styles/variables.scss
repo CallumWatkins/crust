@@ -1,8 +1,8 @@
 // Bulma variables
 $background: var(--background-color);
-$border: var(--border-color);
 $body-overflow-y: hidden;
 $border-hover: None;
+$border: var(--border-color);
 $button-background-color: var(--background-color);
 $button-border-color: var(--border-color);
 $button-color: var(--text-color);
@@ -25,10 +25,14 @@ $input-focus-box-shadow-color: var(--border-box-shadow-color);
 $input-focus-box-shadow-size: var(--border-box-shadow-size);
 $input-hover-border-color: var(--border-color-hover);
 $input-radius: 6px;
+$link: var(--primary-color);
 $modal-close-top: calc(var(--titlebar-height) + 20px);
+$radius-large: var(--large-radius);
+$radius-small: var(--small-radius);
+$radius: var(--radius);
 $scheme-main: var(--background-color-secondary);
-$text: var(--text-color);
 $text-strong: var(--text-color-dark);
+$text: var(--text-color);
 
 // Custom Bulma Colours
 $rusty: hsl(31, 38%, 25%);

@@ -117,7 +117,7 @@ function fill_input(conn: Connection) {
 }
 
 .dropdown-item {
-  border-radius: 8px;
+  border-radius: var(--radius);
   min-width: 150px; 
   padding-right: 1rem;
 
