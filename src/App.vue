@@ -16,8 +16,14 @@ const theme = ref(Theme.Dark);
       <div class="is-flex-shrink-0">
         <WindowTitlebar @toggle-theme="theme = (theme === Theme.Dark ? Theme.Light : Theme.Dark)" />
       </div>
-      <div class="is-flex-grow-1">
-        <RouterView />
+      <div class="is-flex-grow-1 is-relative">
+        <RouterView v-slot="{ Component, route }">
+          <Transition :name="(route.meta?.transition as string | undefined) ?? ''">
+            <div class="transition-wrapper" :key="route.name ?? 'Home'">
+              <component :is="Component" />
+            </div>
+          </Transition>
+        </RouterView>
       </div>
     </div>
   </Suspense>
