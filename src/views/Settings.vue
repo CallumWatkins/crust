@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { shallowRef, ref } from 'vue'
 import HelloWorldVue from '../components/HelloWorld.vue';
+import SettingsAbout from '../components/settings/SettingsAbout.vue';
+import SettingsUpdate from '../components/settings/SettingsUpdate.vue';
 
 interface MenuElement {
   name: string;
@@ -48,15 +50,15 @@ const menu_elements: MenuElement[] = [
     ]
   },
   {
-    name: "Transactions",
+    name: "About",
     tabs: [
       {
-        name: "User Settings",
-        component: HelloWorldVue
+        name: "About",
+        component: SettingsAbout
       },
       {
-        name: "User Settings",
-        component: HelloWorldVue
+        name: "Update",
+        component: SettingsUpdate
       },
     ]
   }
@@ -95,7 +97,10 @@ function changes(areChanges: boolean) {
             </aside>
           </div>
           <div class="column">
-            <component :is="current_tab.component" @changes="changes"></component>
+            <h1 class="title">{{ current_tab.name }}</h1>
+            <KeepAlive include="SettingsUpdate">
+              <component :is="current_tab.component" @changes="changes"></component>
+            </KeepAlive>
           </div>
         </div>
       </section>
