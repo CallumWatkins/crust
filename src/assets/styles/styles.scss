@@ -1,7 +1,11 @@
 @charset "utf-8";
 
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
+$roboto_weights: 300, 400, 500, 700, 900;
+@each $weight in $roboto_weights {
+  @import url("/node_modules/@fontsource/roboto/#{$weight}.css");
+  @import url("/node_modules/@fontsource/roboto/#{$weight}-italic.css");
+}
 
 // Variables
 @import "variables.scss";
