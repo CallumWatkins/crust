@@ -4,18 +4,24 @@ import { onUnmounted, ref } from 'vue';
 
 const emit = defineEmits(['toggleTheme', 'toggleSettings']);
 const isMaximized = ref(await appWindow.isMaximized());
+const isFocused = ref(true);
 
 const onResizedUnlisten = await appWindow.onResized(async (_) => {
   isMaximized.value = await appWindow.isMaximized();
 });
 
+const onFocusChangedUnlisten = await appWindow.onFocusChanged(({ payload: focused }) => {
+  isFocused.value = focused;
+});
+
 onUnmounted(() => {
   onResizedUnlisten();
+  onFocusChangedUnlisten();
 })
 </script>
 
 <template>
-  <div class="titlebar" data-tauri-drag-region>
+  <div class="titlebar" :class="{ 'focused': isFocused }" data-tauri-drag-region>
     <div class="titlebar__start">
       <div class="square-icon-button" @click="emit('toggleSettings')">
         <font-awesome-icon icon="fa-solid fa-bars" alt="settings" />
@@ -41,6 +47,7 @@ onUnmounted(() => {
 
 <style scoped lang="scss">
 .titlebar {
+  background-color: var(--background-color-darker);
   border-bottom: 1px solid var(--border-color-dark);
   z-index: 999;
   height: 50px;
@@ -55,7 +62,7 @@ onUnmounted(() => {
   }
 
   .square-icon-button {
-    color: var(--text-color);
+    color: var(--text-color-light);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -68,6 +75,14 @@ onUnmounted(() => {
 
     &.window-control:last-child:hover {
       background-color: rgb(244, 82, 42);
+    }
+  }
+
+  &.focused {
+    background-color: var(--background-color);
+
+    .square-icon-button {
+      color: var(--text-color);
     }
   }
 }
