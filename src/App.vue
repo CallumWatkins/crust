@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { invoke } from '@tauri-apps/api/tauri'
 import WindowTitlebar from '@/components/WindowTitlebar.vue';
 import Settings from './views/Settings.vue';
 
@@ -10,10 +11,19 @@ enum Theme {
 
 const theme = ref(Theme.Dark);
 const show_settings = ref(false);
+
+let first_resolve = true;
+
+function firstResolve() {
+  if (first_resolve) {
+    invoke('close_splashscreen');
+    first_resolve = false;
+  }
+}
 </script>
 
 <template>
-  <Suspense>
+  <Suspense @resolve="firstResolve">
     <div id="root" class="is-flex is-flex-direction-column" :class="theme.toLowerCase()">
       <div class="is-flex-shrink-0">
         <WindowTitlebar @toggle-theme="theme = (theme === Theme.Dark ? Theme.Light : Theme.Dark)" @toggle-settings="show_settings = !show_settings" />
