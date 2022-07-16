@@ -93,11 +93,11 @@ function set_output_device(device: string) {
 }
 
 .dropdown-item {
+  align-items: center;
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  white-space: normal;
   line-break: anywhere;
+  white-space: normal;
 }
 
 .dropdown-content {
@@ -105,8 +105,8 @@ function set_output_device(device: string) {
 }
 
 .icon {
-  min-height: 1.25em;
   margin-left: var(--spacing);
+  min-height: 1.25em;
   min-width: 1.25em;
 }
 </style>
