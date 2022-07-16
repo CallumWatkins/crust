@@ -93,6 +93,7 @@ function fill_input(conn: Connection) {
 
 #view-more {
   width: 100%;
+  text-align: center;
 }
 
 #dropdown-button {
@@ -105,24 +106,5 @@ function fill_input(conn: Connection) {
   flex-direction: column;
   height: 100%;
   justify-content: center;
-}
-
-.dropdown-content {
-  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2);
-
-  hr {
-    margin-left: calc(var(--spacing) * -2);
-    margin-right: calc(var(--spacing) * -2);
-  }
-}
-
-.dropdown-item {
-  border-radius: var(--radius);
-  min-width: 150px; 
-  padding-right: 1rem;
-
-  &:last-child {
-    text-align: center;
-  }
 }
 </style>

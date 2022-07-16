@@ -3,6 +3,8 @@ import { shallowRef, ref } from 'vue'
 import HelloWorldVue from '../components/HelloWorld.vue';
 import SettingsAbout from '../components/settings/SettingsAbout.vue';
 import SettingsUpdate from '../components/settings/SettingsUpdate.vue';
+import SettingsProfile from '../components/settings/SettingsProfile.vue';
+import SettingsAudio from '../components/settings/SettingsAudio.vue';
 
 interface MenuElement {
   name: string;
@@ -19,12 +21,12 @@ const menu_elements: MenuElement[] = [
     name: "General",
     tabs: [
       {
-        name: "User Settings",
-        component: HelloWorldVue
+        name: "User Profile",
+        component: SettingsProfile
       },
       {
-        name: "User Settings",
-        component: HelloWorldVue
+        name: "Audio",
+        component: SettingsAudio
       },
     ]
   },

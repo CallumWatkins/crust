@@ -5,9 +5,12 @@ import Popper from 'vue3-popper'
 
 import { library as fontAwesomeLibrary } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark, faBars, faCaretLeft, faLightbulb } from '@fortawesome/free-solid-svg-icons'
+import { 
+  faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark, 
+  faBars, faCaretLeft, faChevronDown, faCircleCheck, faLightbulb } from '@fortawesome/free-solid-svg-icons'
 
-fontAwesomeLibrary.add(faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark, faBars, faCaretLeft, faLightbulb)
+fontAwesomeLibrary.add(faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark, 
+  faBars, faCaretLeft, faChevronDown, faCircleCheck, faLightbulb)
 
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
