@@ -57,10 +57,12 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 800,
+        "height": 980,
         "resizable": true,
         "title": "Crust",
         "width": 1200,
+        "minWidth": 769,
+        "minHeight": 500,
         "decorations": false
       }
     ]
