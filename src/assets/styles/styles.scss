@@ -1,7 +1,11 @@
 @charset "utf-8";
 
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
+$roboto_weights: 300, 400, 500, 700, 900;
+@each $weight in $roboto_weights {
+  @import url("/node_modules/@fontsource/roboto/#{$weight}.css");
+  @import url("/node_modules/@fontsource/roboto/#{$weight}-italic.css");
+}
 
 // Variables
 @import "variables.scss";
@@ -78,6 +82,7 @@
 
   #root.dark {
     --background-color-secondary: rgb(51, 51, 51);
+    --background-color-darker: rgb(45, 45, 45);
     --background-color: rgb(38, 38, 38);
     --border-color-hover: hsl(0, 0%, 50%);
     --border-color: rgb(101, 100, 100);
@@ -85,6 +90,7 @@
     --button-color-focus: hsl(31, 38%, 40%);
     --button-color-hover: hsl(31, 38%, 25%);
     --primary-color: rgb(173, 92, 4);
+    --text-color-light: rgb(150, 150, 150);
     --text-color: rgb(200, 200, 200);
     --text-color-dark: rgb(250, 250, 250);
   }
