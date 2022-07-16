@@ -57,8 +57,8 @@
     "windows": [
       {
         "title": "Crust",
-        "width": 1200,
-        "height": 1000,
+        "width": 1250,
+        "height": 950,
         "minWidth": 769,
         "minHeight": 500,
         "center": true,
