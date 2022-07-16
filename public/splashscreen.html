@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      html, body {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+      }
+      body {
+        background: rgb(20,15,9);
+        background: linear-gradient(345deg, #140f09 0%, hsl(29, 36%, 12%) 65%, #3e2e1d 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      body * {
+        user-select: none;
+        pointer-events: none;
+      }
+      h1 {
+        color: rgb(153 149 148);
+        filter: blur(0.5px);
+        font-size: 2.5em;
+        margin-top: 60px;
+        margin-bottom: 0px;
+      }
+      h3 {
+        color: rgb(180, 180, 180);
+      }
+    </style>
+  </head>
+  <body data-tauri-drag-region>
+    <h1>Crust</h1>
+    <h3>Loading...</h3>
+  </body>
+</html>
