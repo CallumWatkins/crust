@@ -112,6 +112,21 @@
   gap: calc(var(--spacing) * 1);
 }
 
+.dropdown-content {
+  padding: calc(var(--spacing) * 2) calc(var(--spacing) * 2);
+
+  hr {
+    margin-left: calc(var(--spacing) * -2);
+    margin-right: calc(var(--spacing) * -2);
+  }
+}
+
+.dropdown-item, a.dropdown-item {
+  border-radius: var(--radius);
+  min-width: 150px; 
+  padding: 0.375rem 1rem;
+}
+
 .btn-outlined {
   background-color: transparent;
   border-color: var(--border-color);
