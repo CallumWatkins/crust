@@ -4,6 +4,7 @@ import HelloWorldVue from '../components/HelloWorld.vue';
 import SettingsAbout from '../components/settings/SettingsAbout.vue';
 import SettingsUpdate from '../components/settings/SettingsUpdate.vue';
 import SettingsProfile from '../components/settings/SettingsProfile.vue';
+import SettingsAudio from '../components/settings/SettingsAudio.vue';
 
 interface MenuElement {
   name: string;
@@ -24,8 +25,8 @@ const menu_elements: MenuElement[] = [
         component: SettingsProfile
       },
       {
-        name: "User Settings",
-        component: HelloWorldVue
+        name: "Audio",
+        component: SettingsAudio
       },
     ]
   },
