@@ -9,6 +9,7 @@
     "tauri": "tauri"
   },
   "dependencies": {
+    "@fontsource/roboto": "^4.5.7",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/free-regular-svg-icons": "^6.1.1",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.4",
+    "@types/node": "^18.0.5",
     "@vitejs/plugin-vue": "^3.0.0",
     "sass": "^1.53.0",
     "typescript": "^4.5.4",
