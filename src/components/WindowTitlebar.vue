@@ -17,7 +17,7 @@ appWindow.onResized(async (_) => {
         <font-awesome-icon icon="fa-solid fa-bars" alt="settings" />
       </div>
       <div class="square-icon-button" @click="emit('toggleTheme')">
-        <font-awesome-icon icon="fa-solid fa-bars" alt="settings" />
+        <font-awesome-icon icon="fa-solid fa-lightbulb" alt="theme" />
       </div>
     </div>
     <div class="titlebar__end">
