@@ -21,7 +21,7 @@ function set_output_device(device: string) {
     <div class="dropdown is-active">
       <Popper offsetDistance="6" offsetSkid="-150" placement="bottom">
         <div class="dropdown-trigger">
-          <p class="title is-5"><strong>Input Device</strong></p>
+          <p class="label">Input Device</p>
           <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
             <span>{{ current_input_device }}</span>
             <span class="icon">
@@ -49,7 +49,7 @@ function set_output_device(device: string) {
     <div class="dropdown is-active">
       <Popper offsetDistance="6" offsetSkid="-150" placement="bottom">
         <div class="dropdown-trigger">
-          <p class="title is-5"><strong>Output Device</strong></p>
+          <p class="label">Output Device</p>
           <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
             <span>{{ current_output_device }}</span>
             <span class="icon">
