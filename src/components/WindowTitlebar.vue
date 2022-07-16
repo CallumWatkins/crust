@@ -68,13 +68,14 @@ onUnmounted(() => {
     justify-content: center;
     height: 100%;
     width: var(--titlebar-height);
+    transition: background-color 0.15s;
 
     &:hover {
       background-color: var(--background-color-secondary);
     }
 
     &.window-control:last-child:hover {
-      background-color: rgb(244, 82, 42);
+      background-color: rgb(214, 20, 37);
     }
   }
 
