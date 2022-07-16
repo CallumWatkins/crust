@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { appWindow } from '@tauri-apps/api/window';
-import { ref } from 'vue';
+import { onUnmounted, ref } from 'vue';
 
 const emit = defineEmits(['toggleTheme', 'toggleSettings']);
 const isMaximized = ref(await appWindow.isMaximized());
 
-appWindow.onResized(async (_) => {
+const onResizedUnlisten = await appWindow.onResized(async (_) => {
   isMaximized.value = await appWindow.isMaximized();
 });
+
+onUnmounted(() => {
+  onResizedUnlisten();
+})
 </script>
 
 <template>
