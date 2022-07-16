@@ -15,7 +15,7 @@ const profile_settings: Setting[] = [
     key: "username",
     name: "Username",
     value: "",
-    valid: (val) => {
+    valid: (val: string) => {
       if (val.length < 3 || val.length > 50) {
         return "Username must be between 3 and 50 characters."
       }
@@ -33,7 +33,7 @@ watch(
   () => text_modal_input.value,
   (val) => {
     if (current_setting.value !== null) {
-      validation_error.value = current_setting.value.valid(val);
+      validation_error.value = current_setting.value.valid(val.trim());
     }
   }
 );
@@ -46,7 +46,8 @@ function open_text_modal(profile_setting: Setting) {
 
 function close_text_modal(data: any) {
   if (data === true) {
-    current_setting.value!.value = text_modal_input.value;
+    current_setting.value!.value = text_modal_input.value.trim();
+    // TODO: persist(current_setting.value.key, current_setting.value.value)
   }
   current_setting.value = null;
   show_text_modal.value = false;
