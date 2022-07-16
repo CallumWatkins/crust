@@ -80,6 +80,7 @@ function set_output_device(device: string) {
 <style scoped lang="scss">
 .audio-container {
   display: flex;
+  flex-wrap: wrap;
   gap: calc(var(--spacing) * 4);
 }
 
