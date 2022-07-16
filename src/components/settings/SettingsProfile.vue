@@ -1,4 +1,28 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import type { Ref } from 'vue';
+import PopupModal from '../PopupModal.vue';
+
+const profile_settings = new Map<string, any>([
+  ["Username", "John James Smith"],
+]);
+
+const text_modal_name = ref("label")
+const text_modal_input = ref("value");
+const show_text_modal = ref(false);
+
+function open_text_modal(name: string, value: string) {
+  text_modal_name.value = name;
+  text_modal_input.value = value;
+  show_text_modal.value = true;
+}
+
+function close_text_modal(data: any) {
+  if(data === true) {
+    profile_settings.set(text_modal_name.value, text_modal_input.value);
+  }
+  show_text_modal.value = false;
+}
 </script>
 
 <template>
@@ -9,14 +33,24 @@
     </div>
   </div>
   <div class="profile-container">
-    <div class="field-container">
+    <div class="field-container" v-for="[name, value] in profile_settings.entries()">
       <div class="label">
-        <strong>Username</strong>
-        <p class="value">John James Smith</p>
+        <strong>{{ name }}</strong>
+        <p class="value">{{ value }}</p>
       </div>
-      <button class="button">Edit</button>
+      <button class="button" @click="open_text_modal(name, value)">Edit</button>
     </div>
   </div>
+  <PopupModal id="text-modal" :canCloseWithBackground="true" :hasCloseButton="true" :isOpen="show_text_modal" :isCard="false" v-slot="{ close }" @closed="close_text_modal">
+    <div class="box">
+      <p class="block"><strong>{{ text_modal_name }}</strong></p>
+      <input class="block input" type="text" v-model="text_modal_input" />
+      <div class="block buttons">
+        <button class="button is-success" @click="close(true)">Save</button>
+        <button class="button" @click="close(false)">Cancel</button>
+      </div>
+    </div>
+  </PopupModal>
 </template>
 
 <style scoped lang="scss">
@@ -55,5 +89,11 @@
 .value {
   color: var(--text-color);
   font-weight: normal;
+}
+
+.box {
+  strong {
+    font-size: 20px;
+  }
 }
 </style>

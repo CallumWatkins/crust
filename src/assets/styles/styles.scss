@@ -16,7 +16,7 @@
 @import "/node_modules/bulma/sass/utilities/_all";
 @import "/node_modules/bulma/sass/base/_all";
 
-// @import "/node_modules/bulma/sass/elements/box";
+@import "/node_modules/bulma/sass/elements/box";
 @import "/node_modules/bulma/sass/elements/button";
 @import "/node_modules/bulma/sass/elements/container";
 @import "/node_modules/bulma/sass/elements/content";
@@ -70,10 +70,12 @@
 :root {
   --border-box-shadow-color: bulmaRgba(var(--primary-color), 0.25);
   --border-box-shadow-size: 0;
+  --danger: rgb(176, 28, 28);
   --large-radius: 24px;
   --radius: 8px;
   --small-radius: 6px;
   --spacing: 8px;
+  --success: rgb(56, 117, 60);
   --titlebar-height: 50px;
 
   #root.dark {
@@ -106,6 +108,9 @@
   height: 100vh;
 }
 
+.buttons {
+  gap: calc(var(--spacing) * 1);
+}
 
 .btn-outlined {
   background-color: transparent;
