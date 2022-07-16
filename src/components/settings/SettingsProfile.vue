@@ -35,9 +35,9 @@ function close_text_modal(data: any) {
   </div>
   <div class="profile-container">
     <div class="block field-container" v-for="[name, value] in profile_settings.entries()">
-      <div class="label">
+      <div>
         <strong>{{ name }}</strong>
-        <p class="value">{{ value }}</p>
+        <p>{{ value }}</p>
       </div>
       <button class="button" @click="open_text_modal(name, value)">Edit</button>
     </div>
@@ -77,19 +77,9 @@ function close_text_modal(data: any) {
 }
 
 .field-container {
+  align-items: center;
   display: flex;
   justify-content: space-between;
-}
-
-.label {
-  color: var(--text-color-dark);
-  display: flex;
-  flex-direction: column;
-}
-
-.value {
-  color: var(--text-color);
-  font-weight: normal;
 }
 
 .box {
