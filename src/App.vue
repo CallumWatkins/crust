@@ -14,10 +14,11 @@ const show_settings = ref(false);
 
 let first_resolve = true;
 
-function firstResolve() {
+async function firstResolve() {
   if (first_resolve) {
-    invoke('close_splashscreen');
     first_resolve = false;
+    await new Promise(r => setTimeout(r, 500));
+    invoke('close_splashscreen');
   }
 }
 </script>
