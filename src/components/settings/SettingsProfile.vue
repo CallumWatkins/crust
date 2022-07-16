@@ -5,6 +5,7 @@ import PopupModal from '../PopupModal.vue';
 
 const profile_settings = new Map<string, any>([
   ["Username", "John James Smith"],
+  ["Example Field", "Some value"],
 ]);
 
 const text_modal_name = ref("label")
@@ -33,7 +34,7 @@ function close_text_modal(data: any) {
     </div>
   </div>
   <div class="profile-container">
-    <div class="field-container" v-for="[name, value] in profile_settings.entries()">
+    <div class="block field-container" v-for="[name, value] in profile_settings.entries()">
       <div class="label">
         <strong>{{ name }}</strong>
         <p class="value">{{ value }}</p>
