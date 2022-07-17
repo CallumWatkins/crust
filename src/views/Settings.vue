@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { shallowRef, ref } from 'vue'
-import HelloWorldVue from '../components/HelloWorld.vue';
+import PlaceholderComponent from '../components/PlaceholderComponent.vue';
 import SettingsAbout from '../components/settings/SettingsAbout.vue';
 import SettingsUpdate from '../components/settings/SettingsUpdate.vue';
 import SettingsProfile from '../components/settings/SettingsProfile.vue';
@@ -35,19 +35,19 @@ const menu_elements: MenuElement[] = [
     tabs: [
       {
         name: "User Settings",
-        component: HelloWorldVue
+        component: PlaceholderComponent
       },
       {
         name: "User Settings",
-        component: HelloWorldVue
+        component: PlaceholderComponent
       },
       {
         name: "User Settings",
-        component: HelloWorldVue
+        component: PlaceholderComponent
       },
       {
         name: "User Settings",
-        component: HelloWorldVue
+        component: PlaceholderComponent
       },
     ]
   },
