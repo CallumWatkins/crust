@@ -24,7 +24,7 @@ const available_update_manifest: Ref<updater.UpdateManifest | undefined> = ref(u
 
 const update_state = ref(UpdateState.Unchecked);
 
-async function checkForUpdates() {
+async function check_for_updates() {
   const { shouldUpdate, manifest } = await updater.checkUpdate();
   if (shouldUpdate) {
     available_update_manifest.value = manifest;
@@ -58,7 +58,7 @@ async function relaunch() {
       </div>
     </div>
     <div class="block">
-      <button v-if="update_state === UpdateState.Unchecked || update_state === UpdateState.UpToDate" class="button" @click="checkForUpdates">Check for updates</button>
+      <button v-if="update_state === UpdateState.Unchecked || update_state === UpdateState.UpToDate" class="button" @click="check_for_updates">Check for updates</button>
       <button v-else-if="update_state === UpdateState.UpdateAvailable" class="button" @click="update">Update now</button>
       <button v-else-if="update_state === UpdateState.Updating" class="button is-loading">Update now</button>
       <button v-else-if="update_state === UpdateState.Updated" class="button is-success" @click="relaunch">Relaunch</button>

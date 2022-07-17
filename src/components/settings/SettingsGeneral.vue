@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useSettings } from '../../composables/settings';
+import { use_settings } from '../../composables/settings';
 
-const { emit, are_changes, set_changes, read_setting, write_setting } = useSettings();
+const { emit, are_changes, set_changes, read_setting, write_setting } = use_settings();
 </script>
 
 <template>
