@@ -12,10 +12,10 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <div v-if="src === undefined" class="fallback">
-    <font-awesome-layers>
-      <font-awesome-icon icon="fa-solid fa-circle" />
-      <font-awesome-icon icon="fa-solid fa-user" />
-    </font-awesome-layers>
+    <FontAwesomeLayers>
+      <FontAwesomeIcon icon="fa-solid fa-circle" />
+      <FontAwesomeIcon icon="fa-solid fa-user" />
+    </FontAwesomeLayers>
   </div>
   <img v-else :src="src" alt="avatar" draggable="false" />
 </template>

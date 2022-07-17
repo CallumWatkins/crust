@@ -24,19 +24,19 @@ onUnmounted(() => {
   <div class="titlebar" :class="{ 'focused': isFocused }" data-tauri-drag-region>
     <div class="titlebar__start">
       <div class="square-icon-button" @click="emit('toggleSettings')">
-        <font-awesome-icon icon="fa-solid fa-bars" alt="settings" />
+        <FontAwesomeIcon icon="fa-solid fa-bars" alt="settings" />
       </div>
       <div class="square-icon-button" @click="emit('toggleTheme')">
-        <font-awesome-icon icon="fa-solid fa-lightbulb" alt="theme" />
+        <FontAwesomeIcon icon="fa-solid fa-lightbulb" alt="theme" />
       </div>
     </div>
     <div class="titlebar__end">
       <div class="square-icon-button window-control" @click="appWindow.minimize">
-        <font-awesome-icon icon="fa-solid fa-window-minimize" alt="minimize" />
+        <FontAwesomeIcon icon="fa-solid fa-window-minimize" alt="minimize" />
       </div>
       <div class="square-icon-button window-control" @click="appWindow.toggleMaximize">
-        <font-awesome-icon icon="fa-solid fa-window-restore" alt="restore" v-if="isMaximized" />
-        <font-awesome-icon icon="fa-solid fa-window-maximize" alt="maximize" v-else />
+        <FontAwesomeIcon icon="fa-solid fa-window-restore" alt="restore" v-if="isMaximized" />
+        <FontAwesomeIcon icon="fa-solid fa-window-maximize" alt="maximize" v-else />
       </div>
       <div class="square-icon-button window-control" @click="appWindow.close">
         <font-awesome-icon icon="fa-solid fa-xmark" size="lg" alt="close" />
