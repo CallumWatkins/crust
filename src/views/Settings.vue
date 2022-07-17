@@ -76,8 +76,8 @@ function setTab(tab: Tab) {
   current_tab.value = tab;
 }
 
-function changes(areChanges: boolean) {
-  are_changes.value = areChanges;
+function changes(changes: boolean) {
+  are_changes.value = changes;
 }
 </script>
 
