@@ -3,6 +3,8 @@
   windows_subsystem = "windows"
 )]
 
+mod system_tray;
+
 use tauri::Manager;
 
 #[tauri::command]
@@ -17,6 +19,7 @@ async fn close_splashscreen(window: tauri::Window) {
 
 fn main() {
   tauri::Builder::default()
+    .system_tray(system_tray::create_system_tray())
     .invoke_handler(tauri::generate_handler![close_splashscreen])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");
