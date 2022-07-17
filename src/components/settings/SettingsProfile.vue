@@ -2,6 +2,7 @@
 import { ref, watch } from 'vue'
 import type { Ref } from 'vue';
 import PopupModal from '../PopupModal.vue';
+import UserAvatar from '../UserAvatar.vue';
 
 interface Setting {
   key: string,
@@ -56,7 +57,7 @@ function close_text_modal(data: any) {
 
 <template>
   <div class="avatar-container">
-    <img class="avatar" src="@/assets/placeholder-avatar.webp" alt="avatar" draggable="false">
+    <UserAvatar class="avatar" />
     <button class="button">Upload Profile Picture</button>
   </div>
   <div class="profile-container">
@@ -91,7 +92,6 @@ function close_text_modal(data: any) {
 
 .avatar {
   width: 96px;
-  border-radius: 100%;
 }
 
 .profile-container {
