@@ -12,11 +12,11 @@ enum Theme {
 const theme = ref(Theme.Dark);
 const show_settings = ref(false);
 
-let first_resolve = true;
+let is_first_resolve = true;
 
-async function firstResolve() {
-  if (first_resolve) {
-    first_resolve = false;
+async function first_resolve() {
+  if (is_first_resolve) {
+    is_first_resolve = false;
     await new Promise(r => setTimeout(r, 500));
     invoke('close_splashscreen');
   }
@@ -24,7 +24,7 @@ async function firstResolve() {
 </script>
 
 <template>
-  <Suspense @resolve="firstResolve">
+  <Suspense @resolve="first_resolve">
     <div id="root" class="is-flex is-flex-direction-column" :class="theme.toLowerCase()">
       <div class="is-flex-shrink-0">
         <WindowTitlebar @toggle-theme="theme = (theme === Theme.Dark ? Theme.Light : Theme.Dark)" @toggle-settings="show_settings = !show_settings" />
