@@ -19,3 +19,30 @@ pub fn create_system_tray() -> SystemTray {
   SystemTray::new().with_menu(tray_menu)
 }
 
+pub fn handle_system_tray_event(app: &AppHandle, event: SystemTrayEvent) {
+  match event {
+    SystemTrayEvent::LeftClick { .. } => {
+      let main_window = app.get_window("main").unwrap();
+      if main_window.is_visible().unwrap() {
+        window_control::unminimize_focus_window(&main_window);
+      }
+    }
+    SystemTrayEvent::DoubleClick { .. } => {
+      window_control::toggle_main_window_visibility(app);
+    }
+    SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
+      "crust" => {
+        let main_window = app.get_window("main").unwrap();
+        window_control::unminimize_focus_window(&main_window);
+      }
+      "showhide" => {
+        window_control::toggle_main_window_visibility(app);
+      }
+      "quit" => {
+        app.exit(0);
+      }
+      _ => {}
+    },
+    _ => {}
+  }
+}
