@@ -56,7 +56,7 @@ function close_text_modal(data: any) {
 
 <template>
   <div class="avatar-container">
-    <img class="avatar" src="@/assets/placeholder-avatar.webp" alt="avatar">
+    <img class="avatar" src="@/assets/placeholder-avatar.webp" alt="avatar" draggable="false">
     <button class="button">Upload Profile Picture</button>
   </div>
   <div class="profile-container">
