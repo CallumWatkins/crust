@@ -110,6 +110,11 @@ $roboto_weights: 300, 400, 500, 700, 900;
   background-color: var(--background-color);
   width: 100vw;
   height: 100vh;
+  user-select: none;
+}
+
+.is-selectable {
+  user-select: text;
 }
 
 .buttons {

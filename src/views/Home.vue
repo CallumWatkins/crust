@@ -40,7 +40,7 @@ function fill_input(conn: Connection) {
 
 <template>
   <div class="container">
-    <img id="logo" alt="Crust logo" src="@/assets/logo.svg" />
+    <img id="logo" alt="Crust logo" src="@/assets/logo.svg" draggable="false" />
 
     <div class="field has-addons has-addons-centered">
       <p class="control">
