@@ -25,7 +25,7 @@ function set_output_device(device: string) {
           <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
             <span>{{ current_input_device }}</span>
             <span class="icon">
-              <font-awesome-icon icon="fa-solid fa-chevron-down" />
+              <FontAwesomeIcon icon="fa-solid fa-chevron-down" />
             </span>
           </button>
         </div>
@@ -38,7 +38,7 @@ function set_output_device(device: string) {
                 @click="set_input_device(device); close()">
                 <span>{{ device }}</span>
                 <span class="icon">
-                  <font-awesome-icon v-if="device == current_input_device" icon="fa-solid fa-circle-check" size="lg" />
+                  <FontAwesomeIcon v-if="device == current_input_device" icon="fa-solid fa-circle-check" size="lg" />
                 </span>
               </a>
             </div>
@@ -53,7 +53,7 @@ function set_output_device(device: string) {
           <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
             <span>{{ current_output_device }}</span>
             <span class="icon">
-              <font-awesome-icon icon="fa-solid fa-chevron-down" />
+              <FontAwesomeIcon icon="fa-solid fa-chevron-down" />
             </span>
           </button>
         </div>
@@ -66,7 +66,7 @@ function set_output_device(device: string) {
                 @click="set_output_device(device); close()">
                 {{ device }}
                 <span class="icon">
-                  <font-awesome-icon v-if="device == current_output_device" icon="fa-solid fa-circle-check" size="lg" />
+                  <FontAwesomeIcon v-if="device == current_output_device" icon="fa-solid fa-circle-check" size="lg" />
                 </span>
               </a>
             </div>

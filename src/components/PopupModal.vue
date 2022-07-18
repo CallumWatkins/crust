@@ -18,22 +18,22 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['closed']);
 
-const isActive = ref(false);
+const is_active = ref(false);
 
 watch(
   () => props.isOpen,
-  (newVal) => isActive.value = newVal,
+  (newVal) => is_active.value = newVal,
   { immediate: true }
 );
 
 function close(data?: any) {
-  isActive.value = false;
+  is_active.value = false;
   emit("closed", data);
 }
 </script>
 
 <template>
-  <div class="modal" :class="{ 'is-active': isActive }">
+  <div class="modal" :class="{ 'is-active': is_active }">
     <div class="modal-background" @click="if (props.canCloseWithBackground) close();"></div>
     <div class="modal-card" v-if="isCard">
       <header class="modal-card-head">

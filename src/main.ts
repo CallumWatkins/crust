@@ -18,8 +18,8 @@ fontAwesomeLibrary.add(
 )
 
 createApp(App)
-  .component('font-awesome-icon', FontAwesomeIcon)
-  .component('font-awesome-layers', FontAwesomeLayers)
+  .component('FontAwesomeIcon', FontAwesomeIcon)
+  .component('FontAwesomeLayers', FontAwesomeLayers)
   .use(router)
   .component("Popper", Popper)
   .mount('#app')
