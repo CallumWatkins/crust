@@ -8,13 +8,13 @@ import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome
 import {
   faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark,
   faBars, faCaretLeft, faChevronDown, faCircleCheck, faLightbulb,
-  faCircle, faUser
+  faCircle, faUser, faMagnifyingGlass
 } from '@fortawesome/free-solid-svg-icons'
 
 fontAwesomeLibrary.add(
   faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark,
   faBars, faCaretLeft, faChevronDown, faCircleCheck, faLightbulb,
-  faCircle, faUser
+  faCircle, faUser, faMagnifyingGlass
 )
 
 createApp(App)
