@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ChevronDown from '@/components/ChevronDown.vue';
-import { Connection, use_connections } from '../composables/connection';
+import { Connection, use_connections } from '../composables/connections';
 
 const { recent_connections } = use_connections();
 
