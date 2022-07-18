@@ -1,6 +1,6 @@
 import { ref, readonly } from "vue";
 
-export function useSettings() {
+export function use_settings() {
   const emit = defineEmits(['changes']);
 
   const are_changes = ref(false);

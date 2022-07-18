@@ -18,30 +18,30 @@ enum UpdateState {
   Relaunching,
 }
 
-const appVersion = await app.getVersion();
+const app_version = await app.getVersion();
 
-const availableUpdateManifest: Ref<updater.UpdateManifest | undefined> = ref(undefined);
+const available_update_manifest: Ref<updater.UpdateManifest | undefined> = ref(undefined);
 
-const updateState = ref(UpdateState.Unchecked);
+const update_state = ref(UpdateState.Unchecked);
 
-async function checkForUpdates() {
+async function check_for_updates() {
   const { shouldUpdate, manifest } = await updater.checkUpdate();
   if (shouldUpdate) {
-    availableUpdateManifest.value = manifest;
-    updateState.value = UpdateState.UpdateAvailable;
+    available_update_manifest.value = manifest;
+    update_state.value = UpdateState.UpdateAvailable;
   } else {
-    updateState.value = UpdateState.UpToDate;
+    update_state.value = UpdateState.UpToDate;
   }
 }
 
 async function update() {
-  updateState.value = UpdateState.Updating;
+  update_state.value = UpdateState.Updating;
   await updater.installUpdate();
-  updateState.value = UpdateState.Updated;
+  update_state.value = UpdateState.Updated;
 }
 
 async function relaunch() {
-  updateState.value = UpdateState.Relaunching;
+  update_state.value = UpdateState.Relaunching;
   await process.relaunch();
 }
 </script>
@@ -49,20 +49,20 @@ async function relaunch() {
 <template>
   <div>
     <div class="block">
-      <p>App version: {{ appVersion }}</p>
+      <p>App version: {{ app_version }}</p>
       <div class="has-text-success has-text-weight-bold mt-2">
-        <p v-if="updateState === UpdateState.UpdateAvailable">New version available: {{ availableUpdateManifest!.version }} ({{ availableUpdateManifest!.date }})</p>
-        <p v-else-if="updateState === UpdateState.UpToDate">App is up to date</p>
-        <p v-else-if="updateState === UpdateState.Updating">Updating...</p>
-        <p v-else-if="updateState === UpdateState.Updated">Update complete, relaunch now?</p>
+        <p v-if="update_state === UpdateState.UpdateAvailable">New version available: {{ available_update_manifest!.version }} ({{ available_update_manifest!.date }})</p>
+        <p v-else-if="update_state === UpdateState.UpToDate">App is up to date</p>
+        <p v-else-if="update_state === UpdateState.Updating">Updating...</p>
+        <p v-else-if="update_state === UpdateState.Updated">Update complete, relaunch now?</p>
       </div>
     </div>
     <div class="block">
-      <button v-if="updateState === UpdateState.Unchecked || updateState === UpdateState.UpToDate" class="button" @click="checkForUpdates">Check for updates</button>
-      <button v-else-if="updateState === UpdateState.UpdateAvailable" class="button" @click="update">Update now</button>
-      <button v-else-if="updateState === UpdateState.Updating" class="button is-loading">Update now</button>
-      <button v-else-if="updateState === UpdateState.Updated" class="button is-success" @click="relaunch">Relaunch</button>
-      <button v-else-if="updateState === UpdateState.Relaunching" class="button is-success is-loading">Relaunch</button>
+      <button v-if="update_state === UpdateState.Unchecked || update_state === UpdateState.UpToDate" class="button" @click="check_for_updates">Check for updates</button>
+      <button v-else-if="update_state === UpdateState.UpdateAvailable" class="button" @click="update">Update now</button>
+      <button v-else-if="update_state === UpdateState.Updating" class="button is-loading">Update now</button>
+      <button v-else-if="update_state === UpdateState.Updated" class="button is-success" @click="relaunch">Relaunch</button>
+      <button v-else-if="update_state === UpdateState.Relaunching" class="button is-success is-loading">Relaunch</button>
     </div>
   </div>
 </template>

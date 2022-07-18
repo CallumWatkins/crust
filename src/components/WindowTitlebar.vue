@@ -3,43 +3,43 @@ import { appWindow } from '@tauri-apps/api/window';
 import { onUnmounted, ref } from 'vue';
 
 const emit = defineEmits(['toggleTheme', 'toggleSettings']);
-const isMaximized = ref(await appWindow.isMaximized());
-const isFocused = ref(true);
+const is_maximized = ref(await appWindow.isMaximized());
+const is_focused = ref(true);
 
-const onResizedUnlisten = await appWindow.onResized(async (_) => {
-  isMaximized.value = await appWindow.isMaximized();
+const on_resized_unlisten = await appWindow.onResized(async (_) => {
+  is_maximized.value = await appWindow.isMaximized();
 });
 
-const onFocusChangedUnlisten = await appWindow.onFocusChanged(({ payload: focused }) => {
-  isFocused.value = focused;
+const on_focus_changed_unlisten = await appWindow.onFocusChanged(({ payload: focused }) => {
+  is_focused.value = focused;
 });
 
 onUnmounted(() => {
-  onResizedUnlisten();
-  onFocusChangedUnlisten();
+  on_resized_unlisten();
+  on_focus_changed_unlisten();
 })
 </script>
 
 <template>
-  <div class="titlebar" :class="{ 'focused': isFocused }" data-tauri-drag-region>
+  <div class="titlebar" :class="{ 'focused': is_focused }" data-tauri-drag-region>
     <div class="titlebar__start">
       <div class="square-icon-button" @click="emit('toggleSettings')">
-        <font-awesome-icon icon="fa-solid fa-bars" alt="settings" />
+        <FontAwesomeIcon icon="fa-solid fa-bars" alt="settings" />
       </div>
       <div class="square-icon-button" @click="emit('toggleTheme')">
-        <font-awesome-icon icon="fa-solid fa-lightbulb" alt="theme" />
+        <FontAwesomeIcon icon="fa-solid fa-lightbulb" alt="theme" />
       </div>
     </div>
     <div class="titlebar__end">
       <div class="square-icon-button window-control" @click="appWindow.minimize">
-        <font-awesome-icon icon="fa-solid fa-window-minimize" alt="minimize" />
+        <FontAwesomeIcon icon="fa-solid fa-window-minimize" alt="minimize" />
       </div>
       <div class="square-icon-button window-control" @click="appWindow.toggleMaximize">
-        <font-awesome-icon icon="fa-solid fa-window-restore" alt="restore" v-if="isMaximized" />
-        <font-awesome-icon icon="fa-solid fa-window-maximize" alt="maximize" v-else />
+        <FontAwesomeIcon icon="fa-solid fa-window-restore" alt="restore" v-if="is_maximized" />
+        <FontAwesomeIcon icon="fa-solid fa-window-maximize" alt="maximize" v-else />
       </div>
       <div class="square-icon-button window-control" @click="appWindow.close">
-        <font-awesome-icon icon="fa-solid fa-xmark" size="lg" alt="close" />
+        <FontAwesomeIcon icon="fa-solid fa-xmark" size="lg" alt="close" />
       </div>
     </div>
   </div>
