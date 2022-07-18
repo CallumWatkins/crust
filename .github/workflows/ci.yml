@@ -22,7 +22,8 @@ jobs:
       uses: actions-rs/toolchain@v1
       with:
         toolchain: stable
-    - uses: Swatinem/rust-cache@v2
+    - name: setup Rust cache
+      uses: Swatinem/rust-cache@v2
       with:
         workspaces: src-tauri
     - name: install dependencies (ubuntu only)
@@ -38,5 +39,5 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: bundle-${{ matrix.platform }}
-        path: ${{ GITHUB_WORKSPACE }}/src-tauri/target/release/bundle/
+        path: ${{ github.workspace }}/src-tauri/target/release/bundle/
         retention-days: 14
