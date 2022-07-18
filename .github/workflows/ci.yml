@@ -32,3 +32,8 @@ jobs:
     - uses: tauri-apps/tauri-action@v0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/upload-artifact@v3
+      with:
+        name: bundle-${{ matrix.platform }}
+        path: ${{ GITHUB_WORKSPACE }}/src-tauri/target/release/bundle/
+        retention-days: 14
