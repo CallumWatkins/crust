@@ -40,4 +40,4 @@ jobs:
       with:
         name: bundle-${{ matrix.platform }}
         path: ${{ github.workspace }}/src-tauri/target/release/bundle/
-        retention-days: 14
+        retention-days: 1
