@@ -3,7 +3,7 @@ import { ref, Ref, watch } from 'vue';
 import { Connection, use_connections } from '../../composables/connections';
 import PopupModal from '../PopupModal.vue';
 
-const { connections, add_connection, update_connection } = use_connections();
+const { connections, add_connection, update_connection, delete_connection } = use_connections();
 const selected_conn: Ref<Connection | null> = ref(null);
 
 
@@ -13,6 +13,7 @@ const modal_input_ip = ref("");
 const show_alias_modal = ref(false);
 const show_ip_modal = ref(false);
 const show_add_modal = ref(false);
+const show_delete_modal = ref(false);
 
 watch(
   () => modal_input_ip.value,
@@ -47,6 +48,10 @@ function open_add_modal() {
   show_add_modal.value = true;
 }
 
+function open_delete_modal() {
+  show_delete_modal.value = true;
+}
+
 function close_alias_modal(data: any) {
   if(data === true) {
     if(!modal_input_alias.value) {
@@ -77,6 +82,14 @@ function close_add_modal(data: any) {
     selected_conn.value = conn;
   }
   show_add_modal.value = false;
+}
+
+function close_delete_modal(data: any) {
+  if(data === true) {
+    delete_connection(selected_conn.value!);
+    selected_conn.value = null;
+  }
+  show_delete_modal.value = false;
 }
 </script>
 
@@ -126,6 +139,9 @@ function close_add_modal(data: any) {
           </div>
           <button class="button" @click="open_ip_modal">Edit</button>
         </div>
+        <div class="block is-flex is-justify-content-flex-end">
+          <button class="button is-danger" @click="open_delete_modal">Delete</button>
+        </div>
       </div>
     </div>
   </div>
@@ -163,6 +179,16 @@ function close_add_modal(data: any) {
       <p class="block has-text-danger" v-if="validation_error !== null">{{ validation_error }}</p>
       <div class="block buttons">
         <button class="button is-success" :disabled="validation_error !== null" @click="close(true)">Save</button>
+        <button class="button" @click="close(false)">Cancel</button>
+      </div>
+    </div>
+  </PopupModal>
+  <PopupModal :canCloseWithBackground="true" :hasCloseButton="true" :isOpen="show_delete_modal" 
+    :isCard="false" v-slot="{ close }" @closed="close_delete_modal">
+    <div class="box">
+      <p class="block title is-4">Are you sure you want to delete "{{ selected_conn?.alias ?? selected_conn?.ip }}"?</p>
+      <div class="block buttons">
+        <button class="button is-danger" @click="close(true)">Yes</button>
         <button class="button" @click="close(false)">Cancel</button>
       </div>
     </div>
