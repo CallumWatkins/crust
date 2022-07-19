@@ -145,14 +145,16 @@ $roboto_weights: 300, 400, 500, 700, 900;
   border-radius: var(--large-radius);
 }
 
-.btn-color-rusty {
-  &:hover {
-    background-color: var(--button-color-hover);
-    border-color: var(--button-color-hover);
-  }
-
-  &:focus {
-    background-color: var(--button-color-focus);
-    border-color: var(--button-color-focus);
+.btn-color {
+  &-rusty {    
+    &:hover {
+      background-color: var(--button-color-hover);
+      border-color: var(--button-color-hover);
+    }
+  
+    &:focus {
+      background-color: var(--button-color-focus);
+      border-color: var(--button-color-focus);
+    }
   }
 }
