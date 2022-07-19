@@ -43,6 +43,7 @@ function open_ip_modal() {
 }
 
 function open_add_modal() {
+  validation_error.value = validate_ip("");
   modal_input_alias.value = null;
   modal_input_ip.value = "";
   show_add_modal.value = true;
