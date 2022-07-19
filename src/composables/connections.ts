@@ -1,7 +1,7 @@
 import { ref, Ref } from "vue";
 
 export interface Connection {
-  alias?: string,
+  alias: string | null,
   ip: string,
 };
 
@@ -16,15 +16,15 @@ export function use_connections() {
       ip: "3.66.149.79",
     },
     {
-      alias: undefined,
+      alias: null,
       ip: "62.109.37.164",
     },
     {
-      alias: undefined,
+      alias: null,
       ip: "34.61.123.222",
     },
     {
-      alias: undefined,
+      alias: null,
       ip: "215.4.207.51",
     },
   ]);
