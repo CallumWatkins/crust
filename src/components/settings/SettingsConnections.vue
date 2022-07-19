@@ -20,7 +20,7 @@ watch(
   (val) => {
     validation_error.value = validate_ip(val);
   }
-)
+);
 
 // TODO: Check IP format.
 function validate_ip(ip: string) {
