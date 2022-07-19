@@ -3,15 +3,16 @@ import { ref, Ref, watch } from 'vue';
 import { Connection, use_connections } from '../../composables/connections';
 import PopupModal from '../PopupModal.vue';
 
-const { connections, update_connection } = use_connections();
+const { connections, add_connection, update_connection } = use_connections();
 const selected_conn: Ref<Connection | null> = ref(null);
 
 
 const validation_error: Ref<string | null> = ref(null);
-const modal_input_alias = ref("");
+const modal_input_alias: Ref<string | null> = ref(null);
 const modal_input_ip = ref("");
 const show_alias_modal = ref(false);
 const show_ip_modal = ref(false);
+const show_add_modal = ref(false);
 
 watch(
   () => modal_input_ip.value,
@@ -40,20 +41,42 @@ function open_ip_modal() {
   show_ip_modal.value = true;
 }
 
+function open_add_modal() {
+  modal_input_alias.value = null;
+  modal_input_ip.value = "";
+  show_add_modal.value = true;
+}
+
 function close_alias_modal(data: any) {
-  if (data === true) {
-    selected_conn.value!.alias = modal_input_alias.value.trim();
+  if(data === true) {
+    if(!modal_input_alias.value) {
+      selected_conn.value!.alias = null;
+    } else {      
+      selected_conn.value!.alias = modal_input_alias.value.trim();
+    }
+    update_connection(selected_conn.value!);
   }
   show_alias_modal.value = false;
-  update_connection(selected_conn.value!);
 }
 
 function close_ip_modal(data: any) {
-  if (data === true) {
+  if(data === true) {
     selected_conn.value!.ip = modal_input_ip.value.trim();
+    update_connection(selected_conn.value!);
   }
   show_ip_modal.value = false;
-  update_connection(selected_conn.value!);
+}
+
+function close_add_modal(data: any) {
+  if(data === true) {
+    const conn: Connection = {
+      alias: modal_input_alias.value,
+      ip: modal_input_ip.value,
+    };
+    add_connection(conn);
+    selected_conn.value = conn;
+  }
+  show_add_modal.value = false;
 }
 </script>
 
@@ -80,6 +103,11 @@ function close_ip_modal(data: any) {
           </span>
           {{ conn.alias ?? conn.ip }}
         </a>
+        <div class="panel-block is-flex is-justify-content-flex-end">
+          <button class="button" @click="open_add_modal">
+            <font-awesome-icon icon="fa-solid fa-plus" />
+          </button>
+        </div>
       </div>
     </div>
     <div class="column">
@@ -116,6 +144,20 @@ function close_ip_modal(data: any) {
   <PopupModal :canCloseWithBackground="true" :hasCloseButton="true" :isOpen="show_ip_modal" 
     :isCard="false" v-slot="{ close }" @closed="close_ip_modal">
     <div class="box">
+      <p class="block title is-4">IP Address</p>
+      <input class="block input" type="text" v-model="modal_input_ip" />
+      <p class="block has-text-danger" v-if="validation_error !== null">{{ validation_error }}</p>
+      <div class="block buttons">
+        <button class="button is-success" :disabled="validation_error !== null" @click="close(true)">Save</button>
+        <button class="button" @click="close(false)">Cancel</button>
+      </div>
+    </div>
+  </PopupModal>
+  <PopupModal :canCloseWithBackground="true" :hasCloseButton="true" :isOpen="show_add_modal" 
+    :isCard="false" v-slot="{ close }" @closed="close_add_modal">
+    <div class="box">
+      <p class="block title is-4">Alias</p>
+      <input class="block input" type="text" v-model="modal_input_alias" />
       <p class="block title is-4">IP Address</p>
       <input class="block input" type="text" v-model="modal_input_ip" />
       <p class="block has-text-danger" v-if="validation_error !== null">{{ validation_error }}</p>
