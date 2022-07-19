@@ -60,7 +60,7 @@ export function use_connections() {
     } 
   }
   
-  function edit_connection(conn: Connection) {
+  function update_connection(conn: Connection) {
     const index = find_connection(conn);
     if(index) {
       connections.value[index].alias = conn.alias;
@@ -73,6 +73,6 @@ export function use_connections() {
     recent_connections,
     add_connection,
     delete_connection,
-    edit_connection
+    update_connection
   }
 }
