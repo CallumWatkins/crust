@@ -136,6 +136,13 @@ $roboto_weights: 300, 400, 500, 700, 900;
   padding: 0.375rem 1rem;
 }
 
+.panel-block {
+  // background-color: var(--background-color-secondary);
+  &:not(:last-child) {
+    // border-bottom: none;
+  }
+}
+
 .btn-outlined {
   background-color: transparent;
   border-color: var(--border-color);
@@ -157,4 +164,10 @@ $roboto_weights: 300, 400, 500, 700, 900;
       border-color: var(--button-color-focus);
     }
   }
+}
+
+.field-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 }
