@@ -55,14 +55,14 @@ export function use_connections() {
   
   function delete_connection(conn: Connection) {
     const index = find_connection(conn);
-    if(index) {
+    if(index >= 0) {
       connections.value.splice(index, 1);
-    } 
+    }
   }
   
   function update_connection(conn: Connection) {
     const index = find_connection(conn);
-    if(index) {
+    if(index >= 0) {
       connections.value[index].alias = conn.alias;
       connections.value[index].ip = conn.ip;
     }
