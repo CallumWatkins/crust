@@ -167,7 +167,6 @@ let current_tab = ref(Tabs.Join);
 
 #logo {
   width: 270px;
-  margin-bottom: calc(var(--spacing) * 5);
 }
 
 #view-more {
@@ -184,6 +183,5 @@ let current_tab = ref(Tabs.Join);
   display: flex;
   flex-direction: column;
   height: 100%;
-  justify-content: center;
 }
 </style>
