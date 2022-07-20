@@ -6,7 +6,7 @@ import PopupModal from '../PopupModal.vue';
 const { connections, add_connection, update_connection, delete_connection } = use_connections();
 const selected_conn: Ref<Connection | null> = ref(null);
 
-
+const search = ref("");
 const validation_error: Ref<string | null> = ref(null);
 const modal_input_alias: Ref<string | null> = ref(null);
 const modal_input_ip = ref("");
@@ -100,13 +100,13 @@ function close_delete_modal(data: any) {
       <div class="panel is-primary">
         <div class="panel-block">
           <p class="control has-icons-left">
-            <input class="input" type="text" placeholder="Search">
+            <input class="input" type="text" v-model="search" placeholder="Search">
             <span class="icon is-left">
               <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
             </span>
           </p>
         </div>
-        <a v-for="conn in connections"
+        <a v-for="conn in connections.filter(conn => conn.alias?.includes(search) || conn.ip.includes(search))"
           class="panel-block"
           :class="{ 'is-active': selected_conn && selected_conn.ip == conn.ip }"
           @click="selected_conn = conn">
