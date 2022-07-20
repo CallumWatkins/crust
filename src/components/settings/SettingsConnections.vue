@@ -117,31 +117,33 @@ function close_delete_modal(data: any) {
           </span>
           {{ conn.alias ?? conn.ip }}
         </a>
-        <div class="panel-block is-flex is-justify-content-flex-end">
+      </div>
+    </div>
+    <div class="column">
+      <div class="panel">
+        <div class="panel-block is-flex">
           <button class="button" @click="open_add_modal">
             <font-awesome-icon icon="fa-solid fa-plus" />
           </button>
         </div>
-      </div>
-    </div>
-    <div class="column">
-      <div v-if="selected_conn" class="edit-container">
-        <div class="block field-container">
-          <div>
-            <strong>Alias</strong>
-            <p>{{ selected_conn.alias }}</p>
+        <div v-if="selected_conn" class="box">
+          <div class="block field-container">
+            <div>
+              <strong>Alias</strong>
+              <p>{{ selected_conn.alias }}</p>
+            </div>
+            <button class="button" @click="open_alias_modal">Edit</button>
           </div>
-          <button class="button" @click="open_alias_modal">Edit</button>
-        </div>
-        <div class="block field-container">
-          <div>
-            <strong>IP Address</strong>
-            <p>{{ selected_conn.ip }}</p>
+          <div class="block field-container">
+            <div>
+              <strong>IP Address</strong>
+              <p>{{ selected_conn.ip }}</p>
+            </div>
+            <button class="button" @click="open_ip_modal">Edit</button>
           </div>
-          <button class="button" @click="open_ip_modal">Edit</button>
-        </div>
-        <div class="block is-flex is-justify-content-flex-end">
-          <button class="button is-danger" @click="open_delete_modal">Delete</button>
+          <div class="block is-flex is-justify-content-flex-end">
+            <button class="button is-danger" @click="open_delete_modal">Delete</button>
+          </div>
         </div>
       </div>
     </div>
@@ -200,10 +202,5 @@ function close_delete_modal(data: any) {
 .panel {
   height: 100%;
   overflow-y: auto;
-}
-
-.edit-container {
-  display: flex;
-  flex-direction: column;
 }
 </style>
