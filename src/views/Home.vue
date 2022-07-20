@@ -37,6 +37,10 @@ function fill_input(conn: Connection) {
   input_ip.value = conn.ip;
 }
 
+function join() {
+  const ip = input_ip.value;
+  // TODO
+}
 
 enum Tabs {
   Join = "Join",
@@ -63,6 +67,47 @@ let current_tab = ref(Tabs.Join);
               </div>
         </div>
         <div v-else-if="current_tab === Tabs.Join">
+          <div class="field has-addons has-addons-centered mb-5">
+            <div class="control is-expanded">
+              <input id="ip-input" v-model="input_ip" class="input is-large btn-large" type="text" placeholder="IP Address">
+            </div>
+            <div class="control">
+              <div id="dropdown" class="dropdown is-active">
+                <Popper offsetDistance="6" offsetSkid="45" placement="bottom">
+                  <div class="dropdown-trigger">
+                    <button id="dropdown-button" 
+                      class="button is-large btn-outlined btn-color-rusty btn-large" 
+                      aria-haspopup="true" 
+                      aria-controls="dropdown-menu">
+                      <span id="dropdown-icon" class="icon">
+                        <ChevronDown></ChevronDown>
+                      </span>
+                    </button>
+                  </div>
+                  <template #content="{ close }">
+                    <div id="dropdown-menu" role="menu">
+                      <div class="dropdown-content">
+                        <a v-for="conn in saved_connections" 
+                          :key="conn.ip" 
+                          class="dropdown-item" 
+                          role="button" 
+                          @click="fill_input(conn); close();">
+                          {{ conn.alias ?? conn.ip }}
+                        </a>
+                        <hr class="dropdown-divider">
+                        <a id="view-more" class="dropdown-item">View more</a>
+                      </div>
+                    </div>
+                  </template>
+                </Popper>
+              </div>
+            </div>
+          </div>
+          <div class="field is-grouped is-grouped-centered">
+            <div class="control">
+              <button class="button is-large is-rounded is-primary" :disabled="input_ip === ''" @click="join">Join</button>
+            </div>
+          </div>
         </div>
       </Transition>
     </section>
