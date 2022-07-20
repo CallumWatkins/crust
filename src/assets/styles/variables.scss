@@ -44,3 +44,7 @@ $text: var(--text-color);
 $rusty: hsl(31, 38%, 25%);
 $rusty-invert: findColorInvert($rusty);
 $custom-colors: ("rusty": ($rusty, $rusty-invert));
+
+// Bulma Switch
+$switch-focus: none;
+$switch-margin: 5rem;

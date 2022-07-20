@@ -71,6 +71,11 @@ $roboto_weights: 300, 400, 500, 700, 900;
 @import "/node_modules/bulma/sass/layout/section";
 @import "/node_modules/bulma/sass/layout/footer";
 
+$temp_radius-large: $radius-large;
+$radius-large: 24px;
+@import "/node_modules/bulma-switch";
+$radius-large: $temp_radius-large;
+
 :root {
   --border-box-shadow-color: bulmaRgba(var(--primary-color), 0.25);
   --border-box-shadow-size: 0;
