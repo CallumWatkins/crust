@@ -36,56 +36,46 @@ let input_ip = ref("");
 function fill_input(conn: Connection) {
   input_ip.value = conn.ip;
 }
+
+
+enum Tabs {
+  Join = "Join",
+  Host = "Host",
+}
+
+let current_tab = ref(Tabs.Join);
 </script>
 
 <template>
   <div class="container">
-    <img id="logo" alt="Crust logo" src="@/assets/logo.svg" draggable="false" />
-
-    <div class="field has-addons has-addons-centered">
-      <p class="control">
-        <input id="ip-input" v-model="input_ip" class="input is-large btn-large" type="text" placeholder="IP Address">
-      </p>
-      
-      <p class="control">
-        <div id="dropdown" class="dropdown is-active">
-          <Popper offsetDistance="6" offsetSkid="45" placement="bottom">
-            <div class="dropdown-trigger">
-              <button id="dropdown-button" 
-                class="button is-large btn-outlined btn-color-rusty btn-large" 
-                aria-haspopup="true" 
-                aria-controls="dropdown-menu">
-                <span id="dropdown-icon" class="icon">
-                  <ChevronDown></ChevronDown>
-                </span>
-              </button>
-            </div>
-
-            <template #content="{ close }">
-              <div id="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                  <a v-for="conn in saved_connections" 
-                    :key="conn.ip" 
-                    class="dropdown-item" 
-                    role="button" 
-                    @click="fill_input(conn); close();">
-                    {{ conn.alias ?? conn.ip }}
-                  </a>
-
-                  <hr class="dropdown-divider">
-
-                  <a id="view-more" class="dropdown-item">View more</a>
+    <section class="section mt-6">
+      <img id="logo" alt="Crust logo" src="@/assets/logo.svg" draggable="false" />
+    </section>
+    <section class="tabs-container">
+      <div class="tabs is-centered is-large is-fullwidth">
+        <ul>
+          <li v-for="tab in Tabs" :class="{ 'is-active': current_tab === tab }"><a @click="current_tab = tab">{{ tab }}</a></li>
+        </ul>
+      </div>
+      <Transition mode="out-in" name="quick-fade">
+        <div v-if="current_tab === Tabs.Host">
                 </div>
               </div>
-            </template>
-          </Popper>
         </div>
-      </p>
-    </div>
+        <div v-else-if="current_tab === Tabs.Join">
+        </div>
+      </Transition>
+    </section>
   </div>
 </template>
 
 <style scoped lang="scss">
+.tabs-container {
+  width: 100%;
+  max-width: 400px;
+
+}
+
 #logo {
   width: 270px;
   margin-bottom: calc(var(--spacing) * 5);
