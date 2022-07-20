@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import ChevronDown from '@/components/ChevronDown.vue';
+import InlineHelpTip from '../components/InlineHelpTip.vue';
 
 interface Connection {
   alias?: string;
@@ -78,9 +79,7 @@ let current_tab = ref(Tabs.Join);
                   </div>
                 </div>
                 <div class="level-item mr-3">
-                  <Popper content="Allow uninvited participants to join this session" placement="top" :hover="true" :interactive="false">
-                    <FontAwesomeIcon icon="fa-solid fa-circle-question" />
-                  </Popper>
+                  <InlineHelpTip content="Allow uninvited participants to join this session" />
                 </div>
               </div>
               <div class="level-right">
