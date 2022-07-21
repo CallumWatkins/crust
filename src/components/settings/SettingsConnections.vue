@@ -43,7 +43,7 @@ function open_ip_modal() {
 }
 
 function open_add_modal() {
-  validation_error.value = validate_ip("");
+  validation_error.value = null;
   modal_input_alias.value = null;
   modal_input_ip.value = "";
   show_add_modal.value = true;
@@ -182,7 +182,7 @@ function close_delete_modal(data: any) {
       <input class="block input" type="text" v-model="modal_input_alias" />
       <p class="block has-text-danger" v-if="validation_error !== null">{{ validation_error }}</p>
       <div class="block buttons">
-        <button class="button is-success" :disabled="validation_error !== null" @click="close(true)">Save</button>
+        <button class="button is-success" :disabled="validation_error !== null || modal_input_ip?.length === 0" @click="close(true)">Save</button>
         <button class="button" @click="close(false)">Cancel</button>
       </div>
     </div>
@@ -194,7 +194,7 @@ function close_delete_modal(data: any) {
       <input class="block input" type="text" v-model="modal_input_ip" />
       <p class="block has-text-danger" v-if="validation_error !== null">{{ validation_error }}</p>
       <div class="block buttons">
-        <button class="button is-success" :disabled="validation_error !== null" @click="close(true)">Save</button>
+        <button class="button is-success" :disabled="validation_error !== null || modal_input_ip?.length === 0" @click="close(true)">Save</button>
         <button class="button" @click="close(false)">Cancel</button>
       </div>
     </div>
@@ -208,7 +208,7 @@ function close_delete_modal(data: any) {
       <input class="block input" type="text" v-model="modal_input_ip" />
       <p class="block has-text-danger" v-if="validation_error !== null">{{ validation_error }}</p>
       <div class="block buttons">
-        <button class="button is-success" :disabled="validation_error !== null" @click="close(true)">Save</button>
+        <button class="button is-success" :disabled="validation_error !== null || modal_input_ip?.length === 0" @click="close(true)">Save</button>
         <button class="button" @click="close(false)">Cancel</button>
       </div>
     </div>
