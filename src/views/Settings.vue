@@ -5,6 +5,7 @@ import SettingsAbout from '../components/settings/SettingsAbout.vue';
 import SettingsUpdate from '../components/settings/SettingsUpdate.vue';
 import SettingsProfile from '../components/settings/SettingsProfile.vue';
 import SettingsAudio from '../components/settings/SettingsAudio.vue';
+import SettingsConnections from '../components/settings/SettingsConnections.vue';
 
 interface MenuElement {
   name: string;
@@ -27,6 +28,10 @@ const menu_elements: MenuElement[] = [
       {
         name: "Audio",
         component: SettingsAudio
+      },
+      {
+        name: "Connections",
+        component: SettingsConnections
       },
     ]
   },
