@@ -102,14 +102,14 @@ function close_delete_modal(data: any) {
           <p class="control has-icons-left pr-3">
             <input class="input" type="text" v-model="search" placeholder="Search">
             <span class="icon is-left">
-              <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+              <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" />
             </span>
           </p>
           <div class="dropdown is-active">
             <Popper offsetDistance="6" offsetSkid="-100" placement="bottom">
               <div class="dropdown-trigger">
                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                  <font-awesome-icon icon="fa-solid fa-sort" />
+                  <FontAwesomeIcon icon="fa-solid fa-sort" />
                 </button>
               </div>
               <template #content="{ close }">
@@ -137,7 +137,7 @@ function close_delete_modal(data: any) {
             :class="{ 'is-active': selected_conn && selected_conn.ip == conn.ip }"
             @click="selected_conn = conn">
             <span class="panel-icon">
-              <font-awesome-icon 
+              <FontAwesomeIcon 
                 v-if="selected_conn && selected_conn.ip == conn.ip" 
                 icon="fa-solid fa-circle" size="sm" />
             </span>
@@ -150,7 +150,7 @@ function close_delete_modal(data: any) {
       <div class="panel">
         <div class="panel-block">
           <button class="button" @click="open_add_modal">
-            <font-awesome-icon icon="fa-solid fa-plus" />
+            <FontAwesomeIcon icon="fa-solid fa-plus" />
           </button>
         </div>
         <div v-if="selected_conn">
