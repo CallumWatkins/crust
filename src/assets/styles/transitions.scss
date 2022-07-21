@@ -21,3 +21,17 @@
 .slide-leave-to {
   transform: translateX(-100%)
 }
+
+// Quick Fade
+.quick-fade-enter-active {
+  transition: all 0.1s ease-out;
+}
+
+.quick-fade-leave-active {
+  transition: all 0.1s ease-in;
+}
+
+.quick-fade-enter-from,
+.quick-fade-leave-to {
+  opacity: 0;
+}
