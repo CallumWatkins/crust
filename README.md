@@ -1,16 +1,36 @@
-# Vue 3 + TypeScript + Vite
+<div align="center">
+<img height=150 src="src-tauri/icons/icon.png" />
+</div>
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+<p align="center"><span><b>Crust</b>, a lightweight chat and screen sharing application.</span></p>
 
-## Recommended IDE Setup
+---
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+# What is Crust?
+Crust is a peer-to-peer voice and text chat application with high-resolution screen sharing support.
 
-## Type Support For `.vue` Imports in TS
+This app was made to avoid the downsides of a server-based subscription model, such as Discord, which imposes arbitrary restrictions to the quality of screen sharing. Our app uses a peer-to-peer model to provide unrestricted control to the user.
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's Take Over mode by following these steps:
+Your data is encrypted end-to-end and does not travel through any servers. You're in control of your own data; we cannot and do not examine, censor, nor remotely store your communications.
 
-1. Run `Extensions: Show Built-in Extensions` from VS Code's command palette, look for `TypeScript and JavaScript Language Features`, then right click and select `Disable (Workspace)`. By default, Take Over mode will enable itself if the default TypeScript extension is disabled.
-2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
+# Installation
+WIP
 
-You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+# Contributing
+## Getting Started
+1. Follow the [Tauri prerequisites guide](https://tauri.app/v1/guides/getting-started/prerequisites)
+2. Fork this project
+3. Clone the project to your local system — `git clone https://github.com/<your_github_username>/crust.git`
+4. Change to the project root directory — `cd crust`
+5. Install all dependencies using npm — `npm install`
+6. Run the project in development mode — `npm run tauri dev`
+
+## Scripts
+- Run the project in development mode — `npm run tauri dev`
+- Build the project for release — `npm run tauri build`
+
+# Features
+WIP
+
+# License
+Distributed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for more information.
