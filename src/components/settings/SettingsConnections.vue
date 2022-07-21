@@ -105,6 +105,30 @@ function close_delete_modal(data: any) {
               <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
             </span>
           </p>
+          <div class="dropdown is-active">
+            <Popper offsetDistance="6" offsetSkid="-100" placement="bottom">
+              <div class="dropdown-trigger">
+                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                  <font-awesome-icon icon="fa-solid fa-sort" />
+                </button>
+              </div>
+              <template #content="{ close }">
+                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                  <div class="dropdown-content">
+                    <a href="#" class="dropdown-item">
+                      Dropdown item
+                    </a>
+                    <a class="dropdown-item">
+                      Other dropdown item
+                    </a>
+                    <a href="#" class="dropdown-item is-active">
+                      Active dropdown item
+                    </a>
+                  </div>
+                </div>
+              </template>
+            </Popper>
+          </div>
         </div>
         <a v-for="conn in connections.filter(conn => conn.alias?.includes(search) || conn.ip.includes(search))"
           class="panel-block"
@@ -121,27 +145,27 @@ function close_delete_modal(data: any) {
     </div>
     <div class="column">
       <div class="panel">
-        <div class="panel-block is-flex">
+        <div class="panel-block">
           <button class="button" @click="open_add_modal">
             <font-awesome-icon icon="fa-solid fa-plus" />
           </button>
         </div>
-        <div v-if="selected_conn" class="box">
-          <div class="block field-container">
+        <div v-if="selected_conn" class="panel">
+          <div class="panel-block field-container">
             <div>
               <strong>Alias</strong>
               <p>{{ selected_conn.alias }}</p>
             </div>
             <button class="button" @click="open_alias_modal">Edit</button>
           </div>
-          <div class="block field-container">
+          <div class="panel-block field-container">
             <div>
               <strong>IP Address</strong>
               <p>{{ selected_conn.ip }}</p>
             </div>
             <button class="button" @click="open_ip_modal">Edit</button>
           </div>
-          <div class="block is-flex is-justify-content-flex-end">
+          <div class="panel-block is-flex is-justify-content-flex-end">
             <button class="button is-danger" @click="open_delete_modal">Delete</button>
           </div>
         </div>
@@ -202,5 +226,14 @@ function close_delete_modal(data: any) {
 .panel {
   height: 100%;
   overflow-y: auto;
+  overflow-x: visible;
+
+  .panel {
+    height: auto;
+  }
+}
+
+.columns {
+  height: 100%;
 }
 </style>
