@@ -83,7 +83,7 @@
       }
     ],
     "systemTray": {
-      "iconPath": "icons/icon.png",
+      "iconPath": "icons/Square107x107Logo.png",
       "iconAsTemplate": true
     }
   }
