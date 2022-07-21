@@ -97,9 +97,9 @@ function close_delete_modal(data: any) {
 <template>
   <div class="columns">
     <div class="column">
-      <div class="panel is-primary">
+      <div class="panel is-primary is-flex is-flex-direction-column is-radiusless">
         <div class="panel-block">
-          <p class="control has-icons-left">
+          <p class="control has-icons-left pr-3">
             <input class="input" type="text" v-model="search" placeholder="Search">
             <span class="icon is-left">
               <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
@@ -130,17 +130,20 @@ function close_delete_modal(data: any) {
             </Popper>
           </div>
         </div>
-        <a v-for="conn in connections.filter(conn => conn.alias?.includes(search) || conn.ip.includes(search))"
-          class="panel-block"
-          :class="{ 'is-active': selected_conn && selected_conn.ip == conn.ip }"
-          @click="selected_conn = conn">
-          <span class="panel-icon">
-            <font-awesome-icon 
-              v-if="selected_conn && selected_conn.ip == conn.ip" 
-              icon="fa-solid fa-circle" size="sm" />
-          </span>
-          {{ conn.alias ?? conn.ip }}
-        </a>
+        <div class="connections-list">
+          <a v-for="conn in connections.filter(conn => conn.alias?.includes(search) || conn.ip.includes(search))"
+            :key="conn.ip"
+            class="panel-block"
+            :class="{ 'is-active': selected_conn && selected_conn.ip == conn.ip }"
+            @click="selected_conn = conn">
+            <span class="panel-icon">
+              <font-awesome-icon 
+                v-if="selected_conn && selected_conn.ip == conn.ip" 
+                icon="fa-solid fa-circle" size="sm" />
+            </span>
+            {{ conn.alias ?? conn.ip }}
+          </a>
+        </div>
       </div>
     </div>
     <div class="column">
@@ -150,11 +153,11 @@ function close_delete_modal(data: any) {
             <font-awesome-icon icon="fa-solid fa-plus" />
           </button>
         </div>
-        <div v-if="selected_conn" class="panel">
+        <div v-if="selected_conn">
           <div class="panel-block field-container">
             <div>
               <strong>Alias</strong>
-              <p>{{ selected_conn.alias }}</p>
+              <p>{{ selected_conn.alias ?? '-' }}</p>
             </div>
             <button class="button" @click="open_alias_modal">Edit</button>
           </div>
@@ -225,11 +228,10 @@ function close_delete_modal(data: any) {
 <style scoped lang="scss">
 .panel {
   height: 100%;
-  overflow-y: auto;
   overflow-x: visible;
 
-  .panel {
-    height: auto;
+  .connections-list {
+    overflow-y: auto;
   }
 }
 
