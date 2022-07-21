@@ -99,10 +99,4 @@ function close_text_modal(data: any) {
   flex-direction: column;
   max-width: 450px;
 }
-
-.field-container {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-}
 </style>

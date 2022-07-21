@@ -51,8 +51,8 @@ $roboto_weights: 300, 400, 500, 700, 900;
 // $navbar-breakpoint: $tablet;
 // @import "/node_modules/bulma/sass/components/navbar";
 // @import "/node_modules/bulma/sass/components/pagination";
-// @import "/node_modules/bulma/sass/components/panel";
 @import "/node_modules/bulma/sass/components/tabs";
+@import "/node_modules/bulma/sass/components/panel";
 
 @import "/node_modules/bulma/sass/grid/columns";
 // @import "/node_modules/bulma/sass/grid/tiles";
@@ -60,7 +60,7 @@ $roboto_weights: 300, 400, 500, 700, 900;
 @import "/node_modules/bulma/sass/helpers/color";
 @import "/node_modules/bulma/sass/helpers/flexbox";
 // @import "/node_modules/bulma/sass/helpers/float";
-// @import "/node_modules/bulma/sass/helpers/other";
+@import "/node_modules/bulma/sass/helpers/other";
 // @import "/node_modules/bulma/sass/helpers/overflow";
 @import "/node_modules/bulma/sass/helpers/position";
 @import "/node_modules/bulma/sass/helpers/spacing";
@@ -86,18 +86,19 @@ $radius-large: $temp_radius-large;
   --titlebar-height: 50px;
 
   #root.dark {
-    --background-color-secondary: rgb(51, 51, 51);
     --background-color-darker: rgb(45, 45, 45);
+    --background-color-secondary: rgb(51, 51, 51);
     --background-color: rgb(38, 38, 38);
+    --border-color-dark: rgb(20, 20, 20);
     --border-color-hover: hsl(0, 0%, 50%);
     --border-color: rgb(101, 100, 100);
-    --border-color-dark: rgb(20, 20, 20);
     --button-color-focus: hsl(31, 38%, 40%);
     --button-color-hover: hsl(31, 38%, 25%);
     --primary-color: rgb(173, 92, 4);
+    --text-color-dark: rgb(250, 250, 250);
     --text-color-light: rgb(150, 150, 150);
     --text-color: rgb(200, 200, 200);
-    --text-color-dark: rgb(250, 250, 250);
+    --text-color-danger: rgb(230, 52, 52);
   }
 
   #root.light {
@@ -120,6 +121,10 @@ $radius-large: $temp_radius-large;
 
 .is-selectable {
   user-select: text;
+}
+
+.has-text-danger {
+  color: var(--text-color-danger) !important;
 }
 
 .buttons {
@@ -150,14 +155,22 @@ $radius-large: $temp_radius-large;
   border-radius: var(--large-radius);
 }
 
-.btn-color-rusty {
-  &:hover {
-    background-color: var(--button-color-hover);
-    border-color: var(--button-color-hover);
+.btn-color {
+  &-rusty {    
+    &:hover {
+      background-color: var(--button-color-hover);
+      border-color: var(--button-color-hover);
+    }
+  
+    &:focus {
+      background-color: var(--button-color-focus);
+      border-color: var(--button-color-focus);
+    }
   }
+}
 
-  &:focus {
-    background-color: var(--button-color-focus);
-    border-color: var(--button-color-focus);
-  }
+.field-container {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
 }

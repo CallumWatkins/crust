@@ -2,35 +2,9 @@
 import { ref } from 'vue';
 import ChevronDown from '@/components/ChevronDown.vue';
 import InlineHelpTip from '../components/InlineHelpTip.vue';
+import { Connection, use_connections } from '../composables/connections';
 
-interface Connection {
-  alias?: string;
-  ip: string;
-}
-
-//TODO: Fetch actual data
-const saved_connections: Connection[] = [
-  {
-    alias: "John Doe",
-    ip: "206.15.168.235",
-  },
-  {
-    alias: "James Smith",
-    ip: "3.66.149.79",
-  },
-  {
-    alias: undefined,
-    ip: "62.109.37.164",
-  },
-  {
-    alias: undefined,
-    ip: "34.61.123.222",
-  },
-  {
-    alias: undefined,
-    ip: "215.4.207.51",
-  },
-];
+const { recent_connections } = use_connections();
 
 let input_ip = ref("");
 let input_public = ref(false);
@@ -119,7 +93,7 @@ let current_tab = ref(Tabs.Join);
                   <template #content="{ close }">
                     <div id="dropdown-menu" role="menu">
                       <div class="dropdown-content">
-                        <a v-for="conn in saved_connections" 
+                        <a v-for="conn in recent_connections" 
                           :key="conn.ip" 
                           class="dropdown-item" 
                           role="button" 
