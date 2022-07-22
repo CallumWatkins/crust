@@ -81,31 +81,11 @@ export function use_connections() {
     }
   }
 
-  function sort_connections_alphabetically(ascending: boolean = true) {
-    const comparison_result = ascending ? -1 : 1;
-    connections.value.sort((a: Connection, b: Connection) => {
-      if(a.alias && b.alias) {
-        if(a.alias < b.alias) {
-          return comparison_result;
-        }
-        if(a.alias > b.alias) {
-          return -comparison_result;
-        }
-      } else if(a.alias) {
-        return -1;
-      } else if(b.alias) {
-        return 1;
-      }
-      return 0;
-    });
-  }
-
   return {
     connections, 
     recent_connections,
     add_connection,
     delete_connection,
     update_connection,
-    sort_connections_alphabetically
   }
 }
