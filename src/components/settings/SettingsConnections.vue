@@ -138,7 +138,10 @@ function close_delete_modal(data: any) {
               <template #content="{ close }">
                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                   <div class="dropdown-content">
-                    <DropDownList :list="sorters" @changed="sorter => { sorter.function(); close(); }"></DropDownList>
+                    <DropDownList :list="sorters" 
+                      :get_key="(sorter: any) => sorter.name"
+                      @changed="sorter => { sorter.function(); close(); }">
+                    </DropDownList>
                   </div>
                 </div>
               </template>

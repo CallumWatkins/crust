@@ -34,7 +34,8 @@ function set_output_device(device: string) {
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
               <DropDownList :list="input_devices" 
-                :default_item="current_input_device" 
+                :default_item="current_input_device"
+                :get_key="(device: string) => device"
                 @changed="device => { set_input_device(device); close(); }">
               </DropDownList>
             </div>
@@ -57,7 +58,8 @@ function set_output_device(device: string) {
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
               <DropDownList :list="output_devices" 
-                :default_item="current_output_device" 
+                :default_item="current_output_device"
+                :get_key="(device: string) => device" 
                 @changed="device => { set_output_device(device); close(); }">
               </DropDownList>
             </div>
