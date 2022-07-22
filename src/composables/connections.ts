@@ -3,6 +3,7 @@ import { ref, Ref } from "vue";
 export interface Connection {
   alias: string | null,
   ip: string,
+  last_connected: Date | null,
 };
 
 export function use_connections() {
@@ -10,26 +11,32 @@ export function use_connections() {
     {
       alias: "John Doe",
       ip: "206.15.168.235",
+      last_connected: new Date("2022-01-16"),
     },
     {
       alias: "James Smith",
       ip: "3.66.149.79",
+      last_connected: new Date("2022-03-22"),
     },
     {
       alias: null,
       ip: "62.109.37.164",
+      last_connected: null,
     },
     {
       alias: null,
       ip: "34.61.123.222",
+      last_connected: null,
     },
     {
       alias: null,
       ip: "215.4.207.51",
+      last_connected: new Date("2022-04-01"),
     },
     {
       alias: "Charles Smith",
       ip: "39.6.121.89",
+      last_connected: new Date("2022-05-12"),
     },
   ]);
   
@@ -37,10 +44,12 @@ export function use_connections() {
     {
       alias: "Raveena Adkins",
       ip: "175.157.72.251",
+      last_connected: null,
     },
     {
       alias: "Skye Willis",
       ip: "11.77.205.157",
+      last_connected: null,
     },
     connections.value[0],
     connections.value[2],
