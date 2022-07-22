@@ -123,8 +123,11 @@ function close_delete_modal(data: any) {
                     <a class="dropdown-item" @click="() => { connections.sort(sort_by_property<Connection>('alias', false)); close() }">
                       z-A
                     </a>
+                    <a class="dropdown-item" @click="() => { connections.sort(sort_by_property<Connection>('last_connected', false)); close() }">
+                      Most Recent
+                    </a>
                     <a class="dropdown-item" @click="() => { connections.sort(sort_by_property<Connection>('last_connected')); close() }">
-                      Recent
+                      Least Recent
                     </a>
                   </div>
                 </div>
