@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import DropDownList from '../DropDownList.vue';
 
 const input_devices = ["Default", "Device 1", "Device 2", "Device 3"];
 const current_input_device = ref("Device 1");
@@ -32,15 +33,11 @@ function set_output_device(device: string) {
         <template #content="{ close }">
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a v-for="device in input_devices" 
-                class="dropdown-item" 
-                :class="{ 'has-text-weight-bold': device == current_input_device }"
-                @click="set_input_device(device); close()">
-                <span>{{ device }}</span>
-                <span class="icon">
-                  <FontAwesomeIcon v-if="device == current_input_device" icon="fa-solid fa-circle-check" size="lg" />
-                </span>
-              </a>
+              <DropDownList :list="input_devices" 
+                :default_item="current_input_device"
+                :get_key="(device: string) => device"
+                @changed="device => { set_input_device(device); close(); }">
+              </DropDownList>
             </div>
           </div>
         </template>
@@ -60,15 +57,11 @@ function set_output_device(device: string) {
         <template #content="{ close }">
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a v-for="device in output_devices" 
-                class="dropdown-item" 
-                :class="{ 'has-text-weight-bold': device == current_output_device }"
-                @click="set_output_device(device); close()">
-                {{ device }}
-                <span class="icon">
-                  <FontAwesomeIcon v-if="device == current_output_device" icon="fa-solid fa-circle-check" size="lg" />
-                </span>
-              </a>
+              <DropDownList :list="output_devices" 
+                :default_item="current_output_device"
+                :get_key="(device: string) => device" 
+                @changed="device => { set_output_device(device); close(); }">
+              </DropDownList>
             </div>
           </div>
         </template>
@@ -93,7 +86,7 @@ function set_output_device(device: string) {
   }
 }
 
-.dropdown-item {
+:deep(.dropdown-item) {
   align-items: center;
   display: flex;
   justify-content: space-between;
@@ -103,11 +96,5 @@ function set_output_device(device: string) {
 
 .dropdown-content {
   width: 300px;
-}
-
-.icon {
-  margin-left: var(--spacing);
-  min-height: 1.25em;
-  min-width: 1.25em;
 }
 </style>
