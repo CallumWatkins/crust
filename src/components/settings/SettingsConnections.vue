@@ -3,7 +3,7 @@ import { ref, Ref, watch } from 'vue';
 import { Connection, use_connections } from '../../composables/connections';
 import PopupModal from '../PopupModal.vue';
 
-const { connections, add_connection, update_connection, delete_connection } = use_connections();
+const { connections, add_connection, update_connection, delete_connection, sort_connections_alphabetically } = use_connections();
 const selected_conn: Ref<Connection | null> = ref(null);
 
 const search = ref("");
@@ -115,14 +115,14 @@ function close_delete_modal(data: any) {
               <template #content="{ close }">
                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                   <div class="dropdown-content">
-                    <a href="#" class="dropdown-item">
-                      Dropdown item
+                    <a class="dropdown-item" @click="sort_connections_alphabetically(); close()">
+                      A-z
                     </a>
-                    <a class="dropdown-item">
-                      Other dropdown item
+                    <a class="dropdown-item" @click="sort_connections_alphabetically(false); close()">
+                      z-A
                     </a>
-                    <a href="#" class="dropdown-item is-active">
-                      Active dropdown item
+                    <a class="dropdown-item" @click="close()">
+                      Recent
                     </a>
                   </div>
                 </div>
