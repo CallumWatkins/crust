@@ -16,7 +16,7 @@ const selected_item: Ref<any | null> = ref(null);
     class="dropdown-item is-flex is-justify-content-space-between" 
     :class="{ 'has-text-weight-bold': item == selected_item }"
     @click="selected_item = item; emit('changed', selected_item)">
-    <span>{{ list as string[] ? item : item.name }}</span>
+    <span>{{ typeof item === 'string' ? item : item.name }}</span>
     <span class="circle-icon">
       <FontAwesomeIcon v-if="item == selected_item" icon="fa-solid fa-circle-check" size="lg" />
     </span>
