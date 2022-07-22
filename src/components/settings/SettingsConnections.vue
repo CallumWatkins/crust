@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, Ref, watch } from 'vue';
 import { Connection, use_connections } from '../../composables/connections';
+import { sort_by_property } from '../../helpers/sort';
 import PopupModal from '../PopupModal.vue';
 
-const { connections, add_connection, update_connection, delete_connection, sort_connections_alphabetically } = use_connections();
+const { connections, add_connection, update_connection, delete_connection } = use_connections();
 const selected_conn: Ref<Connection | null> = ref(null);
 
 const search = ref("");
@@ -78,6 +79,7 @@ function close_add_modal(data: any) {
     const conn: Connection = {
       alias: modal_input_alias.value,
       ip: modal_input_ip.value,
+      last_connected: null,
     };
     add_connection(conn);
     selected_conn.value = conn;
@@ -115,13 +117,13 @@ function close_delete_modal(data: any) {
               <template #content="{ close }">
                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                   <div class="dropdown-content">
-                    <a class="dropdown-item" @click="sort_connections_alphabetically(); close()">
+                    <a class="dropdown-item" @click="() => { connections.sort(sort_by_property<Connection>('alias')); close() }">
                       A-z
                     </a>
-                    <a class="dropdown-item" @click="sort_connections_alphabetically(false); close()">
+                    <a class="dropdown-item" @click="() => { connections.sort(sort_by_property<Connection>('alias', false)); close() }">
                       z-A
                     </a>
-                    <a class="dropdown-item" @click="close()">
+                    <a class="dropdown-item" @click="() => { connections.sort(sort_by_property<Connection>('last_connected')); close() }">
                       Recent
                     </a>
                   </div>
