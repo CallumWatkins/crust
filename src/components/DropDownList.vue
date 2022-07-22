@@ -11,7 +11,6 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   default_item: null,
-  get_key: (item: any) => item['key'],
   get_value: null,
 });
 
