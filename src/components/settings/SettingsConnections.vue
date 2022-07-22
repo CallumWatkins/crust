@@ -3,9 +3,30 @@ import { ref, Ref, watch } from 'vue';
 import { Connection, use_connections } from '../../composables/connections';
 import { sort_by_property } from '../../helpers/sort';
 import PopupModal from '../PopupModal.vue';
+import DropDownList from '../DropDownList.vue';
 
 const { connections, add_connection, update_connection, delete_connection } = use_connections();
 const selected_conn: Ref<Connection | null> = ref(null);
+
+const sorters = ref([
+  {
+    name: "A-Z",
+    function: () => connections.value.sort(sort_by_property<Connection>('alias')),
+  },
+  {
+    name: "Z-A",
+    function: () => connections.value.sort(sort_by_property<Connection>('alias', false)),
+  },
+  {
+    name: "Most Recent",
+    function: () => connections.value.sort(sort_by_property<Connection>('last_connected', false)),
+  },
+  {
+    name: "Least Recent",
+    function: () => connections.value.sort(sort_by_property<Connection>('last_connected')),
+  },
+]);
+const selected_sorter: Ref<object | null> = ref(null);
 
 const search = ref("");
 const validation_error: Ref<string | null> = ref(null);
@@ -117,18 +138,7 @@ function close_delete_modal(data: any) {
               <template #content="{ close }">
                 <div class="dropdown-menu" id="dropdown-menu" role="menu">
                   <div class="dropdown-content">
-                    <a class="dropdown-item" @click="() => { connections.sort(sort_by_property<Connection>('alias')); close() }">
-                      A-z
-                    </a>
-                    <a class="dropdown-item" @click="() => { connections.sort(sort_by_property<Connection>('alias', false)); close() }">
-                      z-A
-                    </a>
-                    <a class="dropdown-item" @click="() => { connections.sort(sort_by_property<Connection>('last_connected', false)); close() }">
-                      Most Recent
-                    </a>
-                    <a class="dropdown-item" @click="() => { connections.sort(sort_by_property<Connection>('last_connected')); close() }">
-                      Least Recent
-                    </a>
+                    <DropDownList :list="sorters" @changed="item => { item.function(); close(); }"></DropDownList>
                   </div>
                 </div>
               </template>
