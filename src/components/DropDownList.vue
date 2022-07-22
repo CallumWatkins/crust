@@ -3,12 +3,16 @@ import { ref, Ref } from 'vue';
 
 interface Props {
   list: Array<any>,
+  default_item: any,
 }
+
+const props = withDefaults(defineProps<Props>(), {
+  default_item: null
+});
 
 const emit = defineEmits(['changed']);
 
-const props = defineProps<Props>();
-const selected_item: Ref<any | null> = ref(null);
+const selected_item = ref(props.default_item);
 </script>
 
 <template>
