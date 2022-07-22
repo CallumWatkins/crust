@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { propsToAttrMap } from '@vue/shared';
-import { ref, Ref } from 'vue';
+import { ref } from 'vue';
 
 interface Props {
   list: Array<any>,
