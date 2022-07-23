@@ -15,7 +15,13 @@
       "window": { "all": true },
       "os": { "all": true },
       "process": { "all": true },
-      "clipboard": { "writeText": true }
+      "clipboard": { "writeText": true },
+      "fs": {
+        "scope": ["$APP", "$APP/*"],
+        "createDir": true,
+        "readFile": true,
+        "writeFile": true
+      }
     },
     "bundle": {
       "active": true,
@@ -32,7 +38,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "app.crustchat",
+      "identifier": "Crust",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
