@@ -9,8 +9,10 @@
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "tauri": "tauri",
-    "lint": "npx eslint \"{src/**/,}*.{js,ts,json,vue}\"",
-    "lint-fix": "npx eslint \"{src/**/,}*.{js,ts,json,vue}\" --fix"
+    "eslint": "npx eslint \"{src/**/,}*.{js,ts,json,vue}\"",
+    "eslint-fix": "npx eslint \"{src/**/,}*.{js,ts,json,vue}\" --fix",
+    "stylelint": "npx stylelint \"{src/**/,}*.{vue,scss,css}\"",
+    "stylelint-fix": "npx stylelint \"{src/**/,}*.{vue,scss,css}\" --fix"
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.7",
