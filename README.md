@@ -34,5 +34,3 @@ WIP
 
 # License
 Distributed under the GNU General Public License v3.0. See [LICENSE](LICENSE) for more information.
-
-TEST
