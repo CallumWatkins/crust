@@ -236,10 +236,7 @@ function close_delete_modal(data: any) {
   </div>
   <PopupModal
     v-slot="{ close }"
-    :can-close-with-background="true"
-    :has-close-button="true"
-    :is-open="show_alias_modal"
-    :is-card="false"
+    :is_open="show_alias_modal"
     @closed="close_alias_modal"
   >
     <div class="box">
@@ -277,10 +274,7 @@ function close_delete_modal(data: any) {
   </PopupModal>
   <PopupModal
     v-slot="{ close }"
-    :can-close-with-background="true"
-    :has-close-button="true"
-    :is-open="show_ip_modal"
-    :is-card="false"
+    :is_open="show_ip_modal"
     @closed="close_ip_modal"
   >
     <div class="box">
@@ -318,10 +312,7 @@ function close_delete_modal(data: any) {
   </PopupModal>
   <PopupModal
     v-slot="{ close }"
-    :can-close-with-background="true"
-    :has-close-button="true"
-    :is-open="show_add_modal"
-    :is-card="false"
+    :is_open="show_add_modal"
     @closed="close_add_modal"
   >
     <div class="box">
@@ -368,10 +359,7 @@ function close_delete_modal(data: any) {
   </PopupModal>
   <PopupModal
     v-slot="{ close }"
-    :can-close-with-background="true"
-    :has-close-button="true"
-    :is-open="show_delete_modal"
-    :is-card="false"
+    :is_open="show_delete_modal"
     @closed="close_delete_modal"
   >
     <div class="box">

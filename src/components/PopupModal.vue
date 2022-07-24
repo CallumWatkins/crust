@@ -11,9 +11,9 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   can_close_with_background: true,
-  hasCloseButton: true,
-  isOpen: true,
-  isCard: false,
+  has_close_button: true,
+  is_open: true,
+  is_card: false,
   card_title: undefined,
 });
 
@@ -22,7 +22,7 @@ const emit = defineEmits(['closed']);
 const is_active = ref(false);
 
 watch(
-  () => props.isOpen,
+  () => props.is_open,
   (newVal) => { is_active.value = newVal; },
   { immediate: true },
 );

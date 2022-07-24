@@ -83,10 +83,7 @@ function close_text_modal(data: any) {
   <PopupModal
     id="text-modal"
     v-slot="{ close }"
-    :can-close-with-background="true"
-    :has-close-button="true"
-    :is-open="show_text_modal"
-    :is-card="false"
+    :is_open="show_text_modal"
     @closed="close_text_modal"
   >
     <div class="box">
