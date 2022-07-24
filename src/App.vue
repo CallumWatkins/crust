@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { invoke } from '@tauri-apps/api/tauri'
-import WindowTitlebar from '@/components/WindowTitlebar.vue';
-import Settings from './views/Settings.vue';
+import { invoke } from '@tauri-apps/api/tauri';
+import WindowTitlebar from './components/WindowTitlebar.vue';
+import SettingsMenu from './components/SettingsMenu.vue';
 
 enum Theme {
-  Light = "LIGHT",
-  Dark = "DARK",
+  Light = 'light',
+  Dark = 'dark',
 }
 
 const theme = ref(Theme.Dark);
@@ -17,7 +17,7 @@ let is_first_resolve = true;
 async function first_resolve() {
   if (is_first_resolve) {
     is_first_resolve = false;
-    await new Promise(r => setTimeout(r, 500));
+    await new Promise((r) => { setTimeout(r, 500); });
     invoke('close_splashscreen');
   }
 }
@@ -25,20 +25,33 @@ async function first_resolve() {
 
 <template>
   <Suspense @resolve="first_resolve">
-    <div id="root" class="is-flex is-flex-direction-column" :class="theme.toLowerCase()">
+    <div
+      id="root"
+      class="is-flex is-flex-direction-column"
+      :class="theme"
+    >
       <div class="is-flex-shrink-0">
-        <WindowTitlebar @toggle-theme="theme = (theme === Theme.Dark ? Theme.Light : Theme.Dark)" @toggle-settings="show_settings = !show_settings" />
+        <WindowTitlebar
+          @toggle-theme="theme = (theme === Theme.Dark ? Theme.Light : Theme.Dark)"
+          @toggle-settings="show_settings = !show_settings"
+        />
       </div>
       <div class="is-flex-grow-1 is-relative">
         <RouterView v-slot="{ Component, route }">
           <Transition :name="(route.meta?.transition as string | undefined) ?? ''">
-            <div class="transition-wrapper" :key="route.name ?? 'Home'">
+            <div
+              :key="route.name ?? 'Home'"
+              class="transition-wrapper"
+            >
               <component :is="Component" />
             </div>
           </Transition>
         </RouterView>
         <Transition name="slide">
-          <Settings class="settings" v-if="show_settings"></Settings>
+          <SettingsMenu
+            v-if="show_settings"
+            class="settings"
+          />
         </Transition>
       </div>
     </div>
@@ -46,7 +59,7 @@ async function first_resolve() {
 </template>
 
 <style lang="scss">
-@import "@/assets/styles/styles.scss";
+@import "@/assets/styles/styles";
 
 .settings {
   height: 100%;

@@ -1,7 +1,8 @@
-import { BaseDirectory, createDir, readTextFile, writeTextFile } from "@tauri-apps/api/fs";
-import { plainToInstance, instanceToPlain, Expose, Type } from "class-transformer";
-import "reflect-metadata";
-import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from "semver";
+/* eslint-disable max-classes-per-file */
+import { BaseDirectory, createDir, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
+import { plainToInstance, instanceToPlain, Expose } from 'class-transformer';
+import 'reflect-metadata';
+import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from 'semver';
 
 /**
  * The base database class.
@@ -15,8 +16,8 @@ import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid a
  */
 export abstract class Database {
   static readonly DB_BASE_DIR = BaseDirectory.App;
-  static readonly DB_PATH = "";
-  static readonly DB_FILE_NAME = "db.json";
+  static readonly DB_PATH = '';
+  static readonly DB_FILE_NAME = 'db.json';
 
   /**
    * The latest version of the database.
@@ -24,7 +25,7 @@ export abstract class Database {
    * @static
    * @memberof Database
    */
-  static readonly LATEST_VERSION = "0.0.0";
+  static readonly LATEST_VERSION = '0.0.0';
 
   /**
    * The database version.
@@ -33,7 +34,7 @@ export abstract class Database {
    * @type {string}
    * @memberof Database
    */
-  abstract readonly _version: string;
+  abstract readonly db_version: string;
 
   /**
    * Read from the database file on disk.
@@ -43,12 +44,12 @@ export abstract class Database {
    * @return The contents of the database file, or null if the file does not exist.
    * @memberof Database
    */
-  private static async readDatabaseFile(): Promise<string | null> {
+  private static async read_database_file(): Promise<string | null> {
     await createDir(Database.DB_PATH, { dir: Database.DB_BASE_DIR, recursive: true });
     try {
       return await readTextFile(Database.DB_PATH + Database.DB_FILE_NAME, { dir: Database.DB_BASE_DIR });
     } catch (ex) {
-      console.log(ex);
+      console.error(ex);
       return null;
     }
   }
@@ -60,7 +61,7 @@ export abstract class Database {
    * @param {string} contents
    * @memberof Database
    */
-  private async writeDatabaseFile(contents: string) {
+  private static async write_database_file(contents: string) {
     await createDir(Database.DB_PATH, { dir: Database.DB_BASE_DIR, recursive: true });
     await writeTextFile(Database.DB_PATH + Database.DB_FILE_NAME, contents, { dir: Database.DB_BASE_DIR });
   }
@@ -72,28 +73,28 @@ export abstract class Database {
    * @static
    * @param {string} serialized The serialized database string.
    * @throws Will throw an error if `serialized` is null or cannot be converted into a database.
-   * @throws {FutureVersionError} Will throw an error if the database version is 
+   * @throws {FutureVersionError} Will throw an error if the database version is greater than the latest compatible version.
    * @memberof Database
    */
-  private static constructDatabase(serialized: string): Database {
-    if (serialized == null) throw new Error("serialized is null");
+  private static construct_database(serialized: string): Database {
+    if (serialized == null) throw new Error('serialized is null');
 
     const obj = JSON.parse(serialized);
     console.log(obj);
-    const version = semVerClean((obj as any)._version);
-    console.log("Cleaned version", version);
-    if (version === null || semVerValid(version) === null) throw new Error("Data is missing a valid version number");
+    const version = semVerClean(obj?.db_version);
+    console.log('Cleaned version', version);
+    if (version === null || semVerValid(version) === null) throw new Error('Data is missing a valid version number');
 
     let db: Database | null = null;
-    if (semVerSatisfies(version, "0.0.0")) db = Database_v0.deserialize(serialized);
+    if (semVerSatisfies(version, '0.0.0')) db = Database_v0.deserialize(serialized);
 
     if (db === null) {
       if (semVerGt(version, Database.LATEST_VERSION)) throw new FutureVersionError(version);
       else throw new Error(`Compatible database model for version "${version}" not found`);
     }
 
-    while (semVerNeq(semVerClean(db._version)!, Database.LATEST_VERSION)) {
-      db = db.upgradeVersion();
+    while (semVerNeq(semVerClean(db.db_version) ?? '', Database.LATEST_VERSION)) {
+      db = db.upgrade_version();
     }
 
     return db;
@@ -107,13 +108,14 @@ export abstract class Database {
    * @memberof Database
    */
   static async load(): Promise<Database_v0> {
-    const serialized: string | null = await Database.readDatabaseFile();
+    const serialized: string | null = await Database.read_database_file();
     const db = (serialized === null)
       ? new Database_v0()
-      : Database.constructDatabase(serialized);
+      : Database.construct_database(serialized);
 
     if (db instanceof Database_v0) return db;
-    else throw new Error("Unexpected database version");
+
+    throw new Error('Unexpected database version');
   }
 
   /**
@@ -122,7 +124,7 @@ export abstract class Database {
    * @memberof Database
    */
   async save() {
-    this.writeDatabaseFile(this.serialize());
+    Database.write_database_file(this.serialize());
   }
 
   /**
@@ -139,7 +141,7 @@ export abstract class Database {
    * @abstract
    * @memberof Database
    */
-  abstract upgradeVersion(): Database;
+  abstract upgrade_version(): Database;
 }
 
 /**
@@ -149,20 +151,21 @@ export abstract class Database {
  * @extends {Database}
  */
 export class Database_v0 extends Database {
-  @Expose() readonly _version = "0.0.0";
+  @Expose() readonly db_version = '0.0.0';
 
-  @Expose() example: string = "example data";
+  @Expose() example = 'example data';
 
   serialize(): string {
-    return JSON.stringify(instanceToPlain(this, { strategy: "excludeAll" }), undefined, 2);
+    return JSON.stringify(instanceToPlain(this, { strategy: 'excludeAll' }), undefined, 2);
   }
 
   static deserialize(serialized: string): Database_v0 {
     return plainToInstance(Database_v0, JSON.parse(serialized), { excludeExtraneousValues: true });
   }
 
-  upgradeVersion(): Database {
-    throw new Error("Cannot upgrade from the latest version");
+  // eslint-disable-next-line class-methods-use-this
+  upgrade_version(): Database {
+    throw new Error('Cannot upgrade from the latest version');
   }
 }
 

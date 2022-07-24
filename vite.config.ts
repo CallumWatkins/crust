@@ -1,6 +1,7 @@
-import { defineConfig } from 'vite'
-import { resolve } from 'path'
-import vue from '@vitejs/plugin-vue'
+/* eslint-disable import/no-extraneous-dependencies */
+import { defineConfig } from 'vite';
+import { resolve } from 'path';
+import vue from '@vitejs/plugin-vue';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -9,15 +10,15 @@ export default defineConfig({
     alias: [
       {
         find: '@',
-        replacement: '/src'
-      }
-    ]
+        replacement: '/src',
+      },
+    ],
   },
   build: {
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        splash: resolve(__dirname, 'splashscreen.html')
+        splash: resolve(__dirname, 'splashscreen.html'),
       },
       output: {
         assetFileNames: (assetInfo) => {
@@ -30,7 +31,7 @@ export default defineConfig({
           return `assets/${ext}/[name].[hash][extname]`;
         },
         chunkFileNames: 'assets/js/[name].[hash].js',
-        entryFileNames: 'assets/js/[name].[hash].js'
+        entryFileNames: 'assets/js/[name].[hash].js',
       },
     },
   },
@@ -40,8 +41,8 @@ export default defineConfig({
         additionalData: `
           @import "/src/assets/styles/variables.scss";
           @import "/node_modules/bulma/sass/utilities/mixins.sass";
-        `
-      }
-    }
-  }
-})
+        `,
+      },
+    },
+  },
+});

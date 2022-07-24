@@ -1,14 +1,20 @@
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
     content: string
 }>();
 </script>
 
 <template>
-  <Popper placement="top" :hover="true" :interactive="false">
+  <Popper
+    placement="top"
+    :hover="true"
+    :interactive="false"
+  >
     <FontAwesomeIcon icon="fa-solid fa-circle-question" />
     <template #content>
-      <div class="box">{{ content }}</div>
+      <div class="box">
+        {{ content }}
+      </div>
     </template>
   </Popper>
 </template>

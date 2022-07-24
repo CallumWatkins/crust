@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from 'vue';
 import DropDownList from '../DropDownList.vue';
 
-const input_devices = ["Default", "Device 1", "Device 2", "Device 3"];
-const current_input_device = ref("Device 1");
+const input_devices = ['Default', 'Device 1', 'Device 2', 'Device 3'];
+const current_input_device = ref('Device 1');
 
-const output_devices = ["Default", "Device 1", "Device 2", "Device 3"];
-const current_output_device = ref("Default");
+const output_devices = ['Default', 'Device 1', 'Device 2', 'Device 3'];
+const current_output_device = ref('Default');
 
 function set_input_device(device: string) {
   current_input_device.value = device;
@@ -20,10 +20,20 @@ function set_output_device(device: string) {
 <template>
   <div class="audio-container">
     <div class="dropdown is-active">
-      <Popper offsetDistance="6" offsetSkid="-150" placement="bottom">
+      <Popper
+        offset-distance="6"
+        offset-skid="-150"
+        placement="bottom"
+      >
         <div class="dropdown-trigger">
-          <p class="label">Input Device</p>
-          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+          <p class="label">
+            Input Device
+          </p>
+          <button
+            class="button"
+            aria-haspopup="true"
+            aria-controls="dropdown-menu"
+          >
             <span>{{ current_input_device }}</span>
             <span class="icon">
               <FontAwesomeIcon icon="fa-solid fa-chevron-down" />
@@ -31,23 +41,38 @@ function set_output_device(device: string) {
           </button>
         </div>
         <template #content="{ close }">
-          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+          <div
+            id="dropdown-menu"
+            class="dropdown-menu"
+            role="menu"
+          >
             <div class="dropdown-content">
-              <DropDownList :list="input_devices" 
+              <DropDownList
+                :list="input_devices"
                 :default_item="current_input_device"
                 :get_key="(device: string) => device"
-                @changed="device => { set_input_device(device); close(); }">
-              </DropDownList>
+                @changed="device => { set_input_device(device); close(); }"
+              />
             </div>
           </div>
         </template>
       </Popper>
     </div>
     <div class="dropdown is-active">
-      <Popper offsetDistance="6" offsetSkid="-150" placement="bottom">
+      <Popper
+        offset-distance="6"
+        offset-skid="-150"
+        placement="bottom"
+      >
         <div class="dropdown-trigger">
-          <p class="label">Output Device</p>
-          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+          <p class="label">
+            Output Device
+          </p>
+          <button
+            class="button"
+            aria-haspopup="true"
+            aria-controls="dropdown-menu"
+          >
             <span>{{ current_output_device }}</span>
             <span class="icon">
               <FontAwesomeIcon icon="fa-solid fa-chevron-down" />
@@ -55,13 +80,18 @@ function set_output_device(device: string) {
           </button>
         </div>
         <template #content="{ close }">
-          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+          <div
+            id="dropdown-menu"
+            class="dropdown-menu"
+            role="menu"
+          >
             <div class="dropdown-content">
-              <DropDownList :list="output_devices" 
+              <DropDownList
+                :list="output_devices"
                 :default_item="current_output_device"
-                :get_key="(device: string) => device" 
-                @changed="device => { set_output_device(device); close(); }">
-              </DropDownList>
+                :get_key="(device: string) => device"
+                @changed="device => { set_output_device(device); close(); }"
+              />
             </div>
           </div>
         </template>

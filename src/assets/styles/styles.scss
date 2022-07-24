@@ -1,24 +1,19 @@
+/* stylelint-disable at-rule-empty-line-before */
+/* stylelint-disable scss/double-slash-comment-empty-line-before */
 @charset "utf-8";
 
-// Fonts
-$roboto_weights: 300, 400, 500, 700, 900;
-@each $weight in $roboto_weights {
-  @import url("/node_modules/@fontsource/roboto/#{$weight}.css");
-  @import url("/node_modules/@fontsource/roboto/#{$weight}-italic.css");
-}
-
 // Variables
-@import "variables.scss";
+@import "variables";
 
 // Transitions
-@import "transitions.scss";
+@import "transitions";
 
 // Scrollbar
-@import "scrollbar.scss";
+@import "scrollbar";
 
 // Bulma
-@import "/node_modules/bulma/sass/utilities/_all";
-@import "/node_modules/bulma/sass/base/_all";
+@import "/node_modules/bulma/sass/utilities/all";
+@import "/node_modules/bulma/sass/base/all";
 
 @import "/node_modules/bulma/sass/elements/box";
 @import "/node_modules/bulma/sass/elements/button";
@@ -71,10 +66,22 @@ $roboto_weights: 300, 400, 500, 700, 900;
 @import "/node_modules/bulma/sass/layout/section";
 @import "/node_modules/bulma/sass/layout/footer";
 
-$temp_radius-large: $radius-large;
+// Fonts
+$roboto-weights: 300, 400, 500, 700, 900;
+@each $weight in $roboto-weights {
+  /* stylelint-disable-next-line no-invalid-position-at-import-rule */
+  @import "/node_modules/@fontsource/roboto/#{$weight}.css";
+  /* stylelint-disable-next-line no-invalid-position-at-import-rule */
+  @import "/node_modules/@fontsource/roboto/#{$weight}-italic.css";
+}
+
+$temp-radius-large: $radius-large;
 $radius-large: 24px;
+
+/* stylelint-disable-next-line no-invalid-position-at-import-rule */
 @import "/node_modules/bulma-switch";
-$radius-large: $temp_radius-large;
+
+$radius-large: $temp-radius-large;
 
 :root {
   --border-box-shadow-color: bulmaRgba(var(--primary-color), 0.25);
@@ -86,28 +93,28 @@ $radius-large: $temp_radius-large;
   --titlebar-height: 50px;
 
   #root.dark {
-    --background-color-darker: rgb(45, 45, 45);
-    --background-color-secondary: rgb(51, 51, 51);
-    --background-color: rgb(38, 38, 38);
-    --border-color-dark: rgb(20, 20, 20);
-    --border-color-hover: hsl(0, 0%, 50%);
-    --border-color: rgb(101, 100, 100);
-    --button-color-focus: hsl(31, 38%, 40%);
-    --button-color-hover: hsl(31, 38%, 25%);
-    --primary-color: rgb(173, 92, 4);
-    --text-color-dark: rgb(250, 250, 250);
-    --text-color-light: rgb(150, 150, 150);
-    --text-color: rgb(200, 200, 200);
-    --text-color-danger: rgb(230, 52, 52);
+    --background-color-darker: rgb(45 45 45);
+    --background-color-secondary: rgb(51 51 51);
+    --background-color: rgb(38 38 38);
+    --border-color-dark: rgb(20 20 20);
+    --border-color-hover: hsl(0deg 0% 50%);
+    --border-color: rgb(101 100 100);
+    --button-color-focus: hsl(31deg 38% 40%);
+    --button-color-hover: hsl(31deg 38% 25%);
+    --primary-color: rgb(173 92 4);
+    --text-color-dark: rgb(250 250 250);
+    --text-color-light: rgb(150 150 150);
+    --text-color: rgb(200 200 200);
+    --text-color-danger: rgb(230 52 52);
   }
 
   #root.light {
-    --background-color-secondary: rgb(255, 0, 0);
-    --background-color: rgb(255, 0, 0);
-    --border-color: rgb(255, 0, 0);
-    --primary-color: rgb(255, 0, 0);
-    --text-color: rgb(61, 61, 61);
-    --text-color-dark: hsl(0, 0%, 21%);
+    --background-color-secondary: rgb(255 0 0);
+    --background-color: rgb(255 0 0);
+    --border-color: rgb(255 0 0);
+    --primary-color: rgb(255 0 0);
+    --text-color: rgb(61 61 61);
+    --text-color-dark: hsl(0deg 0% 21%);
   }
 }
 
@@ -140,9 +147,10 @@ $radius-large: $temp_radius-large;
   }
 }
 
-.dropdown-item, a.dropdown-item {
+.dropdown-item,
+a.dropdown-item {
   border-radius: var(--radius);
-  min-width: 150px; 
+  min-width: 150px;
   padding: 0.375rem 1rem;
 }
 
@@ -156,12 +164,12 @@ $radius-large: $temp_radius-large;
 }
 
 .btn-color {
-  &-rusty {    
+  &-rusty {
     &:hover {
       background-color: var(--button-color-hover);
       border-color: var(--button-color-hover);
     }
-  
+
     &:focus {
       background-color: var(--button-color-focus);
       border-color: var(--button-color-focus);

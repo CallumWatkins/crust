@@ -4,20 +4,28 @@ interface Props {
   src?: string,
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   src: undefined,
 });
 
 </script>
 
 <template>
-  <div v-if="src === undefined" class="fallback">
+  <div
+    v-if="src === undefined"
+    class="fallback"
+  >
     <FontAwesomeLayers>
       <FontAwesomeIcon icon="fa-solid fa-circle" />
       <FontAwesomeIcon icon="fa-solid fa-user" />
     </FontAwesomeLayers>
   </div>
-  <img v-else :src="src" alt="avatar" draggable="false" />
+  <img
+    v-else
+    :src="src"
+    alt="avatar"
+    draggable="false"
+  >
 </template>
 
 <style scoped lang="scss">
@@ -40,7 +48,7 @@ const props = withDefaults(defineProps<Props>(), {
     .fa-user {
       width: 55%;
       height: 55%;
-      color: var(--background-color)
+      color: var(--background-color);
     }
   }
 }

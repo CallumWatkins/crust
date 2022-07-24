@@ -6,7 +6,7 @@ const emit = defineEmits(['toggleTheme', 'toggleSettings']);
 const is_maximized = ref(await appWindow.isMaximized());
 const is_focused = ref(true);
 
-const on_resized_unlisten = await appWindow.onResized(async (_) => {
+const on_resized_unlisten = await appWindow.onResized(async () => {
   is_maximized.value = await appWindow.isMaximized();
 });
 
@@ -17,29 +17,79 @@ const on_focus_changed_unlisten = await appWindow.onFocusChanged(({ payload: foc
 onUnmounted(() => {
   on_resized_unlisten();
   on_focus_changed_unlisten();
-})
+});
 </script>
 
 <template>
-  <div class="titlebar" :class="{ 'focused': is_focused }" data-tauri-drag-region>
+  <div
+    class="titlebar"
+    :class="{ 'focused': is_focused }"
+    data-tauri-drag-region
+  >
     <div class="titlebar__start">
-      <div class="square-icon-button" @click="emit('toggleSettings')">
-        <FontAwesomeIcon icon="fa-solid fa-bars" alt="settings" />
+      <div
+        class="square-icon-button"
+        tabindex="0"
+        @click="emit('toggleSettings')"
+        @keypress.enter="emit('toggleSettings')"
+      >
+        <FontAwesomeIcon
+          icon="fa-solid fa-bars"
+          alt="settings"
+        />
       </div>
-      <div class="square-icon-button" @click="emit('toggleTheme')">
-        <FontAwesomeIcon icon="fa-solid fa-lightbulb" alt="theme" />
+      <div
+        class="square-icon-button"
+        tabindex="0"
+        @click="emit('toggleTheme')"
+        @keypress.enter="emit('toggleTheme')"
+      >
+        <FontAwesomeIcon
+          icon="fa-solid fa-lightbulb"
+          alt="theme"
+        />
       </div>
     </div>
     <div class="titlebar__end">
-      <div class="square-icon-button window-control" @click="appWindow.minimize">
-        <FontAwesomeIcon icon="fa-solid fa-window-minimize" alt="minimize" />
+      <div
+        class="square-icon-button window-control"
+        tabindex="0"
+        @click="appWindow.minimize"
+        @keypress.enter="appWindow.minimize"
+      >
+        <FontAwesomeIcon
+          icon="fa-solid fa-window-minimize"
+          alt="minimize"
+        />
       </div>
-      <div class="square-icon-button window-control" @click="appWindow.toggleMaximize">
-        <FontAwesomeIcon icon="fa-solid fa-window-restore" alt="restore" v-if="is_maximized" />
-        <FontAwesomeIcon icon="fa-solid fa-window-maximize" alt="maximize" v-else />
+      <div
+        class="square-icon-button window-control"
+        tabindex="0"
+        @click="appWindow.toggleMaximize"
+        @keypress.enter="appWindow.toggleMaximize"
+      >
+        <FontAwesomeIcon
+          v-if="is_maximized"
+          icon="fa-solid fa-window-restore"
+          alt="restore"
+        />
+        <FontAwesomeIcon
+          v-else
+          icon="fa-solid fa-window-maximize"
+          alt="maximize"
+        />
       </div>
-      <div class="square-icon-button window-control" @click="appWindow.close">
-        <FontAwesomeIcon icon="fa-solid fa-xmark" size="lg" alt="close" />
+      <div
+        class="square-icon-button window-control"
+        tabindex="0"
+        @click="appWindow.close"
+        @keypress.enter="appWindow.close"
+      >
+        <FontAwesomeIcon
+          icon="fa-solid fa-xmark"
+          size="lg"
+          alt="close"
+        />
       </div>
     </div>
   </div>
@@ -56,7 +106,8 @@ onUnmounted(() => {
   justify-content: space-between;
   flex-wrap: nowrap;
 
-  &__start, &__end {
+  &__start,
+  &__end {
     display: flex;
     flex-wrap: nowrap;
   }
@@ -74,7 +125,7 @@ onUnmounted(() => {
     }
 
     &.window-control:last-child:hover {
-      background-color: rgb(244, 82, 42);
+      background-color: rgb(244 82 42);
     }
   }
 
