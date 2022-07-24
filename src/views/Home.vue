@@ -34,7 +34,7 @@ let current_tab = ref(Tabs.Join);
 <template>
   <div class="container">
     <section class="section mt-6">
-      <img id="logo" alt="Crust logo" src="@/assets/logo.svg" draggable="false" />
+      <img id="logo" alt="Crust logo" src="../../app-icon.svg" draggable="false" />
     </section>
     <section class="tabs-container">
       <div class="tabs is-centered is-large is-fullwidth">
