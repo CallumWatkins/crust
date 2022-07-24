@@ -2,5 +2,8 @@
   "extends": [
     "stylelint-config-standard-scss",
     "stylelint-config-recommended-vue/scss"
-  ]
+  ],
+  "rules": {
+    "function-name-case": null
+  }
 }

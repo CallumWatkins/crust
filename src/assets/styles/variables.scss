@@ -1,7 +1,7 @@
 // Bulma variables
 $background: var(--background-color);
 $body-overflow-y: hidden;
-$border-hover: None;
+$border-hover: none;
 $border: var(--border-color);
 $button-active-color: var(--text-color);
 $button-border-color: var(--border-color);
@@ -12,10 +12,10 @@ $button-focus-box-shadow-size: var(--border-box-shadow-size);
 $button-focus-color: var(--text-color);
 $button-hover-border-color: var(--border-color-hover);
 $button-hover-color: var(--text-color);
-$danger: rgb(159, 53, 53);
+$danger: rgb(159 53 53);
 $dropdown-content-background-color: var(--background-color-secondary);
 $dropdown-content-radius: var(--large-radius);
-$dropdown-content-shadow: 0px 5px 8px 3px rgba(0,0,0,0.2);
+$dropdown-content-shadow: 0 5px 8px 3px rgb(0 0 0 / 20%);
 $dropdown-divider-background-color: var(--border-color);
 $dropdown-item-color: var(--text-color);
 $dropdown-item-hover-background-color: var(--primary-color);
@@ -43,13 +43,13 @@ $radius-large: var(--large-radius);
 $radius-small: var(--small-radius);
 $radius: var(--radius);
 $scheme-main: var(--background-color);
-$success: rgb(56, 117, 60);
+$success: rgb(56 117 60);
 $tabs-border-bottom-width: 2px;
 $text-strong: var(--text-color-dark);
 $text: var(--text-color);
 
 // Custom Bulma Colours
-$rusty: hsl(31, 38%, 25%);
+$rusty: hsl(31deg 38% 25%);
 $rusty-invert: findColorInvert($rusty);
 $custom-colors: ("rusty": ($rusty, $rusty-invert));
 

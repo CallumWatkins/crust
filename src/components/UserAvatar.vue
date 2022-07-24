@@ -48,7 +48,7 @@ withDefaults(defineProps<Props>(), {
     .fa-user {
       width: 55%;
       height: 55%;
-      color: var(--background-color)
+      color: var(--background-color);
     }
   }
 }

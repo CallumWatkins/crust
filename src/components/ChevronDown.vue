@@ -22,7 +22,7 @@ const width = props.width ?? '24px';
 
 <style scoped lang="scss">
 .chevron-down {
-    fill: var(--text-color);
-    width: v-bind(width);
+  fill: var(--text-color);
+  width: v-bind(width);
 }
 </style>

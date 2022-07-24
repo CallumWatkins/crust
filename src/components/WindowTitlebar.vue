@@ -106,7 +106,8 @@ onUnmounted(() => {
   justify-content: space-between;
   flex-wrap: nowrap;
 
-  &__start, &__end {
+  &__start,
+  &__end {
     display: flex;
     flex-wrap: nowrap;
   }
@@ -124,7 +125,7 @@ onUnmounted(() => {
     }
 
     &.window-control:last-child:hover {
-      background-color: rgb(244, 82, 42);
+      background-color: rgb(244 82 42);
     }
   }
 

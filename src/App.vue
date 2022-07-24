@@ -59,7 +59,7 @@ async function first_resolve() {
 </template>
 
 <style lang="scss">
-@import "@/assets/styles/styles.scss";
+@import "@/assets/styles/styles";
 
 .settings {
   height: 100%;

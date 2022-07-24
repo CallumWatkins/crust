@@ -88,8 +88,10 @@ function close(data?: any) {
   top: var(--titlebar-height);
 }
 
-.modal-close::before, .modal-close::after,
-.delete::before, .delete::after {
+.modal-close::before,
+.modal-close::after,
+.delete::before,
+.delete::after {
   background-color: var(--border-color);
 }
 </style>
