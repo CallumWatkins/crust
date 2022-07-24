@@ -1,4 +1,5 @@
-export function sort_by_property<T>(key: keyof T, ascending: boolean = true) {
+// eslint-disable-next-line import/prefer-default-export
+export function sort_by_property<T>(key: keyof T, ascending = true) {
   return (a: T, b: T) => {
     const comparison_result = ascending ? -1 : 1;
     const val_a = a[key];
@@ -17,5 +18,5 @@ export function sort_by_property<T>(key: keyof T, ascending: boolean = true) {
       return 1;
     }
     return 0;
-  }
+  };
 }

@@ -3,7 +3,7 @@ import { app, clipboard, os } from '@tauri-apps/api';
 
 const app_version = await app.getVersion();
 const tauri_version = await app.getTauriVersion();
-const os_arch = (await os.arch()).replace("x86_64", "x64");
+const os_arch = (await os.arch()).replace('x86_64', 'x64');
 const os_platform = await os.platform();
 const os_type = await os.type();
 const os_version = await os.version();
@@ -32,10 +32,11 @@ OS Arch: ${os_arch}`);
     <p>Arch: {{ os_arch }}</p>
   </div>
   <div class="block">
-    <button class="button" @click="copy_info">Copy to clipboard</button>
+    <button
+      class="button"
+      @click="copy_info"
+    >
+      Copy to clipboard
+    </button>
   </div>
 </template>
-
-<style scoped lang="scss">
-
-</style>
