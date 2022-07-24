@@ -35,7 +35,7 @@ const current_tab = ref(Tabs.Join);
 
 <template>
   <div class="container">
-    <section class="section mt-6">
+    <section>
       <img
         id="logo"
         alt="Crust logo"
@@ -188,6 +188,7 @@ const current_tab = ref(Tabs.Join);
 .tabs-container {
   width: 100%;
   max-width: 400px;
+  min-height: 250px;
 
   #make-public + label {
     padding-left: 3.75rem !important;
@@ -203,6 +204,7 @@ const current_tab = ref(Tabs.Join);
 }
 
 #logo {
+  display: block;
   width: 270px;
 }
 
@@ -220,5 +222,21 @@ const current_tab = ref(Tabs.Join);
   display: flex;
   flex-direction: column;
   height: 100%;
+  gap: calc(var(--spacing) * 5);
+
+  section:first-child {
+    margin-top: 5rem;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .container {
+    flex-direction: row;
+    justify-content: center;
+
+    section:first-child {
+      margin-top: 0;
+    }
+  }
 }
 </style>
