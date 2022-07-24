@@ -17,17 +17,7 @@ Your data is encrypted end-to-end and does not travel through any servers. You'r
 WIP
 
 # Contributing
-## Getting Started
-1. Follow the [Tauri prerequisites guide](https://tauri.app/v1/guides/getting-started/prerequisites)
-2. Fork this project
-3. Clone the project to your local system — `git clone https://github.com/<your_github_username>/crust.git`
-4. Change to the project root directory — `cd crust`
-5. Install all dependencies using npm — `npm install`
-6. Run the project in development mode — `npm run tauri dev`
-
-## Scripts
-- Run the project in development mode — `npm run tauri dev`
-- Build the project for release — `npm run tauri build`
+See [CONTRIBUTING](CONTRIBUTING.md).
 
 # Features
 WIP
