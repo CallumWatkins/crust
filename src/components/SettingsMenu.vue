@@ -89,32 +89,35 @@ function changes(flag: boolean) {
 <template>
   <div class="settings-container">
     <div class="container">
-      <section class="section">
-        <div class="columns">
+      <section class="is-flex-grow-1 p-5">
+        <div class="columns is-marginless">
           <div class="column is-one-third settings-tabs">
-            <aside class="menu">
-              <template
-                v-for="menu_element in menu_elements"
-                :key="menu_element.name"
-              >
-                <p class="menu-label">
-                  {{ menu_element.name }}
-                </p>
-                <ul class="menu-list">
-                  <li
-                    v-for="tab in menu_element.tabs"
-                    :key="tab.name"
-                  >
-                    <a
-                      :class="{ 'is-active': tab == current_tab }"
-                      href="#"
-                      @click="setTab(tab)"
-                    >{{ tab.name }}</a>
-                  </li>
-                </ul>
-              </template>
-            </aside>
+            <div class="menu-wrapper">
+              <aside class="menu">
+                <template
+                  v-for="menu_element in menu_elements"
+                  :key="menu_element.name"
+                >
+                  <p class="menu-label">
+                    {{ menu_element.name }}
+                  </p>
+                  <ul class="menu-list">
+                    <li
+                      v-for="tab in menu_element.tabs"
+                      :key="tab.name"
+                    >
+                      <a
+                        :class="{ 'is-active': tab == current_tab }"
+                        href="#"
+                        @click="setTab(tab)"
+                      >{{ tab.name }}</a>
+                    </li>
+                  </ul>
+                </template>
+              </aside>
+            </div>
           </div>
+          <div class="column is-narrow" />
           <div class="column">
             <h1 class="title">
               {{ current_tab.name }}
@@ -155,5 +158,17 @@ function changes(flag: boolean) {
 .container {
   display: flex;
   height: 100%;
+
+  .column.is-narrow {
+    width: 3rem;
+
+    @include touch {
+      width: 0;
+    }
+  }
+}
+
+.menu-wrapper {
+  overflow-y: auto;
 }
 </style>
