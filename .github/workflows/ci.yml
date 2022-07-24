@@ -5,9 +5,42 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  eslint:
+    if: |
+      !contains(github.event.pull_request.title, '[skip ci]')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
+    - name: install app dependencies
+      run: npm ci
+    - name: ESLint
+      run: npm run eslint
+
+  stylelint:
+    if: |
+      !contains(github.event.pull_request.title, '[skip ci]')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
+    - name: install app dependencies
+      run: npm ci
+    - name: Stylelint
+      run: npm run stylelint
+
   build:
     if: |
       !contains(github.event.pull_request.title, '[skip ci]')
+    needs: [eslint, stylelint]
     strategy:
       fail-fast: false
       matrix:
@@ -44,35 +77,3 @@ jobs:
         name: bundle-${{ matrix.platform }}
         path: ${{ github.workspace }}/src-tauri/target/release/bundle/
         retention-days: 1
-
-  eslint:
-    if: |
-      !contains(github.event.pull_request.title, '[skip ci]')
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: setup node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: 'npm'
-    - name: install app dependencies
-      run: npm ci
-    - name: ESLint
-      run: npm run eslint
-
-  stylelint:
-    if: |
-      !contains(github.event.pull_request.title, '[skip ci]')
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: setup node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16
-        cache: 'npm'
-    - name: install app dependencies
-      run: npm ci
-    - name: Stylelint
-      run: npm run stylelint
