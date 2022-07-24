@@ -8,7 +8,9 @@
     "vue-devtools": "npx --no-install vue-devtools",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "lint": "npx eslint \"{src/**/,}*.{js,ts,json,vue}\"",
+    "lint-fix": "npx eslint \"{src/**/,}*.{js,ts,json,vue}\" --fix"
   },
   "dependencies": {
     "@fontsource/roboto": "^4.5.7",
@@ -31,9 +33,22 @@
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.4",
     "@types/node": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
     "@vitejs/plugin-vue": "^3.0.0",
     "@vue/devtools": "^6.2.1",
+    "@vue/eslint-config-airbnb": "^6.0.0",
+    "@vue/eslint-config-typescript": "^11.0.0",
+    "eslint": "^8.20.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-import-resolver-typescript": "^3.3.0",
+    "eslint-plugin-json": "^3.1.0",
+    "eslint-plugin-vue": "^9.2.0",
     "sass": "^1.53.0",
+    "stylelint": "^14.9.1",
+    "stylelint-config-recommended-vue": "^1.4.0",
+    "stylelint-config-standard-scss": "^5.0.0",
+    "stylelint-scss": "^4.3.0",
     "typescript": "^4.5.4",
     "vite": "^3.0.0",
     "vue-tsc": "^0.38.8"

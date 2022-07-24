@@ -1,0 +1,31 @@
+{
+  "env": {
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:json/recommended",
+    "@vue/eslint-config-airbnb",
+    "plugin:vue/vue3-recommended",
+    "@vue/typescript/recommended"
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
+    }
+  },
+  "rules": {
+    "linebreak-style": "off",
+    "camelcase": "off",
+    "function-paren-newline": "off",
+    "function-call-argument-newline": "off",
+    "lines-between-class-members": [ "error", "always", { "exceptAfterSingleLine": true } ],
+    "max-len": ["error", { "code": 150 }],
+    "no-use-before-define": [ "error", { "classes": false } ],
+    "object-curly-newline": [ "error", { "consistent": true } ],
+    "vue/prop-name-casing": [ "error", "snake_case" ],
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": [ "error" ],
+    "vuejs-accessibility/label-has-for": ["error", { "required": { "some": [ "nesting", "id" ] } }]
+  }
+}
