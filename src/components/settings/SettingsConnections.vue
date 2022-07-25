@@ -187,7 +187,7 @@ function close_delete_modal(data: any) {
         </div>
       </div>
     </div>
-    <div class="column is-narrow">
+    <div class="column">
       <div class="panel">
         <div class="panel-block">
           <button
