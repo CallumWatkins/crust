@@ -117,7 +117,7 @@ function close_delete_modal(data: any) {
 </script>
 
 <template>
-  <div class="columns">
+  <div class="columns mb-0">
     <div class="column">
       <div class="panel is-primary is-flex is-flex-direction-column is-radiusless">
         <div class="panel-block">
@@ -392,9 +392,5 @@ function close_delete_modal(data: any) {
   .connections-list {
     overflow-y: auto;
   }
-}
-
-.columns {
-  height: 100%;
 }
 </style>
