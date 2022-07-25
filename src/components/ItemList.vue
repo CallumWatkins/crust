@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import BasicAnchor from './BasicAnchor.vue'
+import BasicAnchor from './BasicAnchor.vue';
 
 // Hopefully make this component generic once Vue supports it.
 // See https://github.com/vuejs/rfcs/discussions/436
@@ -12,7 +12,7 @@ interface Props {
   get_value?: (item: any) => any,
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 const emit = defineEmits(['changed']);
 
@@ -29,13 +29,14 @@ const get_value: (item: any) => any = props.get_value ?? props.get_key;
       { 'dropdown-item': layout == 'dropdown-fill' },
       { 'dropdown-item is-flex is-justify-content-space-between': layout == 'dropdown-select' },
       { 'panel-block': layout == 'panel-list' }
-      ]"
+    ]"
     href="#"
     @click="selected_item = item; emit('changed', selected_item)"
   >
-    <span 
+    <span
       v-if="layout == 'panel-list'"
-      class="panel-icon">
+      class="panel-icon"
+    >
       <FontAwesomeIcon
         v-if="selected_item && get_key(item) == get_key(selected_item)"
         icon="fa-solid fa-circle"
@@ -43,9 +44,10 @@ const get_value: (item: any) => any = props.get_value ?? props.get_key;
       />
     </span>
     <span>{{ get_value(item) }}</span>
-    <span 
-      v-if="layout == 'dropdown-select'" 
-      class="circle-icon">
+    <span
+      v-if="layout == 'dropdown-select'"
+      class="circle-icon"
+    >
       <FontAwesomeIcon
         v-if="selected_item && get_key(item) == get_key(selected_item)"
         :icon="'fa-solid fa-circle-check'"
@@ -53,10 +55,10 @@ const get_value: (item: any) => any = props.get_value ?? props.get_key;
       />
     </span>
   </BasicAnchor>
-  <hr 
+  <hr
     v-if="layout == 'dropdown-fill'"
-    class="dropdown-divider" 
-  />
+    class="dropdown-divider"
+  >
   <BasicAnchor
     v-if="layout == 'dropdown-fill'"
     class="view-more dropdown-item"

@@ -168,7 +168,7 @@ function close_delete_modal(data: any) {
           </div>
         </div>
         <div class="connections-list">
-          <ItemList 
+          <ItemList
             layout="panel-list"
             :list="connections.filter(conn => conn.alias?.includes(search) || conn.ip.includes(search))"
             :get_key="(conn: Connection) => conn.ip"
