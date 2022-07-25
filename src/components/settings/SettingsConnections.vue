@@ -384,4 +384,9 @@ function close_delete_modal(data: any) {
     overflow-y: auto;
   }
 }
+
+.columns {
+  height: 100%;
+  min-height: 0;
+}
 </style>

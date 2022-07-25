@@ -145,6 +145,8 @@ function changes(flag: boolean) {
 }
 
 .settings-panel {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
