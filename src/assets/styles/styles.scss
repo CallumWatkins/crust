@@ -130,6 +130,10 @@ $radius-large: $temp-radius-large;
   user-select: text;
 }
 
+.help {
+  font-size: 0.9rem;
+}
+
 .has-text-danger {
   color: var(--text-color-danger) !important;
 }
@@ -181,4 +185,16 @@ a.dropdown-item {
   align-items: center;
   display: flex;
   justify-content: space-between;
+}
+
+.switch + label {
+  padding-left: 3.75rem !important;
+
+  &::before {
+    top: 13px !important;
+  }
+
+  &::after {
+    top: 17px !important;
+  }
 }

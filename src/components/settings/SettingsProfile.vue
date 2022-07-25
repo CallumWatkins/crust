@@ -1,124 +1,46 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import type { Ref } from 'vue';
-import PopupModal from '../PopupModal.vue';
+import { Setting } from '../../model/Setting';
 import UserAvatar from '../UserAvatar.vue';
+import SettingField from './SettingField.vue';
 
-interface Setting {
-  key: string,
-  name: string,
-  value: any,
-  valid: (val: any) => string | null
-}
-
-const profile_settings: Setting[] = [
+const profile_settings: Setting<any>[] = [
   {
     key: 'username',
     name: 'Username',
-    value: '',
+    value: 'MyName',
     valid: (val: string) => {
       if (val.length < 3 || val.length > 50) {
         return 'Username must be between 3 and 50 characters.';
       }
       return null;
     },
-  },
+  } as Setting<string>,
+  {
+    key: 'dark-theme',
+    name: 'Dark Theme',
+    value: true,
+    valid: (_) => null,
+  } as Setting<boolean>,
 ];
-
-const current_setting: Ref<Setting | null> = ref(null);
-const text_modal_input = ref('');
-const validation_error: Ref<string | null> = ref('');
-const show_text_modal = ref(false);
-
-watch(
-  () => text_modal_input.value,
-  (val) => {
-    if (current_setting.value !== null) {
-      validation_error.value = current_setting.value.valid(val.trim());
-    }
-  },
-);
-
-function open_text_modal(profile_setting: Setting) {
-  current_setting.value = profile_setting;
-  text_modal_input.value = profile_setting.value;
-  show_text_modal.value = true;
-}
-
-function close_text_modal(data: any) {
-  if (data === true) {
-    current_setting.value!.value = text_modal_input.value.trim();
-    // TODO: persist(current_setting.value.key, current_setting.value.value)
-  }
-  current_setting.value = null;
-  show_text_modal.value = false;
-}
 </script>
 
 <template>
-  <div class="avatar-container">
-    <UserAvatar class="avatar" />
-    <button class="button">
-      Upload Profile Picture
-    </button>
-  </div>
-  <div class="profile-container">
-    <div
-      v-for="profile_setting in profile_settings"
-      :key="profile_setting.key"
-      class="block field-container"
-    >
-      <div>
-        <strong>{{ profile_setting.name }}</strong>
-        <p>{{ profile_setting.value }}</p>
-      </div>
-      <button
-        class="button"
-        @click="open_text_modal(profile_setting)"
-      >
-        Edit
+  <div class="block">
+    <div class="avatar-container">
+      <UserAvatar class="avatar" />
+      <button class="button">
+        Upload Profile Picture
       </button>
     </div>
   </div>
-  <PopupModal
-    id="text-modal"
-    v-slot="{ close }"
-    :is_open="show_text_modal"
-    @closed="close_text_modal"
-  >
-    <div class="box">
-      <p class="block title is-4">
-        {{ current_setting?.name ?? "" }}
-      </p>
-      <input
-        v-model="text_modal_input"
-        class="block input"
-        type="text"
-        :aria-label="current_setting?.name"
-      >
-      <p
-        v-if="validation_error !== null"
-        class="block has-text-danger"
-      >
-        {{ validation_error }}
-      </p>
-      <div class="block buttons">
-        <button
-          class="button is-success"
-          :disabled="validation_error !== null"
-          @click="close(true)"
-        >
-          Save
-        </button>
-        <button
-          class="button"
-          @click="close(false)"
-        >
-          Cancel
-        </button>
-      </div>
-    </div>
-  </PopupModal>
+  <div class="block settings-block">
+    <SettingField
+      v-for="profile_setting in profile_settings"
+      :key="profile_setting.key"
+      :setting="profile_setting"
+      @changed="(newVal) => profile_setting.value = newVal"
+    />
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -133,9 +55,7 @@ function close_text_modal(data: any) {
   width: 96px;
 }
 
-.profile-container {
-  display: flex;
-  flex-direction: column;
+.settings-block {
   max-width: 450px;
 }
 </style>
