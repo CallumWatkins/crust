@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import DropDownList from '../DropDownList.vue';
 import ItemList from '../ItemList.vue';
 
 const input_devices = ['Default', 'Device 1', 'Device 2', 'Device 3'];
