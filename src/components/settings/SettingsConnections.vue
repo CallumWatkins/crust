@@ -3,7 +3,7 @@ import { ref, Ref, watch } from 'vue';
 import { Connection, use_connections } from '../../composables/connections';
 import { sort_by_property } from '../../helpers/sort';
 import PopupModal from '../PopupModal.vue';
-import DropDownList from '../DropDownList.vue';
+import ItemList from '../ItemList.vue';
 
 const { connections, add_connection, update_connection, delete_connection } = use_connections();
 const selected_conn: Ref<Connection | null> = ref(null);
@@ -155,7 +155,8 @@ function close_delete_modal(data: any) {
                   role="menu"
                 >
                   <div class="dropdown-content">
-                    <DropDownList
+                    <ItemList
+                      layout="dropdown-select"
                       :list="sorters"
                       :get_key="(sorter: any) => sorter.name"
                       @changed="sorter => { sorter.function(); close(); }"
@@ -167,23 +168,13 @@ function close_delete_modal(data: any) {
           </div>
         </div>
         <div class="connections-list">
-          <a
-            v-for="conn in connections.filter(conn => conn.alias?.includes(search) || conn.ip.includes(search))"
-            :key="conn.ip"
-            class="panel-block"
-            :class="{ 'is-active': selected_conn && selected_conn.ip == conn.ip }"
-            href="#"
-            @click="selected_conn = conn"
-          >
-            <span class="panel-icon">
-              <FontAwesomeIcon
-                v-if="selected_conn && selected_conn.ip == conn.ip"
-                icon="fa-solid fa-circle"
-                size="sm"
-              />
-            </span>
-            {{ conn.alias ?? conn.ip }}
-          </a>
+          <ItemList 
+            layout="panel-list"
+            :list="connections.filter(conn => conn.alias?.includes(search) || conn.ip.includes(search))"
+            :get_key="(conn: Connection) => conn.ip"
+            :get_value="(conn: Connection) => conn.alias ?? conn.ip"
+            @changed="conn => selected_conn = conn"
+          />
         </div>
       </div>
     </div>
