@@ -130,6 +130,10 @@ $radius-large: $temp-radius-large;
   user-select: text;
 }
 
+.help {
+  font-size: 0.9rem;
+}
+
 .has-text-danger {
   color: var(--text-color-danger) !important;
 }
