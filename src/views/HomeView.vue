@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import ChevronDown from '../components/ChevronDown.vue';
 import InlineHelpTip from '../components/InlineHelpTip.vue';
 import { Connection, use_connections } from '../composables/connections';
+import ItemList from '../components/ItemList.vue';
 
 const { recent_connections } = use_connections();
 
@@ -145,21 +146,14 @@ const current_tab = ref(Tabs.Join);
                       role="menu"
                     >
                       <div class="dropdown-content">
-                        <a
-                          v-for="conn in recent_connections"
-                          :key="conn.ip"
-                          class="dropdown-item"
-                          role="button"
-                          href="#"
-                          @click="fill_input(conn); close();"
-                        >
-                          {{ conn.alias ?? conn.ip }}
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a
-                          id="view-more"
-                          class="dropdown-item"
-                        >View more</a>
+                        <ItemList
+                          layout="dropdown-fill"
+                          :addons="['view-more']"
+                          :list="recent_connections"
+                          :get_key="(conn: Connection) => conn.ip"
+                          :get_value="(conn: Connection) => conn.alias ?? conn.ip"
+                          @changed="conn => { fill_input(conn); close(); }"
+                        />
                       </div>
                     </div>
                   </template>
@@ -206,11 +200,6 @@ const current_tab = ref(Tabs.Join);
 #logo {
   display: block;
   width: 270px;
-}
-
-#view-more {
-  width: 100%;
-  text-align: center;
 }
 
 #dropdown-button {
