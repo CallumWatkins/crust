@@ -33,7 +33,7 @@ const profile_settings: Setting<any>[] = [
       </button>
     </div>
   </div>
-  <div class="block">
+  <div class="block settings-block">
     <SettingField
       v-for="profile_setting in profile_settings"
       :key="profile_setting.key"
@@ -55,9 +55,7 @@ const profile_settings: Setting<any>[] = [
   width: 96px;
 }
 
-.profile-container {
-  display: flex;
-  flex-direction: column;
+.settings-block {
   max-width: 450px;
 }
 </style>
