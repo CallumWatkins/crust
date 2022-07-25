@@ -182,3 +182,15 @@ a.dropdown-item {
   display: flex;
   justify-content: space-between;
 }
+
+.switch + label {
+  padding-left: 3.75rem !important;
+
+  &::before {
+    top: 13px !important;
+  }
+
+  &::after {
+    top: 17px !important;
+  }
+}

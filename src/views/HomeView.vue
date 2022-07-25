@@ -189,18 +189,6 @@ const current_tab = ref(Tabs.Join);
   width: 100%;
   max-width: 400px;
   min-height: 250px;
-
-  #make-public + label {
-    padding-left: 3.75rem !important;
-
-    &::before {
-      top: 13px !important;
-    }
-
-    &::after {
-      top: 17px !important;
-    }
-  }
 }
 
 #logo {
