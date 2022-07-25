@@ -6,6 +6,7 @@ import BasicAnchor from './BasicAnchor.vue';
 // See https://github.com/vuejs/rfcs/discussions/436
 interface Props {
   layout: string,
+  addons?: string[],
   list: Array<any>,
   default_item?: any,
   get_key: (item: any) => any,
@@ -14,7 +15,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const emit = defineEmits(['changed']);
+const emit = defineEmits(['changed', 'view_more']);
 
 const selected_item = ref(props.default_item);
 const get_value: (item: any) => any = props.get_value ?? props.get_key;
@@ -56,12 +57,13 @@ const get_value: (item: any) => any = props.get_value ?? props.get_key;
     </span>
   </BasicAnchor>
   <hr
-    v-if="layout == 'dropdown-fill'"
+    v-if="layout.includes('dropdown') && addons"
     class="dropdown-divider"
   >
   <BasicAnchor
-    v-if="layout == 'dropdown-fill'"
+    v-if="layout.includes('dropdown') && addons?.includes('view-more')"
     class="view-more dropdown-item"
+    @click="emit('view_more')"
   >
     View more
   </BasicAnchor>

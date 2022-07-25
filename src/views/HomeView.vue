@@ -148,6 +148,7 @@ const current_tab = ref(Tabs.Join);
                       <div class="dropdown-content">
                         <ItemList
                           layout="dropdown-fill"
+                          :addons="['view-more']"
                           :list="recent_connections"
                           :get_key="(conn: Connection) => conn.ip"
                           :get_value="(conn: Connection) => conn.alias ?? conn.ip"
