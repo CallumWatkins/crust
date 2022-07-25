@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import DropDownList from '../DropDownList.vue';
+import ItemList from '../ItemList.vue';
 
 const input_devices = ['Default', 'Device 1', 'Device 2', 'Device 3'];
 const current_input_device = ref('Device 1');
@@ -47,7 +47,8 @@ function set_output_device(device: string) {
             role="menu"
           >
             <div class="dropdown-content">
-              <DropDownList
+              <ItemList
+                layout="dropdown-select"
                 :list="input_devices"
                 :default_item="current_input_device"
                 :get_key="(device: string) => device"
@@ -86,7 +87,8 @@ function set_output_device(device: string) {
             role="menu"
           >
             <div class="dropdown-content">
-              <DropDownList
+              <ItemList
+                layout="dropdown-select"
                 :list="output_devices"
                 :default_item="current_output_device"
                 :get_key="(device: string) => device"
