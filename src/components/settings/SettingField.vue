@@ -45,13 +45,18 @@ function edit_bool(newVal: boolean) {
 </script>
 
 <template>
-  <div v-if="typeof setting.value === 'string'" class="field">
+  <div
+    v-if="typeof setting.value === 'string'"
+    class="field"
+  >
     <div class="level mb-0">
       <div class="overflow-x-hidden">
         <div class="label mb-0">
           {{ setting.name }}
         </div>
-        <p class="ellipsis overflow-x-hidden">{{ setting.value }}</p>
+        <p class="ellipsis overflow-x-hidden">
+          {{ setting.value }}
+        </p>
       </div>
       <button
         class="button"
@@ -100,7 +105,10 @@ function edit_bool(newVal: boolean) {
       </div>
     </PopupModal>
   </div>
-  <div v-else-if="typeof setting.value === 'boolean'" class="field">
+  <div
+    v-else-if="typeof setting.value === 'boolean'"
+    class="field"
+  >
     <div class="level mb-0">
       <div class="level-left">
         <div class="level-item">
@@ -125,7 +133,12 @@ function edit_bool(newVal: boolean) {
         </div>
       </div>
     </div>
-    <p v-if="error_message !== null" class="help has-text-danger">{{ error_message }}</p>
+    <p
+      v-if="error_message !== null"
+      class="help has-text-danger"
+    >
+      {{ error_message }}
+    </p>
   </div>
 </template>
 
