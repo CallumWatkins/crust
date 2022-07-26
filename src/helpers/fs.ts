@@ -1,5 +1,7 @@
 import { readDir, readTextFile, BaseDirectory, FileEntry, createDir, writeTextFile } from '@tauri-apps/api/fs';
 
+export { BaseDirectory };
+
 /**
  * Checks if a file exists.
  *

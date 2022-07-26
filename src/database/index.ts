@@ -1,10 +1,10 @@
 /* eslint-disable max-classes-per-file */
-import { BaseDirectory, createDir, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
 import { Mutex } from 'async-mutex';
 import { plainToInstance, instanceToPlain, Expose } from 'class-transformer';
 import 'reflect-metadata';
 import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from 'semver';
 import { Ref, ref } from 'vue';
+import { BaseDirectory, read_text_file, write_text_file } from '../helpers/fs';
 
 /**
  * The base database class.
@@ -47,13 +47,7 @@ export abstract class Database {
    * @memberof Database
    */
   private static async read_database_file(): Promise<string | null> {
-    await createDir(Database.DB_PATH, { dir: Database.DB_BASE_DIR, recursive: true });
-    try {
-      return await readTextFile(Database.DB_PATH + Database.DB_FILE_NAME, { dir: Database.DB_BASE_DIR });
-    } catch (ex) {
-      console.error(ex);
-      return null;
-    }
+    return read_text_file(Database.DB_BASE_DIR, Database.DB_PATH, Database.DB_FILE_NAME);
   }
 
   /**
@@ -64,8 +58,7 @@ export abstract class Database {
    * @memberof Database
    */
   private static async write_database_file(contents: string) {
-    await createDir(Database.DB_PATH, { dir: Database.DB_BASE_DIR, recursive: true });
-    await writeTextFile(Database.DB_PATH + Database.DB_FILE_NAME, contents, { dir: Database.DB_BASE_DIR });
+    await write_text_file(Database.DB_BASE_DIR, Database.DB_PATH, Database.DB_FILE_NAME, contents);
   }
 
   /**
