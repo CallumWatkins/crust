@@ -39,6 +39,25 @@ export abstract class Database {
   abstract readonly db_version: string;
 
   /**
+   * The singleton database object.
+   *
+   * @private
+   * @static
+   * @type {(DatabaseLatest | null)}
+   * @memberof Database
+   */
+  private static singleton: DatabaseLatest | null = null;
+
+  /**
+   * A mutex for asynchronous operations.
+   *
+   * @private
+   * @static
+   * @memberof Database
+   */
+  private static readonly mutex = new Mutex();
+
+  /**
    * Read from the database file on disk.
    *
    * @private
@@ -75,9 +94,7 @@ export abstract class Database {
     if (serialized == null) throw new Error('serialized is null');
 
     const obj = JSON.parse(serialized);
-    console.log(obj);
     const version = semVerClean(obj?.db_version);
-    console.log('Cleaned version', version);
     if (version === null || semVerValid(version) === null) throw new Error('Data is missing a valid version number');
 
     let db: Database | null = null;
@@ -94,9 +111,6 @@ export abstract class Database {
 
     return db;
   }
-
-  private static singleton: Database_v0 | null = null;
-  private static mutex = new Mutex();
 
   /**
    * Load the database from disk. Creates a new database if one does not already exist.
