@@ -4,6 +4,7 @@ import { Mutex } from 'async-mutex';
 import { plainToInstance, instanceToPlain, Expose } from 'class-transformer';
 import 'reflect-metadata';
 import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from 'semver';
+import { Ref, ref } from 'vue';
 
 /**
  * The base database class.
@@ -130,7 +131,11 @@ export abstract class Database {
     } finally {
       releaseMutex();
     }
+  }
 
+  static async loadRef(): Promise<Ref<Database_v0>> {
+    const db = await Database.load();
+    return ref(db);
   }
 
   /**
