@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { BaseDirectory, createDir, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
+import { Mutex } from 'async-mutex';
 import { plainToInstance, instanceToPlain, Expose } from 'class-transformer';
 import 'reflect-metadata';
 import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from 'semver';
@@ -100,6 +101,9 @@ export abstract class Database {
     return db;
   }
 
+  private static singleton: Database_v0 | null = null;
+  private static mutex = new Mutex();
+
   /**
    * Load the database from disk. Creates a new database if one does not already exist.
    *
@@ -108,14 +112,25 @@ export abstract class Database {
    * @memberof Database
    */
   static async load(): Promise<Database_v0> {
-    const serialized: string | null = await Database.read_database_file();
-    const db = (serialized === null)
-      ? new Database_v0()
-      : Database.construct_database(serialized);
+    const releaseMutex = await Database.mutex.acquire();
+    try {
+      if (Database.singleton) return Database.singleton;
 
-    if (db instanceof Database_v0) return db;
+      const serialized: string | null = await Database.read_database_file();
+      const db = (serialized === null)
+        ? new Database_v0()
+        : Database.construct_database(serialized);
 
-    throw new Error('Unexpected database version');
+      if (db instanceof Database_v0) {
+        Database.singleton = db;
+        return db;
+      }
+
+      throw new Error('Unexpected database version');
+    } finally {
+      releaseMutex();
+    }
+
   }
 
   /**
@@ -124,7 +139,12 @@ export abstract class Database {
    * @memberof Database
    */
   async save() {
-    Database.write_database_file(this.serialize());
+    const releaseMutex = await Database.mutex.acquire();
+    try {
+      Database.write_database_file(this.serialize());
+    } finally {
+      releaseMutex();
+    }
   }
 
   /**
