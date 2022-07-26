@@ -1,8 +1,10 @@
 /* eslint-disable max-classes-per-file */
-import { BaseDirectory, createDir, readTextFile, writeTextFile } from '@tauri-apps/api/fs';
+import { Mutex } from 'async-mutex';
 import { plainToInstance, instanceToPlain, Expose } from 'class-transformer';
 import 'reflect-metadata';
 import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from 'semver';
+import { Ref, ref } from 'vue';
+import { BaseDirectory, read_text_file, write_text_file } from '../helpers/fs';
 
 /**
  * The base database class.
@@ -37,6 +39,25 @@ export abstract class Database {
   abstract readonly db_version: string;
 
   /**
+   * The singleton database object.
+   *
+   * @private
+   * @static
+   * @type {(DatabaseLatest | null)}
+   * @memberof Database
+   */
+  private static singleton: DatabaseLatest | null = null;
+
+  /**
+   * A mutex for asynchronous operations.
+   *
+   * @private
+   * @static
+   * @memberof Database
+   */
+  private static readonly mutex = new Mutex();
+
+  /**
    * Read from the database file on disk.
    *
    * @private
@@ -45,13 +66,7 @@ export abstract class Database {
    * @memberof Database
    */
   private static async read_database_file(): Promise<string | null> {
-    await createDir(Database.DB_PATH, { dir: Database.DB_BASE_DIR, recursive: true });
-    try {
-      return await readTextFile(Database.DB_PATH + Database.DB_FILE_NAME, { dir: Database.DB_BASE_DIR });
-    } catch (ex) {
-      console.error(ex);
-      return null;
-    }
+    return read_text_file(Database.DB_BASE_DIR, Database.DB_PATH, Database.DB_FILE_NAME);
   }
 
   /**
@@ -62,8 +77,7 @@ export abstract class Database {
    * @memberof Database
    */
   private static async write_database_file(contents: string) {
-    await createDir(Database.DB_PATH, { dir: Database.DB_BASE_DIR, recursive: true });
-    await writeTextFile(Database.DB_PATH + Database.DB_FILE_NAME, contents, { dir: Database.DB_BASE_DIR });
+    await write_text_file(Database.DB_BASE_DIR, Database.DB_PATH, Database.DB_FILE_NAME, contents);
   }
 
   /**
@@ -80,9 +94,7 @@ export abstract class Database {
     if (serialized == null) throw new Error('serialized is null');
 
     const obj = JSON.parse(serialized);
-    console.log(obj);
     const version = semVerClean(obj?.db_version);
-    console.log('Cleaned version', version);
     if (version === null || semVerValid(version) === null) throw new Error('Data is missing a valid version number');
 
     let db: Database | null = null;
@@ -107,15 +119,31 @@ export abstract class Database {
    * @return The latest version of the database version from disk or new.
    * @memberof Database
    */
-  static async load(): Promise<Database_v0> {
-    const serialized: string | null = await Database.read_database_file();
-    const db = (serialized === null)
-      ? new Database_v0()
-      : Database.construct_database(serialized);
+  static async load(): Promise<DatabaseLatest> {
+    const releaseMutex = await Database.mutex.acquire();
+    try {
+      if (Database.singleton !== null) return Database.singleton as DatabaseLatest;
 
-    if (db instanceof Database_v0) return db;
+      const serialized: string | null = await Database.read_database_file();
+      let db: DatabaseLatest;
+      if (serialized === null) {
+        // Database file does not exist
+        db = new DatabaseLatest();
+        db.save();
+      } else {
+        db = Database.construct_database(serialized) as DatabaseLatest;
+      }
 
-    throw new Error('Unexpected database version');
+      Database.singleton = db;
+      return db;
+    } finally {
+      releaseMutex();
+    }
+  }
+
+  static async loadRef(): Promise<Ref<DatabaseLatest>> {
+    const db = await Database.load();
+    return ref(db);
   }
 
   /**
@@ -124,7 +152,12 @@ export abstract class Database {
    * @memberof Database
    */
   async save() {
-    Database.write_database_file(this.serialize());
+    const releaseMutex = await Database.mutex.acquire();
+    try {
+      Database.write_database_file(this.serialize());
+    } finally {
+      releaseMutex();
+    }
   }
 
   /**
@@ -177,3 +210,5 @@ export class FutureVersionError extends Error {
     Object.setPrototypeOf(this, FutureVersionError.prototype);
   }
 }
+
+export class DatabaseLatest extends Database_v0 { }

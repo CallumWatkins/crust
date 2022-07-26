@@ -20,7 +20,8 @@
         "scope": ["$APP", "$APP/*"],
         "createDir": true,
         "readFile": true,
-        "writeFile": true
+        "writeFile": true,
+        "readDir": true
       }
     },
     "bundle": {
