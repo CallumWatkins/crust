@@ -112,28 +112,29 @@ export abstract class Database {
    * @return The latest version of the database version from disk or new.
    * @memberof Database
    */
-  static async load(): Promise<Database_v0> {
+  static async load(): Promise<DatabaseLatest> {
     const releaseMutex = await Database.mutex.acquire();
     try {
-      if (Database.singleton) return Database.singleton;
+      if (Database.singleton !== null) return Database.singleton as DatabaseLatest;
 
       const serialized: string | null = await Database.read_database_file();
-      const db = (serialized === null)
-        ? new Database_v0()
-        : Database.construct_database(serialized);
-
-      if (db instanceof Database_v0) {
-        Database.singleton = db;
-        return db;
+      let db: DatabaseLatest;
+      if (serialized === null) {
+        // Database file does not exist
+        db = new DatabaseLatest();
+        db.save();
+      } else {
+        db = Database.construct_database(serialized) as DatabaseLatest;
       }
 
-      throw new Error('Unexpected database version');
+      Database.singleton = db;
+      return db;
     } finally {
       releaseMutex();
     }
   }
 
-  static async loadRef(): Promise<Ref<Database_v0>> {
+  static async loadRef(): Promise<Ref<DatabaseLatest>> {
     const db = await Database.load();
     return ref(db);
   }
@@ -202,3 +203,5 @@ export class FutureVersionError extends Error {
     Object.setPrototypeOf(this, FutureVersionError.prototype);
   }
 }
+
+export class DatabaseLatest extends Database_v0 { }
