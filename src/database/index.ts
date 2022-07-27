@@ -3,6 +3,13 @@ import { BaseDirectory, createDir, readTextFile, writeTextFile } from '@tauri-ap
 import { plainToInstance, instanceToPlain, Expose } from 'class-transformer';
 import 'reflect-metadata';
 import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from 'semver';
+import { Theme } from '../model/enum';
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Fields<T> = Pick<T, { [K in keyof T]: T[K] extends Function ? never : K }[keyof T]>;
+type KeysWithValsOfType<T, V> = keyof { [ P in keyof T as T[P] extends V ? P : never ] : P };
+export type DatabaseFields<T> = Omit<Fields<T>, 'db_version'>
+export type DatabaseFieldsOfType<T, U> = KeysWithValsOfType<DatabaseFields<T>, U>;
 
 /**
  * The base database class.
@@ -154,6 +161,8 @@ export class Database_v0 extends Database {
   @Expose() readonly db_version = '0.0.0';
 
   @Expose() example = 'example data';
+  @Expose() username = 'example data';
+  @Expose() theme: Theme = Theme.Dark;
 
   serialize(): string {
     return JSON.stringify(instanceToPlain(this, { strategy: 'excludeAll' }), undefined, 2);
