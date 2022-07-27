@@ -2,6 +2,7 @@
 import { Ref, ref, watch } from 'vue';
 import { Setting } from '../../model/Setting';
 import PopupModal from '../PopupModal.vue';
+import ItemList from '../ItemList.vue';
 
 const props = defineProps<{
   setting: Setting<any, any>
@@ -45,8 +46,54 @@ function edit_bool(newVal: boolean) {
 </script>
 
 <template>
+  <div v-if="setting.possible_values !== null">
+    <div class="level mb-0">
+      <div class="overflow-x-hidden">
+        <div class="label mb-0">
+          {{ setting.name }}
+        </div>
+      </div>
+      <div class="dropdown is-active">
+        <Popper
+          offset-distance="6"
+          offset-skid="-150"
+          placement="bottom"
+        >
+          <div class="dropdown-trigger">
+            <button
+              class="button"
+              aria-haspopup="true"
+              aria-controls="dropdown-menu"
+            >
+              <span>{{ setting.value }}</span>
+              <span class="icon">
+                <FontAwesomeIcon icon="fa-solid fa-chevron-down" />
+              </span>
+            </button>
+          </div>
+          <template #content="{ close }">
+            <div
+              id="dropdown-menu"
+              class="dropdown-menu"
+              role="menu"
+            >
+              <div class="dropdown-content">
+                <ItemList
+                  layout="dropdown-select"
+                  :list="setting.possible_values"
+                  :default_item="setting.value"
+                  :get_key="(val: any) => val"
+                  @changed="(val: any) => { emit('changed', val); close(); }"
+                />
+              </div>
+            </div>
+          </template>
+        </Popper>
+      </div>
+    </div>
+  </div>
   <div
-    v-if="typeof setting.value === 'string'"
+    v-else-if="typeof setting.value === 'string'"
     class="field"
   >
     <div class="level mb-0">

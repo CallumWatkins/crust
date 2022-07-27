@@ -1,22 +1,25 @@
 /* eslint-disable max-classes-per-file */
-import { Database, DatabaseFields, DatabaseFieldsOfType, Database_v0 } from '../database';
+import { Database, DatabaseFields, DatabaseFieldsOfType, DatabaseLatest } from '../database';
 import { Theme } from './enum';
 
 export abstract class Setting<K extends string, T> {
   readonly key: K;
   name: string;
   value: T;
+  possible_values: T[] | null;
   validator: (val: T) => string | null;
 
   constructor(
     key: K,
     name: string,
     value: T,
+    possible_values: T[] | null,
     validator: (val: T) => string | null,
   ) {
     this.key = key;
     this.name = name;
     this.value = value;
+    this.possible_values = possible_values;
     this.validator = validator;
   }
 
@@ -34,10 +37,11 @@ export class BasicSetting<T> extends Setting<string, T> {
     key: string,
     name: string,
     value: T,
+    possible_values: T[] | null,
     validator: (val: T) => string | null,
     saver: (key: string, val: T) => Promise<void>,
   ) {
-    super(key, name, value, validator);
+    super(key, name, value, possible_values, validator);
     this.saver = saver;
   }
 
@@ -61,6 +65,7 @@ const username_setting = new DatabaseSetting<string>(
   'username',
   'Username',
   db.value.username,
+  null,
   (val: string) => {
     if (val.length < 3 || val.length > 50) {
       return 'Username must be between 3 and 50 characters.';
@@ -73,6 +78,7 @@ const theme_setting = new DatabaseSetting<Theme>(
   'theme',
   'Theme',
   db.value.theme,
+  Object.values(Theme),
   (_) => null,
 );
 
