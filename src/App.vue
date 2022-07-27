@@ -3,11 +3,8 @@ import { ref } from 'vue';
 import { invoke } from '@tauri-apps/api/tauri';
 import WindowTitlebar from './components/WindowTitlebar.vue';
 import SettingsMenu from './components/SettingsMenu.vue';
+import { Theme } from './model/enum';
 
-enum Theme {
-  Light = 'light',
-  Dark = 'dark',
-}
 
 const theme = ref(Theme.Dark);
 const show_settings = ref(false);
