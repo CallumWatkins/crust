@@ -4,9 +4,10 @@ import { invoke } from '@tauri-apps/api/tauri';
 import WindowTitlebar from './components/WindowTitlebar.vue';
 import SettingsMenu from './components/SettingsMenu.vue';
 import { Theme } from './model/enum';
+import { Database } from './database';
 
+const db = await Database.loadRef();
 
-const theme = ref(Theme.Dark);
 const show_settings = ref(false);
 
 let is_first_resolve = true;
@@ -25,11 +26,11 @@ async function first_resolve() {
     <div
       id="root"
       class="is-flex is-flex-direction-column"
-      :class="theme"
+      :class="db.theme"
     >
       <div class="is-flex-shrink-0">
         <WindowTitlebar
-          @toggle-theme="theme = (theme === Theme.Dark ? Theme.Light : Theme.Dark)"
+          @toggle-theme="db.theme = (db.theme === Theme.Dark ? Theme.Light : Theme.Dark)"
           @toggle-settings="show_settings = !show_settings"
         />
       </div>
