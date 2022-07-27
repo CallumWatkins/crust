@@ -3,7 +3,6 @@ import { ref } from 'vue';
 import { invoke } from '@tauri-apps/api/tauri';
 import WindowTitlebar from './components/WindowTitlebar.vue';
 import SettingsMenu from './components/SettingsMenu.vue';
-import { Theme } from './model/enum';
 import { Database } from './database';
 
 const db = await Database.loadRef();
@@ -30,7 +29,6 @@ async function first_resolve() {
     >
       <div class="is-flex-shrink-0">
         <WindowTitlebar
-          @toggle-theme="db.theme = (db.theme === Theme.Dark ? Theme.Light : Theme.Dark)"
           @toggle-settings="show_settings = !show_settings"
         />
       </div>
