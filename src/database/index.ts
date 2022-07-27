@@ -53,7 +53,7 @@ export abstract class Database {
    * @type {(DatabaseLatest | null)}
    * @memberof Database
    */
-  private static singleton: DatabaseLatest | null = null;
+  private static singleton: Ref<DatabaseLatest> | null = null;
 
   /**
    * A mutex for asynchronous operations.
@@ -126,10 +126,10 @@ export abstract class Database {
    * @return The latest version of the database version from disk or new.
    * @memberof Database
    */
-  static async load(): Promise<DatabaseLatest> {
+  static async load(): Promise<Ref<DatabaseLatest>> {
     const releaseMutex = await Database.mutex.acquire();
     try {
-      if (Database.singleton !== null) return Database.singleton as DatabaseLatest;
+      if (Database.singleton !== null) return Database.singleton as Ref<DatabaseLatest>;
 
       const serialized: string | null = await Database.read_database_file();
       let db: DatabaseLatest;
@@ -141,16 +141,11 @@ export abstract class Database {
         db = Database.construct_database(serialized) as DatabaseLatest;
       }
 
-      Database.singleton = db;
-      return db;
+      Database.singleton = ref(db);
+      return Database.singleton;
     } finally {
       releaseMutex();
     }
-  }
-
-  static async loadRef(): Promise<Ref<DatabaseLatest>> {
-    const db = await Database.load();
-    return ref(db);
   }
 
   /**

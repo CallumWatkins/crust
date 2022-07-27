@@ -46,10 +46,10 @@ export class BasicSetting<T> extends Setting<string, T> {
   }
 }
 
-export class DatabaseSetting<T extends DatabaseFields<Database_v0>[keyof DatabaseFields<Database_v0>]>
-  extends Setting<DatabaseFieldsOfType<Database_v0, T>, T> {
+export class DatabaseSetting<T extends DatabaseFields<DatabaseLatest>[keyof DatabaseFields<DatabaseLatest>]>
+  extends Setting<DatabaseFieldsOfType<DatabaseLatest, T>, T> {
   async save() {
-    const db: Database_v0 = await Database.load();
+    const db = (await Database.load()).value;
     db[this.key] = this.value as any;
     await db.save();
   }
@@ -60,7 +60,7 @@ const db = await Database.load();
 const username_setting = new DatabaseSetting<string>(
   'username',
   'Username',
-  db.username,
+  db.value.username,
   (val: string) => {
     if (val.length < 3 || val.length > 50) {
       return 'Username must be between 3 and 50 characters.';
@@ -72,7 +72,7 @@ const username_setting = new DatabaseSetting<string>(
 const theme_setting = new DatabaseSetting<Theme>(
   'theme',
   'Theme',
-  db.theme,
+  db.value.theme,
   (_) => null,
 );
 
