@@ -21,7 +21,7 @@
     "function-call-argument-newline": "off",
     "lines-between-class-members": [ "error", "always", { "exceptAfterSingleLine": true } ],
     "max-len": ["error", { "code": 150 }],
-    "no-use-before-define": [ "error", { "classes": false } ],
+    "no-use-before-define": "off",
     "object-curly-newline": [ "error", { "consistent": true } ],
     "vue/prop-name-casing": [ "error", "snake_case" ],
     "no-shadow": "off",
