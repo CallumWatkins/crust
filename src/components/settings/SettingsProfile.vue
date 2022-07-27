@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import { Ref, ref } from 'vue';
 import { DatabaseSetting, Setting, theme_setting, username_setting } from '../../model/Setting';
 import UserAvatar from '../UserAvatar.vue';
 import SettingField from './SettingField.vue';
 
-const profile_settings: DatabaseSetting<any>[] = [
+const profile_settings: Ref<DatabaseSetting<any>[]> = ref([
   username_setting,
   theme_setting,
-];
+]);
 
 async function changed<T>(setting: Setting<any, T>, newVal: T) {
   setting.value = newVal;
