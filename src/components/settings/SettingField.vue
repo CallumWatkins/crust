@@ -4,7 +4,7 @@ import { Setting } from '../../model/Setting';
 import PopupModal from '../PopupModal.vue';
 
 const props = defineProps<{
-  setting: Setting<any>
+  setting: Setting<any, any>
 }>();
 
 const emit = defineEmits(['changed']);
@@ -17,7 +17,7 @@ const show_edit_string_modal = ref(false);
 watch(
   () => string_val.value,
   (val) => {
-    error_message.value = props.setting.valid(val.trim());
+    error_message.value = props.setting.is_valid(val.trim());
   },
 );
 
@@ -34,7 +34,7 @@ function close_edit_string_modal(save: boolean) {
 }
 
 function edit_bool(newVal: boolean) {
-  const valid = props.setting.valid(newVal);
+  const valid = props.setting.is_valid(newVal);
   error_message.value = valid;
   if (valid === null) {
     emit('changed', newVal);

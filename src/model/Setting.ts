@@ -55,3 +55,25 @@ export class DatabaseSetting<T extends DatabaseFields<Database_v0>[keyof Databas
   }
 }
 
+const db = await Database.load();
+
+const username_setting = new DatabaseSetting<string>(
+  'username',
+  'Username',
+  db.username,
+  (val: string) => {
+    if (val.length < 3 || val.length > 50) {
+      return 'Username must be between 3 and 50 characters.';
+    }
+    return null;
+  },
+);
+
+const theme_setting = new DatabaseSetting<Theme>(
+  'theme',
+  'Theme',
+  db.theme,
+  (_) => null,
+);
+
+export { username_setting, theme_setting };

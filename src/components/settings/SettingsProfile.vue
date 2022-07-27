@@ -1,27 +1,17 @@
 <script setup lang="ts">
-import { Setting } from '../../model/Setting';
+import { DatabaseSetting, Setting, theme_setting, username_setting } from '../../model/Setting';
 import UserAvatar from '../UserAvatar.vue';
 import SettingField from './SettingField.vue';
 
-const profile_settings: Setting<any>[] = [
-  {
-    key: 'username',
-    name: 'Username',
-    value: 'MyName',
-    valid: (val: string) => {
-      if (val.length < 3 || val.length > 50) {
-        return 'Username must be between 3 and 50 characters.';
-      }
-      return null;
-    },
-  } as Setting<string>,
-  {
-    key: 'dark-theme',
-    name: 'Dark Theme',
-    value: true,
-    valid: (_) => null,
-  } as Setting<boolean>,
+const profile_settings: DatabaseSetting<any>[] = [
+  username_setting,
+  theme_setting,
 ];
+
+async function changed<T>(setting: Setting<any, T>, newVal: T) {
+  setting.value = newVal;
+  await setting.save();
+}
 </script>
 
 <template>
@@ -38,7 +28,7 @@ const profile_settings: Setting<any>[] = [
       v-for="profile_setting in profile_settings"
       :key="profile_setting.key"
       :setting="profile_setting"
-      @changed="(newVal) => profile_setting.value = newVal"
+      @changed="(newVal) => changed(profile_setting, newVal)"
     />
   </div>
 </template>
