@@ -34,7 +34,7 @@ export default defineConfig({
         entryFileNames: 'assets/js/[name].[hash].js',
       },
     },
-    target: ['es2021', 'chrome100', 'safari15'],
+    target: ['chrome100', 'safari15'],
   },
   css: {
     preprocessorOptions: {
