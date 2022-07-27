@@ -160,7 +160,6 @@ export abstract class Database {
 export class Database_v0 extends Database {
   @Expose() readonly db_version = '0.0.0';
 
-  @Expose() example = 'example data';
   @Expose() username = 'example data';
   @Expose() theme: Theme = Theme.Dark;
 
