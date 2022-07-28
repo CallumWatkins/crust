@@ -4,7 +4,14 @@ import { plainToInstance, instanceToPlain, Expose } from 'class-transformer';
 import 'reflect-metadata';
 import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from 'semver';
 import { Ref, ref } from 'vue';
+import { Theme } from '../model/enum';
 import { BaseDirectory, read_text_file, write_text_file } from '../helpers/fs';
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Fields<T> = Pick<T, { [K in keyof T]: T[K] extends Function ? never : K }[keyof T]>;
+type KeysWithValsOfType<T, V> = keyof { [ P in keyof T as T[P] extends V ? P : never ] : P };
+export type DatabaseFields<T> = Omit<Fields<T>, 'db_version'>
+export type DatabaseFieldsOfType<T, U> = KeysWithValsOfType<DatabaseFields<T>, U>;
 
 /**
  * The base database class.
@@ -46,7 +53,7 @@ export abstract class Database {
    * @type {(DatabaseLatest | null)}
    * @memberof Database
    */
-  private static singleton: DatabaseLatest | null = null;
+  private static singleton: Ref<DatabaseLatest> | null = null;
 
   /**
    * A mutex for asynchronous operations.
@@ -119,10 +126,10 @@ export abstract class Database {
    * @return The latest version of the database version from disk or new.
    * @memberof Database
    */
-  static async load(): Promise<DatabaseLatest> {
+  static async load(): Promise<Ref<DatabaseLatest>> {
     const releaseMutex = await Database.mutex.acquire();
     try {
-      if (Database.singleton !== null) return Database.singleton as DatabaseLatest;
+      if (Database.singleton !== null) return Database.singleton as Ref<DatabaseLatest>;
 
       const serialized: string | null = await Database.read_database_file();
       let db: DatabaseLatest;
@@ -134,16 +141,11 @@ export abstract class Database {
         db = Database.construct_database(serialized) as DatabaseLatest;
       }
 
-      Database.singleton = db;
-      return db;
+      Database.singleton = ref(db);
+      return Database.singleton;
     } finally {
       releaseMutex();
     }
-  }
-
-  static async loadRef(): Promise<Ref<DatabaseLatest>> {
-    const db = await Database.load();
-    return ref(db);
   }
 
   /**
@@ -186,7 +188,8 @@ export abstract class Database {
 export class Database_v0 extends Database {
   @Expose() readonly db_version = '0.0.0';
 
-  @Expose() example = 'example data';
+  @Expose() username = 'example data';
+  @Expose() theme: Theme = Theme.Dark;
 
   serialize(): string {
     return JSON.stringify(instanceToPlain(this, { strategy: 'excludeAll' }), undefined, 2);

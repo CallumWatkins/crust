@@ -34,6 +34,7 @@ export default defineConfig({
         entryFileNames: 'assets/js/[name].[hash].js',
       },
     },
+    target: ['edge89', 'safari15'],
   },
   css: {
     preprocessorOptions: {
