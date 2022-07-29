@@ -110,8 +110,8 @@ function close_add_modal(data: any) {
 }
 
 function close_delete_modal(data: any) {
-  if (data === true) {
-    delete_connection(selected_conn.value!);
+  if (data === true && selected_conn.value) {
+    delete_connection(selected_conn.value);
     selected_conn.value = null;
   }
   show_delete_modal.value = false;
@@ -172,10 +172,10 @@ function close_delete_modal(data: any) {
         <div class="connections-list">
           <ItemList
             layout="panel-list"
-            :list="connections.filter(conn => conn.alias?.includes(search) || conn.ip.includes(search))"
-            :get_key="(conn: Connection) => conn.ip"
-            :get_value="(conn: Connection) => conn.alias ?? conn.ip"
-            @changed="conn => selected_conn = conn"
+            :list="connections_setting.value.filter(conn => conn.alias?.includes(search) || conn.ip.includes(search))"
+            :get_key="conn => conn.ip"
+            :get_value="conn => conn.alias ?? conn.ip"
+            @changed="selected_conn_changed"
           />
         </div>
       </div>
