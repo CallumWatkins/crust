@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { Database, DatabaseFields, DatabaseFieldsOfType, DatabaseLatest } from '../database';
+import Connection from './Connection';
 import { Theme } from './enum';
 
 export abstract class Setting<K extends string, T> {
@@ -87,4 +88,12 @@ const theme_setting = new DatabaseSetting<Theme>(
   (_) => null,
 );
 
-export { username_setting, theme_setting };
+const connections_setting = new DatabaseSetting<Connection[]>(
+  'connections',
+  'Connections',
+  db.value.connections,
+  null,
+  (_) => null,
+);
+
+export { username_setting, theme_setting, connections_setting };
