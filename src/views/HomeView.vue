@@ -2,13 +2,15 @@
 import { ref } from 'vue';
 import ChevronDown from '../components/ChevronDown.vue';
 import InlineHelpTip from '../components/InlineHelpTip.vue';
-import { Connection, use_connections } from '../composables/connections';
+import Connection from '../model/Connection';
+import { use_connections } from '../composables/connections';
 import ItemList from '../components/ItemList.vue';
 
-const { recent_connections } = use_connections();
+const { get_recent_connections } = use_connections();
 
 const input_ip = ref('');
 const input_public = ref(false);
+const recent_connections = get_recent_connections();
 
 function fill_input(conn: Connection) {
   input_ip.value = conn.ip;
@@ -150,8 +152,8 @@ const current_tab = ref(Tabs.Join);
                           layout="dropdown-fill"
                           :addons="['view-more']"
                           :list="recent_connections"
-                          :get_key="(conn: Connection) => conn.ip"
-                          :get_value="(conn: Connection) => conn.alias ?? conn.ip"
+                          :get_key="(conn) => conn.ip"
+                          :get_value="(conn) => conn.alias ?? conn.ip"
                           @changed="conn => { fill_input(conn); close(); }"
                         />
                       </div>
