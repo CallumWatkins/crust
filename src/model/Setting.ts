@@ -59,6 +59,11 @@ export class DatabaseSetting<T extends DatabaseFields<DatabaseLatest>[keyof Data
   }
 }
 
+export async function setting_on_changed<T>(setting: Setting<any, T>, newVal: T) {
+  setting.value = newVal;
+  await setting.save();
+}
+
 const db = await Database.load();
 
 const username_setting = new DatabaseSetting<string>(
