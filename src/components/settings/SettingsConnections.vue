@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref, Ref, watch } from 'vue';
-import { Connection, use_connections } from '../../composables/connections';
+import { use_connections } from '../../composables/connections';
+import Connection from '../../model/Connection';
 import { sort_by_property } from '../../helpers/sort';
 import PopupModal from '../PopupModal.vue';
 import ItemList from '../ItemList.vue';
 import { BasicSetting, setting_on_changed, connections_setting } from '../../model/Setting';
 import SettingField from './SettingField.vue';
 
-const { connections, add_connection, update_connection, delete_connection } = use_connections();
+const { add_connection, delete_connection } = use_connections();
 const selected_conn: Ref<Connection | null> = ref(null);
 
 const alias_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
@@ -46,19 +47,19 @@ const ip_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
 const sorters = ref([
   {
     name: 'A-Z',
-    function: () => connections.value.sort(sort_by_property<Connection>('alias')),
+    function: () => connections_setting.value.sort(sort_by_property<Connection>('alias')),
   },
   {
     name: 'Z-A',
-    function: () => connections.value.sort(sort_by_property<Connection>('alias', false)),
+    function: () => connections_setting.value.sort(sort_by_property<Connection>('alias', false)),
   },
   {
     name: 'Most Recent',
-    function: () => connections.value.sort(sort_by_property<Connection>('last_connected', false)),
+    function: () => connections_setting.value.sort(sort_by_property<Connection>('last_connected', false)),
   },
   {
     name: 'Least Recent',
-    function: () => connections.value.sort(sort_by_property<Connection>('last_connected')),
+    function: () => connections_setting.value.sort(sort_by_property<Connection>('last_connected')),
   },
 ]);
 
