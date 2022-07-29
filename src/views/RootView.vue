@@ -20,7 +20,7 @@ const show_settings = ref(false);
         @toggle-settings="show_settings = !show_settings"
       />
     </div>
-    <div class="is-flex-grow-1 is-relative">
+    <div class="is-flex-grow-1 is-relative is-min-height-0">
       <RouterView v-slot="{ Component, route }">
         <Transition :name="(route.meta?.transition as string | undefined) ?? ''">
           <div
