@@ -70,31 +70,16 @@ const modal_input_ip = ref('');
 const show_add_modal = ref(false);
 const show_delete_modal = ref(false);
 
-// TODO: Check IP format.
-function validate_ip(ip: string) {
-  const trimmed_ip = ip.trim();
-  const error_message = 'IP address follows an invalid format.';
-  if (trimmed_ip.length < 10) {
-    return error_message;
-  }
-  return null;
-}
-
 watch(
   () => modal_input_ip.value,
   (val) => {
-    validation_error.value = validate_ip(val);
+    validation_error.value = ip_setting.value.is_valid(val);
+  },
+  {
+    immediate: true,
   },
 );
 
-function open_alias_modal() {
-  modal_input_alias.value = selected_conn.value!.alias ?? '';
-  show_alias_modal.value = true;
-}
-
-function open_ip_modal() {
-  modal_input_ip.value = selected_conn.value!.ip;
-  show_ip_modal.value = true;
 function selected_conn_changed(conn: Connection) {
   selected_conn.value = conn;
   alias_setting.value.value = conn.alias ?? '';
@@ -102,7 +87,6 @@ function selected_conn_changed(conn: Connection) {
 }
 
 function open_add_modal() {
-  validation_error.value = null;
   modal_input_alias.value = null;
   modal_input_ip.value = '';
   show_add_modal.value = true;
@@ -263,7 +247,7 @@ function close_delete_modal(data: any) {
       <div class="block buttons">
         <button
           class="button is-success"
-          :disabled="validation_error !== null || modal_input_ip?.length === 0"
+          :disabled="validation_error !== null"
           @click="close(true)"
         >
           Save
