@@ -4,9 +4,43 @@ import { Connection, use_connections } from '../../composables/connections';
 import { sort_by_property } from '../../helpers/sort';
 import PopupModal from '../PopupModal.vue';
 import ItemList from '../ItemList.vue';
+import { BasicSetting, setting_on_changed, connections_setting } from '../../model/Setting';
 
 const { connections, add_connection, update_connection, delete_connection } = use_connections();
 const selected_conn: Ref<Connection | null> = ref(null);
+
+const alias_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
+  'alias',
+  'Alias',
+  selected_conn.value?.alias ?? '',
+  null,
+  (_) => null,
+  async (_, val: string): Promise<void> => {
+    if (selected_conn.value) {
+      selected_conn.value.alias = val;
+      connections_setting.save();
+    }
+  },
+));
+
+const ip_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
+  'ip',
+  'IP',
+  selected_conn.value?.alias ?? '',
+  null,
+  (val: string) => {
+    if (val.length < 1) {
+      return 'IP is required.';
+    }
+    return null;
+  },
+  async (_, val: string): Promise<void> => {
+    if (selected_conn.value) {
+      selected_conn.value.ip = val;
+      connections_setting.save();
+    }
+  },
+));
 
 const sorters = ref([
   {
