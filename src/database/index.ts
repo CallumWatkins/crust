@@ -1,11 +1,12 @@
 /* eslint-disable max-classes-per-file */
-import { Mutex } from 'async-mutex';
-import { plainToInstance, instanceToPlain, Expose } from 'class-transformer';
 import 'reflect-metadata';
+import { Mutex } from 'async-mutex';
+import { plainToInstance, instanceToPlain, Expose, Type } from 'class-transformer';
 import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from 'semver';
 import { Ref, ref } from 'vue';
 import { Theme } from '../model/enum';
 import { BaseDirectory, read_text_file, write_text_file } from '../helpers/fs';
+import Connection from '../model/Connection';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type Fields<T> = Pick<T, { [K in keyof T]: T[K] extends Function ? never : K }[keyof T]>;
@@ -190,6 +191,17 @@ export class Database_v0 extends Database {
 
   @Expose() username = 'example data';
   @Expose() theme: Theme = Theme.Dark;
+
+  @Type(() => Connection)
+  @Expose()
+    connections: Connection[] = [
+      new Connection('206.15.168.235', 'John Doe', new Date('2022-01-16')),
+      new Connection('3.66.149.79', 'James Smith', new Date('2022-03-22')),
+      new Connection('62.109.37.164'),
+      new Connection('34.61.123.222'),
+      new Connection('215.4.207.51', undefined, new Date('2022-04-01')),
+      new Connection('39.6.121.89', 'Charles Smith', new Date('2022-05-12')),
+    ];
 
   serialize(): string {
     return JSON.stringify(instanceToPlain(this, { strategy: 'excludeAll' }), undefined, 2);
