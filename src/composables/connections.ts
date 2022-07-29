@@ -1,23 +1,15 @@
 import { connections_setting } from '../model/Setting';
 import Connection from '../model/Connection';
+import { sort_by_property } from '../helpers/sort';
 
 // eslint-disable-next-line import/prefer-default-export
 export function use_connections() {
-  const recent_connections: Ref<Connection[]> = ref([
-    {
-      alias: 'Raveena Adkins',
-      ip: '175.157.72.251',
-      last_connected: null,
-    },
-    {
-      alias: 'Skye Willis',
-      ip: '11.77.205.157',
-      last_connected: null,
-    },
-    connections.value[0],
-    connections.value[2],
-    connections.value[3],
-  ]);
+  function get_recent_connections() {
+    return [...connections_setting.value]
+      .filter((conn) => conn.last_connected !== null)
+      .sort(sort_by_property<Connection>('last_connected', false))
+      .slice(0, 5);
+  }
 
   function find_connection(conn: Connection) {
     return connections_setting.value.findIndex((connection) => connection.ip === conn.ip);
@@ -37,7 +29,7 @@ export function use_connections() {
   }
 
   return {
-    recent_connections,
+    get_recent_connections,
     add_connection,
     delete_connection,
   };
