@@ -2,16 +2,16 @@
 import Message from '../model/Message';
 import UserAvatar from './UserAvatar.vue';
 
+defineProps<{
+  message: Message,
+  new_group: boolean,
+}>();
+
 function format_days_ago(date: Date) {
   const deltaDays = (date.getTime() - Date.now()) / (1000 * 3600 * 24);
   const formatter = new Intl.RelativeTimeFormat();
   return formatter.format(Math.round(deltaDays), 'days');
 }
-
-const props = defineProps<{
-  message: Message,
-  new_group: boolean,
-}>();
 </script>
 
 <template>
