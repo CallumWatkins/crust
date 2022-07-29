@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
-import { DatabaseSetting, Setting, theme_setting, username_setting } from '../../model/Setting';
+import { DatabaseSetting, theme_setting, username_setting, setting_on_changed } from '../../model/Setting';
 import UserAvatar from '../UserAvatar.vue';
 import SettingField from './SettingField.vue';
 
@@ -8,11 +8,6 @@ const profile_settings: Ref<DatabaseSetting<any>[]> = ref([
   username_setting,
   theme_setting,
 ]);
-
-async function changed<T>(setting: Setting<any, T>, newVal: T) {
-  setting.value = newVal;
-  await setting.save();
-}
 </script>
 
 <template>
@@ -29,7 +24,7 @@ async function changed<T>(setting: Setting<any, T>, newVal: T) {
       v-for="profile_setting in profile_settings"
       :key="profile_setting.key"
       :setting="profile_setting"
-      @changed="(newVal) => changed(profile_setting, newVal)"
+      @changed="(newVal) => setting_on_changed(profile_setting, newVal)"
     />
   </div>
 </template>
