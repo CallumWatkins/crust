@@ -5,7 +5,8 @@ import PopupModal from '../PopupModal.vue';
 import ItemList from '../ItemList.vue';
 
 const props = defineProps<{
-  setting: Setting<any, any>
+  setting: Setting<any, any>,
+  no_value?: string,
 }>();
 
 const emit = defineEmits(['changed']);
@@ -65,7 +66,7 @@ function edit_bool(newVal: boolean) {
               aria-haspopup="true"
               aria-controls="dropdown-menu"
             >
-              <span>{{ setting.value }}</span>
+              <span>{{ setting.value.length ? setting.value : no_value }}</span>
               <span class="icon">
                 <FontAwesomeIcon icon="fa-solid fa-chevron-down" />
               </span>
@@ -102,7 +103,7 @@ function edit_bool(newVal: boolean) {
           {{ setting.name }}
         </div>
         <p class="ellipsis overflow-x-hidden">
-          {{ setting.value }}
+          {{ setting.value.length ? setting.value : no_value }}
         </p>
       </div>
       <button
