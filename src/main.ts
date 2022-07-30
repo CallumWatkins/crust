@@ -2,6 +2,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import devtools from '@vue/devtools';
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 import Popper from 'vue3-popper';
 
 import { library as font_awesome_library } from '@fortawesome/fontawesome-svg-core';
@@ -24,8 +25,9 @@ font_awesome_library.add(
 createApp(App)
   .component('FontAwesomeIcon', FontAwesomeIcon)
   .component('FontAwesomeLayers', FontAwesomeLayers)
-  .use(router)
   .component('Popper', Popper)
+  .use(createPinia())
+  .use(router)
   .mount('#app');
 
 if (import.meta.env.DEV) {
