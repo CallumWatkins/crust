@@ -28,6 +28,7 @@
     "bulma-switch": "^2.0.4",
     "class-transformer": "^0.5.1",
     "mime": "^3.0.0",
+    "pinia": "^2.0.17",
     "reflect-metadata": "^0.1.13",
     "semver": "^7.3.7",
     "vue": "^3.2.25",
