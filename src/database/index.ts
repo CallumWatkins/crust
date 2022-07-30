@@ -191,6 +191,7 @@ export class Database_v0 extends Database {
 
   @Expose() username = 'example data';
   @Expose() theme: Theme = Theme.Dark;
+  @Expose() avatar_file_ext: string | null = null;
 
   @Type(() => Connection)
   @Expose()
