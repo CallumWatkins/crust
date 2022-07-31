@@ -46,6 +46,12 @@ function is_new_group(previousMessage: Message, message: Message): boolean {
             <h2 class="subtitle">
               Group with <span>You</span> and <span>@AnotherUser</span>
             </h2>
+            <p
+              v-if="messages.length === 0"
+              class="is-italic"
+            >
+              It's quiet in here. Say hello!
+            </p>
           </div>
         </div>
         <template
