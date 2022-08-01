@@ -48,8 +48,6 @@ const { users } = use_users();
   min-width: 280px;
   overflow-x: hidden;
   overflow-y: auto;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   width: 280px;
 }
 
