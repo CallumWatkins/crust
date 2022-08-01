@@ -58,7 +58,7 @@ jobs:
   build:
     if: |
       !contains(github.event.pull_request.title, '[skip ci]')
-    needs: [eslint, stylelint]
+    needs: [eslint, stylelint, clippy]
     strategy:
       fail-fast: false
       matrix:
