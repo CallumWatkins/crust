@@ -21,7 +21,8 @@
         "createDir": true,
         "readFile": true,
         "writeFile": true,
-        "readDir": true
+        "readDir": true,
+        "removeFile": true
       },
       "dialog": {
         "open": true
