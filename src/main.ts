@@ -10,7 +10,8 @@ import { FontAwesomeIcon, FontAwesomeLayers } from '@fortawesome/vue-fontawesome
 import {
   faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark,
   faBars, faCaretLeft, faChevronDown, faCircleCheck, faLightbulb,
-  faCircle, faUser, faCircleQuestion, faMagnifyingGlass, faPlus, faSort,
+  faCircle, faUser, faCircleQuestion, faMagnifyingGlass, faPlus,
+  faSort, faImage,
 } from '@fortawesome/free-solid-svg-icons';
 
 import App from './App.vue';
@@ -19,7 +20,8 @@ import router from './router';
 font_awesome_library.add(
   faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark,
   faBars, faCaretLeft, faChevronDown, faCircleCheck, faLightbulb,
-  faCircle, faUser, faCircleQuestion, faMagnifyingGlass, faPlus, faSort,
+  faCircle, faUser, faCircleQuestion, faMagnifyingGlass, faPlus,
+  faSort, faImage,
 );
 
 createApp(App)
