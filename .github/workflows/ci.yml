@@ -37,6 +37,20 @@ jobs:
     - name: Stylelint
       run: npm run stylelint
 
+  clippy:
+    if: |
+      !contains(github.event.pull_request.title, '[skip ci]')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: install Rust stable and Clippy
+      uses: actions-rs/toolchain@v1
+      with:
+        toolchain: stable
+        components: clippy
+    - name: clippy check
+      uses: actions-rs/clippy-check@v1
+
   build:
     if: |
       !contains(github.event.pull_request.title, '[skip ci]')
