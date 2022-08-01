@@ -54,16 +54,17 @@ jobs:
         sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
     - run: mkdir ./dist
     - name: clippy check
-      uses: actions-rs/clippy-check@v1
+      uses: reinismu/clippy-check@ce65cdb6b7d4419dcd2e3b2125134b89c1dadecf # Change to original once nesting is supported: actions-rs/clippy-check@v1
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        args: --all-features --manifest-path ./src-tauri/Cargo.toml
+        working-directory: src-tauri
+        args: --all-features
         name: clippy_check
 
   build:
     if: |
       !contains(github.event.pull_request.title, '[skip ci]')
-    needs: [eslint, stylelint, clippy]
+    needs: [eslint, stylelint, clippy_check]
     strategy:
       fail-fast: false
       matrix:
