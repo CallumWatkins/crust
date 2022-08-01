@@ -12,6 +12,7 @@ export const use_object_url_store = defineStore({
   }),
   actions: {
     create(key: string, obj: Blob | MediaSource): string {
+      this.revoke(key);
       const url = URL.createObjectURL(obj);
       this.object_urls.set(key, url);
       return url;
