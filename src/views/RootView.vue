@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { Database } from '../database';
+import { load_avatar } from '../helpers/avatar';
 import WindowTitlebar from '../components/WindowTitlebar.vue';
 import SettingsMenu from '../components/SettingsMenu.vue';
-import { Database } from '../database';
 
 const db = await Database.load();
 
 const show_settings = ref(false);
+
+await load_avatar();
 </script>
 
 <template>
