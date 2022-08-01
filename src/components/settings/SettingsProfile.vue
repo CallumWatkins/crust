@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
+import { use_object_url_store } from '../../stores/objects';
+import { set_new_avatar } from '../../helpers/avatar';
 import { DatabaseSetting, theme_setting, username_setting, setting_on_changed } from '../../model/Setting';
 import UserAvatar from '../UserAvatar.vue';
 import SettingField from './SettingField.vue';
@@ -9,12 +11,16 @@ const profile_settings: Ref<DatabaseSetting<any>[]> = ref([
   theme_setting,
 ]);
 
+const object_url_store = use_object_url_store();
+
 const loading_new_avatar = ref(false);
 const loading_new_avatar_error = ref('');
 
 async function change_avatar() {
   loading_new_avatar_error.value = '';
   loading_new_avatar.value = true;
+  const result = await set_new_avatar();
+  if (!result.ok) loading_new_avatar_error.value = result.val;
   loading_new_avatar.value = false;
 }
 </script>
@@ -23,6 +29,7 @@ async function change_avatar() {
   <div class="block">
     <div class="avatar-container">
       <UserAvatar
+        :src="object_url_store.get('avatar-image')"
         class="avatar"
       />
       <div class="is-flex is-align-items-center is-relative is-align-self-stretch">
