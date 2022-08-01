@@ -50,7 +50,6 @@ jobs:
         components: clippy
     - name: clippy check
       uses: actions-rs/clippy-check@v1
-      working-directory: 
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         args: --all-features --manifest-path ./src-tauri/Cargo.toml
