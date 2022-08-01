@@ -25,6 +25,6 @@ fn main() {
     .expect("error while running tauri application");
 }
 
-fn aaa() {
-  
+fn aaa(x: i32) {
+  if x & 1 == 2 { }
 }
