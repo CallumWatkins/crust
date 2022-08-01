@@ -1,5 +1,5 @@
 import {
-  readDir, readTextFile, BaseDirectory, FileEntry, createDir, writeTextFile, readBinaryFile, writeBinaryFile, BinaryFileContents,
+  readDir, readTextFile, BaseDirectory, FileEntry, createDir, writeTextFile, readBinaryFile, writeBinaryFile, BinaryFileContents, removeFile,
 } from '@tauri-apps/api/fs';
 
 export { BaseDirectory };
@@ -80,4 +80,16 @@ Promise<Uint8Array | null> {
 export async function write_binary_file(contents: BinaryFileContents, path: string, file_name: string, base_dir?: BaseDirectory) {
   await createDir(path, { dir: base_dir, recursive: true });
   await writeBinaryFile(path + file_name, contents, base_dir == null ? undefined : { dir: base_dir });
+}
+
+/**
+ * Delete a file.
+ *
+ * @export
+ * @param {string} path e.g. '' or 'folder/subfolder/'.
+ * @param {string} file_name e.g. 'file.txt'.
+ * @param {BaseDirectory} base_dir
+ */
+export async function delete_file(path: string, file_name: string, base_dir?: BaseDirectory) {
+  await removeFile(path + file_name, base_dir == null ? undefined : { dir: base_dir });
 }
