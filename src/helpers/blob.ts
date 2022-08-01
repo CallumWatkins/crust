@@ -23,14 +23,15 @@ export async function get_blob_from_url(url: URL): Promise<Blob | null> {
  * RegExp does not match the mime type inferred from the file extension.
  *
  * @export
- * @param {BaseDirectory} base_dir
- * @param {string} path e.g. 'folder/subfolder'.
- * @param {string} file_name e.g. 'file.txt'.
  * @param {(string | RegExp)} allowed_mime_type
+ * @param {string} path e.g. '' or 'folder/subfolder/'.
+ * @param {string} file_name e.g. 'file.txt'.
+ * @param {BaseDirectory} base_dir
+ * @param {boolean} check_exists Check if the file exists before attempting to read (requires readDir permission on the parent scope).
  * @return The file Blob, or null.
  */
-export async function read_blob_from_file(base_dir: BaseDirectory, path: string, file_name: string, allowed_mime_type: string | RegExp):
-Promise<Blob | null> {
+export async function read_blob_from_file(allowed_mime_type: string | RegExp, path: string, file_name: string,
+  base_dir?: BaseDirectory, check_exists = true): Promise<Blob | null> {
   let mime_type: string;
   if (allowed_mime_type instanceof RegExp) {
     const mt = get_mime_type(file_name);
@@ -41,7 +42,7 @@ Promise<Blob | null> {
     mime_type = allowed_mime_type;
   }
 
-  const bytes = await read_binary_file(base_dir, path, file_name);
+  const bytes = await read_binary_file(path, file_name, base_dir, check_exists);
   if (bytes === null) return null;
 
   const url = new Blob([bytes.buffer], { type: mime_type });
@@ -53,13 +54,13 @@ Promise<Blob | null> {
  *
  * @export
  * @param {Blob} blob The Blob to write.
- * @param {BaseDirectory} base_dir
- * @param {string} path e.g. 'folder/subfolder'.
+ * @param {string} path e.g. '' or 'folder/subfolder/'.
  * @param {string} file_name e.g. 'file.txt'.
+ * @param {BaseDirectory} base_dir
  */
-export async function write_blob_to_file(blob: Blob, base_dir: BaseDirectory, path: string, file_name: string) {
+export async function write_blob_to_file(blob: Blob, path: string, file_name: string, base_dir?: BaseDirectory) {
   const buffer = await blob.arrayBuffer();
-  write_binary_file(base_dir, path, file_name, buffer);
+  write_binary_file(buffer, path, file_name, base_dir);
 }
 
 /**
