@@ -8,15 +8,40 @@ const profile_settings: Ref<DatabaseSetting<any>[]> = ref([
   username_setting,
   theme_setting,
 ]);
+
+const loading_new_avatar = ref(false);
+const loading_new_avatar_error = ref('');
+
+async function change_avatar() {
+  loading_new_avatar_error.value = '';
+  loading_new_avatar.value = true;
+  loading_new_avatar.value = false;
+}
 </script>
 
 <template>
   <div class="block">
     <div class="avatar-container">
-      <UserAvatar class="avatar" />
-      <button class="button">
-        Upload Profile Picture
-      </button>
+      <UserAvatar
+        class="avatar"
+      />
+      <div class="is-flex is-align-items-center is-relative is-align-self-stretch">
+        <button
+          class="button"
+          :class="{ 'is-loading': loading_new_avatar }"
+          @click="change_avatar"
+        >
+          <span class="icon">
+            <FontAwesomeIcon icon="fa-solid fa-image" />
+          </span>
+          <span>
+            Change avatar
+          </span>
+        </button>
+        <p v-if="loading_new_avatar_error !== null">
+          {{ loading_new_avatar_error }}
+        </p>
+      </div>
     </div>
   </div>
   <div class="block settings-block">
@@ -35,6 +60,13 @@ const profile_settings: Ref<DatabaseSetting<any>[]> = ref([
   align-items: center;
   margin-bottom: calc(var(--spacing) * 4);
   gap: calc(var(--spacing) * 4);
+
+  p {
+    position: absolute;
+    bottom: 0;
+    white-space: nowrap;
+    color: var(--text-color-danger);
+  }
 }
 
 .avatar {
