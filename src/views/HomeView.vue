@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import ChevronDown from '../components/ChevronDown.vue';
 import InlineHelpTip from '../components/InlineHelpTip.vue';
 import Connection from '../model/Connection';
@@ -22,10 +23,13 @@ function join() {
   // TODO
 }
 
+const router = useRouter();
+
 function host() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const is_public = input_public.value;
   // TODO
+  router.push({ name: 'Room', params: { id: 1 } });
 }
 
 enum Tabs {

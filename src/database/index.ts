@@ -73,7 +73,7 @@ export abstract class Database {
    * @memberof Database
    */
   private static async read_database_file(): Promise<string | null> {
-    return read_text_file(Database.DB_BASE_DIR, Database.DB_PATH, Database.DB_FILE_NAME);
+    return read_text_file(Database.DB_PATH, Database.DB_FILE_NAME, Database.DB_BASE_DIR);
   }
 
   /**
@@ -84,7 +84,7 @@ export abstract class Database {
    * @memberof Database
    */
   private static async write_database_file(contents: string) {
-    await write_text_file(Database.DB_BASE_DIR, Database.DB_PATH, Database.DB_FILE_NAME, contents);
+    await write_text_file(contents, Database.DB_PATH, Database.DB_FILE_NAME, Database.DB_BASE_DIR);
   }
 
   /**
@@ -190,6 +190,7 @@ export class Database_v0 extends Database {
 
   @Expose() username = 'example data';
   @Expose() theme: Theme = Theme.Dark;
+  @Expose() avatar_file_ext: string | null = null;
 
   @Type(() => Connection)
   @Expose()

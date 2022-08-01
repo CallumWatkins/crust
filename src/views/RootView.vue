@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { Database } from '../database';
+import { load_avatar } from '../helpers/avatar';
 import WindowTitlebar from '../components/WindowTitlebar.vue';
 import SettingsMenu from '../components/SettingsMenu.vue';
-import { Database } from '../database';
 
 const db = await Database.load();
 
 const show_settings = ref(false);
+
+await load_avatar();
 </script>
 
 <template>
@@ -20,7 +23,7 @@ const show_settings = ref(false);
         @toggle-settings="show_settings = !show_settings"
       />
     </div>
-    <div class="is-flex-grow-1 is-relative">
+    <div class="is-flex-grow-1 is-relative is-min-height-0">
       <RouterView v-slot="{ Component, route }">
         <Transition :name="(route.meta?.transition as string | undefined) ?? ''">
           <div
