@@ -12,7 +12,9 @@ const props = defineProps<Props>();
 
 <template>
   <div class="user-profile p-5">
-    <UserAvatar class="avatar mb-5" />
+    <div class="avatar mb-5">
+      <UserAvatar />
+    </div>
     <p class="is-size-4">
       <strong>{{ props.user.connection.alias ?? props.user.username ?? props.user.connection.ip }}</strong>
     </p>
@@ -24,7 +26,7 @@ const props = defineProps<Props>();
   background-color: var(--background-color-darker);
   border-radius: var(--large-radius);
   box-shadow: $dropdown-content-shadow;
-  width: 300px;
+  min-width: 300px;
 }
 
 .avatar {

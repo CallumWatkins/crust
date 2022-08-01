@@ -20,8 +20,10 @@ const { users } = use_users();
       offsetSkid="66"
     >
       <div class="user px-3 py-2">
-        <UserAvatar class="avatar mr-3" />
-        <p class="user mr-2">
+        <div class="avatar mr-3">
+          <UserAvatar />
+        </div>
+        <p class="mr-2">
           {{ user.connection.alias ?? user.username ?? user.connection.ip }}
         </p>
         <font-awesome-icon
@@ -46,8 +48,9 @@ const { users } = use_users();
   min-width: 280px;
   overflow-x: hidden;
   overflow-y: auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   width: 280px;
-  word-break: break-all;
 }
 
 .user {
@@ -56,6 +59,11 @@ const { users } = use_users();
   cursor: pointer;
   display: flex;
 
+  & > p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   &:hover,
   &:focus {
     background-color: var(--background-color-secondary);
@@ -63,6 +71,7 @@ const { users } = use_users();
 }
 
 .avatar {
+  flex-shrink: 0;
   width: 40px;
 }
 
