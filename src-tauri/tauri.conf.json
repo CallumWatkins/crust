@@ -22,6 +22,9 @@
         "readFile": true,
         "writeFile": true,
         "readDir": true
+      },
+      "dialog": {
+        "open": true
       }
     },
     "bundle": {
