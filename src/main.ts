@@ -2,6 +2,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import devtools from '@vue/devtools';
 import { createApp } from 'vue';
+import 'reflect-metadata';
 import { createPinia } from 'pinia';
 import Popper from 'vue3-popper';
 
@@ -11,7 +12,7 @@ import {
   faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark,
   faBars, faCaretLeft, faChevronDown, faCircleCheck, faLightbulb,
   faCircle, faUser, faCircleQuestion, faMagnifyingGlass, faPlus,
-  faSort, faImage,
+  faSort, faImage, faCrown,
 } from '@fortawesome/free-solid-svg-icons';
 
 import App from './App.vue';
@@ -21,7 +22,7 @@ font_awesome_library.add(
   faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark,
   faBars, faCaretLeft, faChevronDown, faCircleCheck, faLightbulb,
   faCircle, faUser, faCircleQuestion, faMagnifyingGlass, faPlus,
-  faSort, faImage,
+  faSort, faImage, faCrown,
 );
 
 createApp(App)

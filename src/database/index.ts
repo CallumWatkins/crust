@@ -1,5 +1,4 @@
 /* eslint-disable max-classes-per-file */
-import 'reflect-metadata';
 import { Mutex } from 'async-mutex';
 import { plainToInstance, instanceToPlain, Expose, Type } from 'class-transformer';
 import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from 'semver';
