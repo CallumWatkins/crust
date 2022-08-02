@@ -1,15 +1,9 @@
 import { ref, Ref } from 'vue';
 import Connection from '../model/Connection';
+import User from '../model/User';
 import { UserFlag } from '../model/enum';
 
-export interface User {
-  username?: string;
-  avatar?: string;
-  connection: Connection;
-  flags: UserFlag[];
-}
-
-export function use_users() {
+export default function use_users() {
   const users: Ref<User[]> = ref([
     {
       username: 'MrFishHead',
@@ -61,7 +55,12 @@ export function use_users() {
     },
   ]);
 
+  const active_users: Ref<User[]> = ref([]);
+  const pending_users: Ref<User[]> = ref([]);
+
   return {
     users,
+    active_users,
+    pending_users,
   };
 }

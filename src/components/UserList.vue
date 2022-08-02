@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
-import { User, use_users } from '../composables/users';
+import use_users from '../composables/users';
 import UserAvatar from './UserAvatar.vue';
 import { UserFlag } from '../model/enum';
 import UserProfile from './UserProfile.vue';

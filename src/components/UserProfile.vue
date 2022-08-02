@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
-import { User } from '../composables/users';
+import User from '../model/User';
 import UserAvatar from './UserAvatar.vue';
 
 interface Props {
