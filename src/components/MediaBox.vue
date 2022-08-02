@@ -15,8 +15,11 @@ const relevant_users: Ref<User[]> = ref(active_users.value.concat(pending_users.
     <div
       v-for="user in relevant_users"
       :key="user.connection.ip"
-      class="avatar-wrapper m-2"
-      :class="{ 'is-pending': pending_users.includes(user) }"
+      class="avatar-wrapper m-3"
+      :class="[
+        { 'is-pending': pending_users.includes(user) },
+        { 'is-talking': false },
+      ]"
     >
       <div class="avatar">
         <UserAvatar />
@@ -36,7 +39,7 @@ const relevant_users: Ref<User[]> = ref(active_users.value.concat(pending_users.
 }
 
 .avatar-wrapper {
-  width: 94px;
+  width: 90px;
   box-shadow: 0 0 0 0 rgba(255 255 255 / 100%);
   background: black;
   border-radius: 50%;
@@ -48,6 +51,10 @@ const relevant_users: Ref<User[]> = ref(active_users.value.concat(pending_users.
   & > .avatar {
     filter: brightness(50%);
   }
+}
+
+.is-talking {
+  box-shadow: 0 0 0 5px rgb(44 145 76);
 }
 
 @keyframes pulse {
