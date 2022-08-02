@@ -11,6 +11,12 @@ rust-version = "1.57"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+strip = true
+
 [build-dependencies]
 tauri-build = { version = "1.0", features = [] }
 
