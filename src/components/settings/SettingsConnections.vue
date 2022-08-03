@@ -18,8 +18,8 @@ const alias_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
   null,
   async (_) => null,
   async (_, val: string): Promise<void> => {
-    if (selected_conn.value) {
-      selected_conn.value.alias = val;
+    if (selected_conn.value !== null) {
+      selected_conn.value.alias = (val.length === 0) ? null : val;
       connections_setting.save();
     }
   },
