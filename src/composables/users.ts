@@ -65,7 +65,9 @@ export default function use_users() {
       difference.forEach((user) => {
         setTimeout(() => {
           const index = pending_users.value.findIndex((inner_user) => inner_user.connection.ip === user.connection.ip);
-          pending_users.value.splice(index, 1);
+          if (index >= 0) {
+            pending_users.value.splice(index, 1);
+          }
         }, 10000);
       });
     },
