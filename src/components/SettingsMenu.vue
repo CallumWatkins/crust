@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { shallowRef, ref } from 'vue';
+import type { Component } from 'vue';
 import PlaceholderComponent from './PlaceholderComponent.vue';
 import SettingsAbout from './settings/SettingsAbout.vue';
 import SettingsUpdate from './settings/SettingsUpdate.vue';
@@ -10,7 +11,7 @@ import SettingsShortcuts from './settings/SettingsShortcuts.vue';
 
 interface Tab {
   name: string;
-  component: any;
+  component: Component;
 }
 
 interface MenuElement {

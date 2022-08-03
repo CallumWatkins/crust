@@ -6,6 +6,7 @@ import { DatabaseSetting, theme_setting, username_setting, setting_on_changed } 
 import UserAvatar from '../UserAvatar.vue';
 import SettingField from './SettingField.vue';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const profile_settings: Ref<DatabaseSetting<any>[]> = ref([
   username_setting,
   theme_setting,

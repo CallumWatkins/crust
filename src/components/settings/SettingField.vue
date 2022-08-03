@@ -5,6 +5,7 @@ import PopupModal from '../PopupModal.vue';
 import ItemList from '../ItemList.vue';
 
 const props = defineProps<{
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setting: Setting<any, any>,
   no_value?: string,
 }>();
