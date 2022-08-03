@@ -96,7 +96,7 @@ function open_delete_modal() {
   show_delete_modal.value = true;
 }
 
-function close_add_modal(data: any) {
+function close_add_modal(data?: boolean) {
   if (data === true) {
     const conn: Connection = {
       alias: modal_input_alias.value,
@@ -109,7 +109,7 @@ function close_add_modal(data: any) {
   show_add_modal.value = false;
 }
 
-function close_delete_modal(data: any) {
+function close_delete_modal(data?: boolean) {
   if (data === true && selected_conn.value) {
     delete_connection(selected_conn.value);
     selected_conn.value = null;

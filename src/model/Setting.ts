@@ -55,11 +55,13 @@ export class DatabaseSetting<T extends DatabaseFields<DatabaseLatest>[keyof Data
   extends Setting<DatabaseFieldsOfType<DatabaseLatest, T>, T> {
   async save() {
     const db = (await Database.load()).value;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     db[this.key] = this.value as any;
     await db.save();
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function setting_on_changed<T>(setting: Setting<any, T>, newVal: T) {
   setting.value = newVal;
   await setting.save();
