@@ -11,3 +11,7 @@ export async function register_shortcut(shortcut: string, handler: ShortcutHandl
 export async function unregister_shortcut(shortcut: string) {
   await unregister(shortcut);
 }
+
+export async function is_registered(shortcut: string): Promise<boolean> {
+  return isRegistered(shortcut);
+}

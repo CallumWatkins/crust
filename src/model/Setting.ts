@@ -1,5 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { Database, DatabaseFields, DatabaseFieldsOfType, DatabaseLatest } from '../database';
+import { is_registered, register_shortcut, unregister_shortcut, valid_shortcut } from '../helpers/shortcut';
+import { use_global_store } from '../stores/global';
 import Connection from './Connection';
 import { Theme } from './enum';
 
@@ -96,4 +98,50 @@ const connections_setting = new DatabaseSetting<Connection[]>(
   async (_) => null,
 );
 
-export { username_setting, theme_setting, connections_setting };
+async function is_valid_new_shortcut(old_shortcut: string, shortcut: string): Promise<string | null> {
+  if (!shortcut.match(valid_shortcut)) {
+    return 'Shortcut is not valid.';
+  }
+  if (shortcut !== old_shortcut && await is_registered(shortcut)) {
+    return 'Shortcut already in use.';
+  }
+  return null;
+}
+
+const shortcut_mute_setting = new BasicSetting<string>(
+  'mute',
+  'Mute',
+  db.value.shortcut_mute,
+  null,
+  async (val: string) => {
+    const v = await is_valid_new_shortcut(db.value.shortcut_mute, val);
+    if (v !== null) return v;
+    return null;
+  },
+  async (_: string, val: string) => {
+    await unregister_shortcut(db.value.shortcut_mute);
+    db.value.shortcut_mute = val;
+    await db.value.save();
+    await register_shortcut(val, use_global_store().toggle_audio_input_status_mute);
+  },
+);
+
+const shortcut_deafen_setting = new BasicSetting<string>(
+  'deafen',
+  'Deafen',
+  db.value.shortcut_deafen,
+  null,
+  async (val: string) => {
+    const v = await is_valid_new_shortcut(db.value.shortcut_deafen, val);
+    if (v !== null) return v;
+    return null;
+  },
+  async (_: string, val: string) => {
+    await unregister_shortcut(db.value.shortcut_deafen);
+    db.value.shortcut_deafen = val;
+    await db.value.save();
+    await register_shortcut(val, use_global_store().toggle_audio_output_status_deafened);
+  },
+);
+
+export { username_setting, theme_setting, connections_setting, shortcut_mute_setting, shortcut_deafen_setting };
