@@ -6,6 +6,7 @@ import SettingsUpdate from './settings/SettingsUpdate.vue';
 import SettingsProfile from './settings/SettingsProfile.vue';
 import SettingsAudio from './settings/SettingsAudio.vue';
 import SettingsConnections from './settings/SettingsConnections.vue';
+import SettingsShortcuts from './settings/SettingsShortcuts.vue';
 
 interface Tab {
   name: string;
@@ -32,6 +33,10 @@ const menu_elements: MenuElement[] = [
       {
         name: 'Connections',
         component: SettingsConnections,
+      },
+      {
+        name: 'Shortcuts',
+        component: SettingsShortcuts,
       },
     ],
   },

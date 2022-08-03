@@ -16,7 +16,7 @@ const alias_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
   'Alias',
   selected_conn.value?.alias ?? '',
   null,
-  (_) => null,
+  async (_) => null,
   async (_, val: string): Promise<void> => {
     if (selected_conn.value) {
       selected_conn.value.alias = val;
@@ -30,7 +30,7 @@ const ip_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
   'IP',
   selected_conn.value?.alias ?? '',
   null,
-  (val: string) => {
+  async (val: string) => {
     if (val.length < 1) {
       return 'IP is required.';
     }
@@ -72,8 +72,8 @@ const show_delete_modal = ref(false);
 
 watch(
   () => modal_input_ip.value,
-  (val) => {
-    validation_error.value = ip_setting.value.is_valid(val);
+  async (val) => {
+    validation_error.value = await ip_setting.value.is_valid(val);
   },
   {
     immediate: true,

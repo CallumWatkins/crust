@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Database } from '../database';
-import { load_avatar } from '../helpers/avatar';
+import init from '../helpers/init';
 import WindowTitlebar from '../components/WindowTitlebar.vue';
 import SettingsMenu from '../components/SettingsMenu.vue';
 
@@ -9,7 +9,7 @@ const db = await Database.load();
 
 const show_settings = ref(false);
 
-await load_avatar();
+await init();
 </script>
 
 <template>
