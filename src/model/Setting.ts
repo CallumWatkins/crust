@@ -8,14 +8,14 @@ export abstract class Setting<K extends string, T> {
   name: string;
   value: T;
   possible_values: T[] | null;
-  validator: (val: T) => string | null;
+  validator: (val: T) => Promise<string | null>;
 
   constructor(
     key: K,
     name: string,
     value: T,
     possible_values: T[] | null,
-    validator: (val: T) => string | null,
+    validator: (val: T) => Promise<string | null>,
   ) {
     this.key = key;
     this.name = name;
@@ -24,7 +24,7 @@ export abstract class Setting<K extends string, T> {
     this.validator = validator;
   }
 
-  is_valid(value: T): string | null {
+  async is_valid(value: T): Promise<string | null> {
     return this.validator(value);
   }
 
@@ -39,7 +39,7 @@ export class BasicSetting<T> extends Setting<string, T> {
     name: string,
     value: T,
     possible_values: T[] | null,
-    validator: (val: T) => string | null,
+    validator: (val: T) => Promise<string | null>,
     saver: (key: string, val: T) => Promise<void>,
   ) {
     super(key, name, value, possible_values, validator);
@@ -72,7 +72,7 @@ const username_setting = new DatabaseSetting<string>(
   'Username',
   db.value.username,
   null,
-  (val: string) => {
+  async (val: string) => {
     if (val.length < 3 || val.length > 50) {
       return 'Username must be between 3 and 50 characters.';
     }
@@ -85,7 +85,7 @@ const theme_setting = new DatabaseSetting<Theme>(
   'Theme',
   db.value.theme,
   Object.values(Theme),
-  (_) => null,
+  async (_) => null,
 );
 
 const connections_setting = new DatabaseSetting<Connection[]>(
@@ -93,7 +93,7 @@ const connections_setting = new DatabaseSetting<Connection[]>(
   'Connections',
   db.value.connections,
   null,
-  (_) => null,
+  async (_) => null,
 );
 
 export { username_setting, theme_setting, connections_setting };
