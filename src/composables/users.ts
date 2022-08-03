@@ -1,4 +1,4 @@
-import { ref, Ref } from 'vue';
+import { ref, Ref, watch } from 'vue';
 import Connection from '../model/Connection';
 import User from '../model/User';
 import { UserFlag } from '../model/enum';
@@ -57,6 +57,19 @@ export default function use_users() {
 
   const active_users: Ref<User[]> = ref([]);
   const pending_users: Ref<User[]> = ref([]);
+
+  watch(
+    () => pending_users.value,
+    (newVal, oldVal) => {
+      const difference = newVal.filter((x) => !oldVal.includes(x));
+      difference.forEach((user) => {
+        setTimeout(() => {
+          const index = pending_users.value.findIndex((inner_user) => inner_user.connection.ip === user.connection.ip);
+          pending_users.value.splice(index, 1);
+        }, 10000);
+      });
+    },
+  );
 
   return {
     users,

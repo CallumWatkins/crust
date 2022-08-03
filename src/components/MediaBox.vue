@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
+import { ref, Ref, watch } from 'vue';
 import User from '../model/User.js';
 import use_users from '../composables/users.js';
 import UserAvatar from './UserAvatar.vue';
@@ -7,7 +7,17 @@ import UserAvatar from './UserAvatar.vue';
 const { users, active_users, pending_users } = use_users();
 active_users.value = users.value.slice(0, 3);
 pending_users.value = users.value.slice(4, users.value.length);
-const relevant_users: Ref<User[]> = ref(active_users.value.concat(pending_users.value));
+const relevant_users: Ref<User[]> = ref([]);
+
+watch(
+  [active_users.value, pending_users.value],
+  () => {
+    relevant_users.value = active_users.value.concat(pending_users.value);
+  },
+  {
+    immediate: true,
+  },
+);
 </script>
 
 <template>
