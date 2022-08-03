@@ -16,10 +16,10 @@ const alias_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
   'Alias',
   selected_conn.value?.alias ?? '',
   null,
-  (_) => null,
+  async (_) => null,
   async (_, val: string): Promise<void> => {
-    if (selected_conn.value) {
-      selected_conn.value.alias = val;
+    if (selected_conn.value !== null) {
+      selected_conn.value.alias = (val.length === 0) ? null : val;
       connections_setting.save();
     }
   },
@@ -30,7 +30,7 @@ const ip_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
   'IP',
   selected_conn.value?.alias ?? '',
   null,
-  (val: string) => {
+  async (val: string) => {
     if (val.length < 1) {
       return 'IP is required.';
     }
@@ -72,8 +72,8 @@ const show_delete_modal = ref(false);
 
 watch(
   () => modal_input_ip.value,
-  (val) => {
-    validation_error.value = ip_setting.value.is_valid(val);
+  async (val) => {
+    validation_error.value = await ip_setting.value.is_valid(val);
   },
   {
     immediate: true,
@@ -96,7 +96,7 @@ function open_delete_modal() {
   show_delete_modal.value = true;
 }
 
-function close_add_modal(data: any) {
+function close_add_modal(data?: boolean) {
   if (data === true) {
     const conn: Connection = {
       alias: modal_input_alias.value,
@@ -109,7 +109,7 @@ function close_add_modal(data: any) {
   show_add_modal.value = false;
 }
 
-function close_delete_modal(data: any) {
+function close_delete_modal(data?: boolean) {
   if (data === true && selected_conn.value) {
     delete_connection(selected_conn.value);
     selected_conn.value = null;

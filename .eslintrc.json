@@ -32,6 +32,7 @@
     "@typescript-eslint/func-call-spacing": ["error"],
     "@typescript-eslint/no-unused-vars": [ "warn", { "argsIgnorePattern": "^_" }],
     "no-param-reassign": [ "error", { "props": false } ],
-    "no-console": "off"
+    "no-console": "off",
+    "no-underscore-dangle": "off"
   }
 }

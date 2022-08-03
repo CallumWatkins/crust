@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, Ref } from 'vue';
-import { User, use_users } from '../composables/users';
+import { use_users } from '../composables/users';
 import UserAvatar from './UserAvatar.vue';
 import { UserFlag } from '../model/enum';
 import UserProfile from './UserProfile.vue';
@@ -17,7 +16,7 @@ const { users } = use_users();
       v-for="user in users"
       :key="user.connection.ip"
       placement="left"
-      offsetSkid="66"
+      offset-skid="66"
     >
       <div class="user px-3 py-2">
         <div class="avatar mr-3">

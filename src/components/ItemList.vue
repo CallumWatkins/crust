@@ -7,10 +7,12 @@ import BasicAnchor from './BasicAnchor.vue';
 interface Props {
   layout: string,
   addons?: string[],
-  list: Array<any>,
-  default_item?: any,
+  list: Array<unknown>,
+  default_item?: unknown,
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   get_key: (item: any) => any,
   get_value?: (item: any) => any,
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 }
 
 const props = defineProps<Props>();
@@ -18,7 +20,7 @@ const props = defineProps<Props>();
 const emit = defineEmits(['changed', 'view_more']);
 
 const selected_item = ref(props.default_item);
-const get_value: (item: any) => any = props.get_value ?? props.get_key;
+const get_value: (item: unknown) => unknown = props.get_value ?? props.get_key;
 </script>
 
 <template>
