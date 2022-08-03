@@ -7,6 +7,7 @@ mod system_tray;
 mod window_control;
 
 use tauri::Manager;
+use tauri_plugin_log::{LogTarget, LoggerBuilder};
 
 #[tauri::command]
 async fn close_splashscreen(window: tauri::Window) {
@@ -18,6 +19,13 @@ async fn close_splashscreen(window: tauri::Window) {
 
 fn main() {
   tauri::Builder::default()
+    .plugin(LoggerBuilder::new()
+      .targets([
+        LogTarget::LogDir,
+        LogTarget::Stdout,
+      ])
+      .build()
+    )
     .system_tray(system_tray::create_system_tray())
     .on_system_tray_event(system_tray::handle_system_tray_event)
     .invoke_handler(tauri::generate_handler![close_splashscreen])
