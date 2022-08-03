@@ -1,4 +1,4 @@
-import { UserFlag } from './enum';
+import { UserFlag, UserState } from './enum';
 import Connection from './Connection';
 
 export default interface User {
@@ -6,5 +6,6 @@ export default interface User {
   avatar?: string;
   connection: Connection;
   flags: UserFlag[];
+  state: UserState;
 // eslint-disable-next-line semi
 }
