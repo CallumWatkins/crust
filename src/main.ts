@@ -17,6 +17,9 @@ import {
 
 import App from './App.vue';
 import router from './router';
+import setup_logging from './helpers/logging';
+
+await setup_logging();
 
 font_awesome_library.add(
   faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark,
