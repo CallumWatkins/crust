@@ -8,7 +8,7 @@ export default function use_users() {
     {
       username: 'MrFishHead',
       avatar: undefined,
-      connection: new Connection('0.0.0.0'),
+      connection: new Connection('host'),
       flags: [UserFlag.Host],
       state: UserState.Inactive,
     },
