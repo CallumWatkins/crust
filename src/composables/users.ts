@@ -1,4 +1,4 @@
-import { ref, Ref } from 'vue';
+import { computed, ref, Ref } from 'vue';
 import Connection from '../model/Connection';
 import User from '../model/User';
 import { UserFlag, UserState } from '../model/enum';
@@ -66,6 +66,8 @@ export default function use_users() {
     },
   ]);
 
+  const host = computed(() => users.value.find((user) => user.connection.ip === 'host'));
+
   function call() {
     users.value.forEach((user) => {
       if (user.connection.ip === 'host') {
@@ -83,6 +85,7 @@ export default function use_users() {
 
   return {
     users,
+    host,
     call,
   };
 }
