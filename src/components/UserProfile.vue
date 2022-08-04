@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { User } from '../composables/users';
+import User from '../model/User';
 import UserAvatar from './UserAvatar.vue';
+import { use_object_url_store } from '../stores/objects.js';
 
 interface Props {
   user: User;
@@ -12,7 +13,7 @@ const props = defineProps<Props>();
 <template>
   <div class="user-profile p-5">
     <div class="avatar mb-5">
-      <UserAvatar />
+      <UserAvatar :src="use_object_url_store().get(`avatar-image-${props.user.connection.ip}`)" />
     </div>
     <p class="is-size-4">
       <strong>{{ props.user.connection.alias ?? props.user.username ?? props.user.connection.ip }}</strong>
@@ -30,5 +31,6 @@ const props = defineProps<Props>();
 
 .avatar {
   width: 86px;
+  height: 86px;
 }
 </style>

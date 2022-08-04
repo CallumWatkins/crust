@@ -12,7 +12,8 @@ import {
   faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark,
   faBars, faCaretLeft, faChevronDown, faCircleCheck, faLightbulb,
   faCircle, faUser, faCircleQuestion, faMagnifyingGlass, faPlus,
-  faSort, faImage, faCrown,
+  faSort, faImage, faCrown, faUserPlus, faPhone, faMicrophone,
+  faMicrophoneSlash, faUserGroup,
 } from '@fortawesome/free-solid-svg-icons';
 
 import App from './App.vue';
@@ -25,7 +26,8 @@ font_awesome_library.add(
   faWindowMinimize, faWindowMaximize, faWindowRestore, faXmark,
   faBars, faCaretLeft, faChevronDown, faCircleCheck, faLightbulb,
   faCircle, faUser, faCircleQuestion, faMagnifyingGlass, faPlus,
-  faSort, faImage, faCrown,
+  faSort, faImage, faCrown, faUserPlus, faPhone, faMicrophone,
+  faMicrophoneSlash, faUserGroup,
 );
 
 createApp(App)

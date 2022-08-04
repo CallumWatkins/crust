@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { use_users } from '../composables/users';
+import use_users from '../composables/users';
 import UserAvatar from './UserAvatar.vue';
 import { UserFlag } from '../model/enum';
 import UserProfile from './UserProfile.vue';
+import { use_object_url_store } from '../stores/objects.js';
 
 const { users } = use_users();
 </script>
@@ -20,7 +21,7 @@ const { users } = use_users();
     >
       <div class="user px-3 py-2">
         <div class="avatar mr-3">
-          <UserAvatar />
+          <UserAvatar :src="use_object_url_store().get(`avatar-image-${user.connection.ip}`)" />
         </div>
         <p class="mr-2">
           {{ user.connection.alias ?? user.username ?? user.connection.ip }}
@@ -69,6 +70,7 @@ const { users } = use_users();
 
 .avatar {
   flex-shrink: 0;
+  height: 40px;
   width: 40px;
 }
 
