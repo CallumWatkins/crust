@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import use_users from '../composables/users.js';
 import UserAvatar from './UserAvatar.vue';
 import { UserState } from '../model/enum.js';
+import { use_object_url_store } from '../stores/objects.js';
 
 const { users, call } = use_users();
 
@@ -35,7 +36,7 @@ const relevant_users = computed(() => users.value.filter((user) => user.state ==
       ]"
     >
       <div class="avatar">
-        <UserAvatar />
+        <UserAvatar :src="use_object_url_store().get(`avatar-image-${user.connection.ip}`)" />
       </div>
     </div>
   </div>
