@@ -5,7 +5,7 @@ import UserAvatar from './UserAvatar.vue';
 import { UserState } from '../model/enum.js';
 import { use_object_url_store } from '../stores/objects.js';
 
-const { users, call } = use_users();
+const { users, host, call } = use_users();
 
 const relevant_users = computed(() => users.value.filter((user) => user.state === UserState.Active || user.state === UserState.Pending));
 </script>
@@ -50,7 +50,7 @@ const relevant_users = computed(() => users.value.filter((user) => user.state ==
       </div>
     </div>
     <div
-      v-if="relevant_users.length > 0"
+      v-if="relevant_users.length > 0 && host && host.state === UserState.Active"
       class="call-icons"
     >
       <FontAwesomeLayers class="call-icon">
@@ -58,6 +58,11 @@ const relevant_users = computed(() => users.value.filter((user) => user.state ==
       </FontAwesomeLayers>
       <FontAwesomeLayers
         class="call-icon end-call-icon"
+        @click="() => {
+          if (host) {
+            host.state = UserState.Inactive;
+          }
+        }"
       >
         <FontAwesomeIcon
           icon="fa-solid fa-phone"
