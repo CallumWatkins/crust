@@ -15,40 +15,70 @@ const relevant_users = computed(() => users.value.filter((user) => user.state ==
     class="media-box py-3 px-4"
     :class="{ 'is-call p-4': relevant_users.length > 0 }"
   >
-    <div v-if="relevant_users.length === 0">
-      <FontAwesomeIcon icon="fa-solid fa-user-group" />
-      <span class="ml-3">Room</span>
-    </div>
-    <div v-if="relevant_users.length === 0">
-      <FontAwesomeIcon
-        class="media-icon"
-        icon="fa-solid fa-phone"
-        @click="call"
-      />
+    <div
+      v-if="relevant_users.length === 0"
+      class="is-flex is-justify-content-space-between is-align-items-center"
+    >
+      <div>
+        <FontAwesomeIcon icon="fa-solid fa-user-group" />
+        <span class="ml-3">Room</span>
+      </div>
+      <div>
+        <FontAwesomeIcon
+          class="media-icon"
+          icon="fa-solid fa-phone"
+          @click="call"
+        />
+      </div>
     </div>
     <div
-      v-for="user in relevant_users"
-      :key="user.connection.ip"
-      class="avatar-wrapper m-3"
-      :class="[
-        { 'is-pending': user.state === UserState.Pending },
-        { 'is-talking': false },
-      ]"
+      v-if="relevant_users.length > 0"
+      class="is-flex is-justify-content-center is-align-items-center is-flex-grow-1"
     >
-      <div class="avatar">
-        <UserAvatar :src="use_object_url_store().get(`avatar-image-${user.connection.ip}`)" />
+      <div
+        v-for="user in relevant_users"
+        :key="user.connection.ip"
+        class="avatar-wrapper m-3"
+        :class="[
+          { 'is-pending': user.state === UserState.Pending },
+          { 'is-talking': false },
+        ]"
+      >
+        <div class="avatar">
+          <UserAvatar :src="use_object_url_store().get(`avatar-image-${user.connection.ip}`)" />
+        </div>
       </div>
+    </div>
+    <div
+      v-if="relevant_users.length > 0"
+      class="call-icons"
+    >
+      <FontAwesomeLayers class="call-icon">
+        <FontAwesomeIcon icon="fa-solid fa-microphone" />
+      </FontAwesomeLayers>
+      <FontAwesomeLayers
+        class="call-icon end-call-icon"
+      >
+        <FontAwesomeIcon
+          icon="fa-solid fa-phone"
+          transform="shrink-1 down-0.5 left-0.5"
+        />
+        <FontAwesomeIcon
+          icon="fa-solid fa-xmark"
+          transform="shrink-6 up-4 right-4"
+        />
+      </FontAwesomeLayers>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .media-box {
-  align-items: center;
   border-bottom: 1px solid var(--border-color-dark);
   box-shadow: 0 2px 10px -5px var(--border-color-dark);
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 3);
   resize: none;
 }
 
@@ -56,10 +86,39 @@ const relevant_users = computed(() => users.value.filter((user) => user.state ==
   background-color: var(--border-color-dark);
   border-bottom: unset;
   box-shadow: unset;
-  justify-content: center;
   overflow: auto;
   resize: vertical;
-  min-height: 200px;
+  min-height: 220px;
+}
+
+.call-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: calc(var(--spacing) * 2);
+}
+
+.call-icon {
+  background-color: var(--background-color);
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  height: 50px;
+  width: 50px;
+
+  &:hover,
+  &:focus {
+    background-color: var(--background-color-secondary);
+  }
+}
+
+.end-call-icon {
+  background-color: rgb(255 70 70);
+
+  &:hover,
+  &:focus {
+    background-color: rgb(255 88 88);;
+  }
 }
 
 .media-icon {

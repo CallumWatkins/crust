@@ -2,18 +2,21 @@ import { ref, Ref } from 'vue';
 import Connection from '../model/Connection';
 import User from '../model/User';
 import { UserFlag, UserState } from '../model/enum';
+import { Database } from '../database';
+
+const db = await Database.load();
 
 export default function use_users() {
   const users: Ref<User[]> = ref([
     {
-      username: 'MrFishHead',
+      username: db.value.username,
       avatar: undefined,
       connection: new Connection('host'),
       flags: [UserFlag.Host],
       state: UserState.Inactive,
     },
     {
-      username: 'TheWatkinator',
+      username: 'SomeUser',
       avatar: undefined,
       connection: new Connection('1.1.1.1'),
       flags: [],
