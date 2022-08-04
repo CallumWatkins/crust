@@ -70,6 +70,7 @@ const { users } = use_users();
 
 .avatar {
   flex-shrink: 0;
+  height: 40px;
   width: 40px;
 }
 
