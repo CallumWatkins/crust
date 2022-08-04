@@ -74,6 +74,24 @@ const relevant_users = computed(() => users.value.filter((user) => user.state ==
         />
       </FontAwesomeLayers>
     </div>
+    <div
+      v-else-if="relevant_users.length > 0"
+      class="call-icons"
+    >
+      <FontAwesomeLayers
+        class="call-icon join-call-icon"
+        @click="() => {
+          if (host) {
+            host.state = UserState.Active;
+          }
+        }"
+      >
+        <FontAwesomeIcon
+          icon="fa-solid fa-phone"
+          transform="shrink-1 down-0.5 left-0.5"
+        />
+      </FontAwesomeLayers>
+    </div>
   </div>
 </template>
 
@@ -122,7 +140,16 @@ const relevant_users = computed(() => users.value.filter((user) => user.state ==
 
   &:hover,
   &:focus {
-    background-color: rgb(255 88 88);
+    background-color: rgb(255 70 70);
+  }
+}
+
+.join-call-icon {
+  background-color: rgb(33 146 69);
+
+  &:hover,
+  &:focus {
+    background-color: rgb(33 146 69);
   }
 }
 
