@@ -72,10 +72,11 @@ const relevant_users = computed(() => users.value.filter((user) => user.state ==
 }
 
 .avatar-wrapper {
-  width: 90px;
-  box-shadow: 0 0 0 0 rgba(255 255 255 / 100%);
   background: black;
   border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(255 255 255 / 100%);
+  height: 90px;
+  width: 90px;
 }
 
 .is-pending {
