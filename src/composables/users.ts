@@ -65,6 +65,10 @@ export default function use_users() {
 
   function call() {
     users.value.forEach((user) => {
+      if (user.connection.ip === 'host') {
+        user.state = UserState.Active;
+        return;
+      }
       user.state = UserState.Pending;
       setTimeout(() => {
         if (user.state === UserState.Pending) {
