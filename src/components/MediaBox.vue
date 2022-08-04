@@ -117,7 +117,7 @@ const relevant_users = computed(() => users.value.filter((user) => user.state ==
 
   &:hover,
   &:focus {
-    background-color: rgb(255 88 88);;
+    background-color: rgb(255 88 88);
   }
 }
 
