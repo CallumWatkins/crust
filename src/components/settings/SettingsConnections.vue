@@ -192,7 +192,7 @@ function close_delete_modal(data?: boolean) {
             <FontAwesomeIcon icon="fa-solid fa-plus" />
           </button>
         </div>
-        <div v-if="selected_conn">
+        <div v-if="selected_conn.some">
           <div class="panel-block is-block">
             <SettingField
               :setting="alias_setting"
