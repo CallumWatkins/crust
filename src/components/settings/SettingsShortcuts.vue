@@ -15,6 +15,7 @@ const shortcut_settings: Ref<BasicSetting<string>[]> = ref([
       v-for="shortcut_setting in shortcut_settings"
       :key="shortcut_setting.key"
       :setting="shortcut_setting"
+      no_value="-"
       @changed="(newVal) => setting_on_changed(shortcut_setting, newVal)"
     />
   </div>

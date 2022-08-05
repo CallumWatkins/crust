@@ -102,6 +102,9 @@ const connections_setting = new DatabaseSetting<Connection[]>(
 );
 
 async function is_valid_new_shortcut(old_shortcut: string, shortcut: string): Promise<Result<void, string>> {
+  if (shortcut === '') {
+    return Ok.EMPTY;
+  }
   if (!shortcut.match(valid_shortcut)) {
     return Err('Shortcut is not valid.');
   }
