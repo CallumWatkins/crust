@@ -31,7 +31,7 @@ async function change_avatar() {
   <div class="block">
     <div class="avatar-container">
       <UserAvatar
-        :src="object_url_store.get('avatar-image').unwrapOr(undefined)"
+        :src="object_url_store.get('avatar-image-host').unwrapOr(undefined)"
         class="avatar"
       />
       <div class="is-flex is-align-items-center is-relative is-align-self-stretch">

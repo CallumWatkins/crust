@@ -27,6 +27,8 @@ export default defineConfig({
             ext = 'images';
           } else if (/^(?:woff|woff2)$/i.test(ext)) {
             ext = 'fonts';
+          } else if (/^(?:wav|pcm|mp3|mp4|m4a|aac|flac)$/i.test(ext)) {
+            ext = 'sounds';
           }
           return `assets/${ext}/[name].[hash][extname]`;
         },

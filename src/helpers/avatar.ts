@@ -24,7 +24,7 @@ export async function load_avatar() {
   if (mime_type.none) return;
   const blob = await read_blob_from_file(mime_type.val, '', `${FILE_NAME}.${ext}`, Some(BaseDirectory.App));
   if (blob.none) return;
-  object_url_store.create('avatar-image', blob.val);
+  object_url_store.create('avatar-image-host', blob.val);
 }
 
 /**
@@ -53,7 +53,7 @@ export async function set_new_avatar(): Promise<Result<boolean, string>> {
   write_blob_to_file(image_blob, '', `${FILE_NAME}.${ext}`, Some(BaseDirectory.App));
   db.value.avatar_file_ext = Some(ext);
   db.value.save();
-  object_url_store.create('avatar-image', image_blob);
+  object_url_store.create('avatar-image-host', image_blob);
   return Ok(true);
 }
 
@@ -72,7 +72,7 @@ async function is_valid_avatar_image(full_path: string): Promise<Result<Blob, st
   if (blob.none) return Err('Not a valid image!');
   if (blob.val.size > MAX_FILE_SIZE_BYTES) return Err(`File too large (> ${MAX_FILE_SIZE_BYTES / (1000 * 1000)}MB)`);
 
-  const url = object_url_store.create('new-avatar-image', blob.val);
+  const url = object_url_store.create('new-avatar-image-host', blob.val);
   const valid = await new Promise<boolean>((resolve) => {
     const image = new Image();
     image.onload = () => resolve(true);
@@ -80,7 +80,7 @@ async function is_valid_avatar_image(full_path: string): Promise<Result<Blob, st
     image.src = url;
   });
 
-  object_url_store.revoke('new-avatar-image');
+  object_url_store.revoke('new-avatar-image-host');
 
   if (!valid) return Err('Not a valid image!');
   return Ok(blob.val);
