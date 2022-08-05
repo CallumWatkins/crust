@@ -1,11 +1,10 @@
 [package]
-name = "app"
+name = "crust"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
+description = "A lightweight chat and screen sharing application"
+authors = ["Callum Watkins", "Richard Epure"]
 license = "GPL-3.0-only"
-repository = ""
-default-run = "app"
+repository = "https://github.com/CallumWatkins/crust"
 edition = "2021"
 rust-version = "1.57"
 
