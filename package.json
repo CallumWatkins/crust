@@ -2,7 +2,7 @@
   "name": "crust",
   "private": true,
   "license": "GPL-3.0-only",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "vue-devtools": "npx --no-install vue-devtools",
