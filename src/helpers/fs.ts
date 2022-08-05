@@ -1,6 +1,7 @@
 import {
   readDir, readTextFile, BaseDirectory, FileEntry, createDir, writeTextFile, readBinaryFile, writeBinaryFile, BinaryFileContents, removeFile,
 } from '@tauri-apps/api/fs';
+import { None, Option, Some } from 'ts-results';
 
 export { BaseDirectory };
 
@@ -14,9 +15,9 @@ export { BaseDirectory };
  * @param {BaseDirectory} base_dir
  * @return True if the file exists, otherwise false.
  */
-export async function file_exists(path: string, file_name: string, base_dir?: BaseDirectory): Promise<boolean> {
+export async function file_exists(path: string, file_name: string, base_dir: Option<BaseDirectory>): Promise<boolean> {
   try {
-    const entries: FileEntry[] = await readDir(path, base_dir == null ? undefined : { dir: base_dir });
+    const entries: FileEntry[] = await readDir(path, { dir: base_dir.unwrapOr(undefined) });
     return entries.some((e) => e.name === file_name);
   } catch {
     return false;
@@ -32,10 +33,10 @@ export async function file_exists(path: string, file_name: string, base_dir?: Ba
  * @param {BaseDirectory} base_dir
  * @return The content of the file, or null if the file does not exist.
  */
-export async function read_text_file(path: string, file_name: string, base_dir?: BaseDirectory): Promise<string | null> {
+export async function read_text_file(path: string, file_name: string, base_dir: Option<BaseDirectory>): Promise<Option<string>> {
   return await file_exists(path, file_name, base_dir)
-    ? readTextFile(path + file_name, base_dir == null ? undefined : { dir: base_dir })
-    : null;
+    ? Some(await readTextFile(path + file_name, { dir: base_dir.unwrapOr(undefined) }))
+    : None;
 }
 
 /**
@@ -47,9 +48,9 @@ export async function read_text_file(path: string, file_name: string, base_dir?:
  * @param {string} file_name e.g. 'file.txt'.
  * @param {BaseDirectory} base_dir
  */
-export async function write_text_file(contents: string, path: string, file_name: string, base_dir?: BaseDirectory) {
-  await createDir(path, { dir: base_dir, recursive: true });
-  await writeTextFile(path + file_name, contents, base_dir == null ? undefined : { dir: base_dir });
+export async function write_text_file(contents: string, path: string, file_name: string, base_dir: Option<BaseDirectory>) {
+  await createDir(path, { dir: base_dir.unwrapOr(undefined), recursive: true });
+  await writeTextFile(path + file_name, contents, { dir: base_dir.unwrapOr(undefined) });
 }
 
 /**
@@ -62,10 +63,10 @@ export async function write_text_file(contents: string, path: string, file_name:
  * @param {boolean} check_exists Check if the file exists before attempting to read (requires readDir permission on the parent scope).
  * @return The content of the file, or null if the file does not exist.
  */
-export async function read_binary_file(path: string, file_name: string, base_dir?: BaseDirectory, check_exists = true):
-Promise<Uint8Array | null> {
-  if (check_exists && !(await file_exists(path, file_name, base_dir))) return null;
-  return readBinaryFile(path + file_name, base_dir == null ? undefined : { dir: base_dir });
+export async function read_binary_file(path: string, file_name: string, base_dir: Option<BaseDirectory>, check_exists = true):
+Promise<Option<Uint8Array>> {
+  if (check_exists && !(await file_exists(path, file_name, base_dir))) return None;
+  return Some(await readBinaryFile(path + file_name, { dir: base_dir.unwrapOr(undefined) }));
 }
 
 /**
@@ -77,9 +78,9 @@ Promise<Uint8Array | null> {
  * @param {string} file_name e.g. 'file.txt'.
  * @param {BaseDirectory} base_dir
  */
-export async function write_binary_file(contents: BinaryFileContents, path: string, file_name: string, base_dir?: BaseDirectory) {
-  await createDir(path, { dir: base_dir, recursive: true });
-  await writeBinaryFile(path + file_name, contents, base_dir == null ? undefined : { dir: base_dir });
+export async function write_binary_file(contents: BinaryFileContents, path: string, file_name: string, base_dir: Option<BaseDirectory>) {
+  await createDir(path, { dir: base_dir.unwrapOr(undefined), recursive: true });
+  await writeBinaryFile(path + file_name, contents, { dir: base_dir.unwrapOr(undefined) });
 }
 
 /**
@@ -90,6 +91,6 @@ export async function write_binary_file(contents: BinaryFileContents, path: stri
  * @param {string} file_name e.g. 'file.txt'.
  * @param {BaseDirectory} base_dir
  */
-export async function delete_file(path: string, file_name: string, base_dir?: BaseDirectory) {
-  await removeFile(path + file_name, base_dir == null ? undefined : { dir: base_dir });
+export async function delete_file(path: string, file_name: string, base_dir: Option<BaseDirectory>) {
+  await removeFile(path + file_name, { dir: base_dir.unwrapOr(undefined) });
 }

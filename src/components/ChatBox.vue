@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Ok, Err, Result, Option, None, Some } from 'ts-results';
 import { Ref, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import Message from '../model/Message';
@@ -32,16 +33,16 @@ function is_new_group(previousMessage: Message, message: Message): boolean {
 }
 
 const message_input = ref('');
-const message_validation_error: Ref<string | null> = ref(null);
+const message_validation_error: Ref<Option<string>> = ref(None);
 const message_validation_shake = ref(false);
 
-function validate_message(message: string): string | null {
-  if (message.length > 5000) return `Message length is too long (${message.length} / 5000)`;
-  return null;
+function validate_message(message: string): Result<void, string> {
+  if (message.length > 5000) return Err(`Message length is too long (${message.length} / 5000)`);
+  return Ok.EMPTY;
 }
 
 function show_message_validation_error(error: string) {
-  message_validation_error.value = error;
+  message_validation_error.value = Some(error);
   message_validation_shake.value = true;
 }
 
@@ -50,11 +51,11 @@ function send_message() {
   if (message.length === 0) return;
 
   const validation_result = validate_message(message);
-  if (validation_result !== null) {
-    show_message_validation_error(validation_result);
+  if (!validation_result.ok) {
+    show_message_validation_error(validation_result.val);
     return;
   }
-  message_validation_error.value = null;
+  message_validation_error.value = None;
 
   // TODO: send message
   message_input.value = '';
@@ -121,10 +122,10 @@ function send_message() {
         @keypress.enter="send_message"
       >
       <div
-        v-if="message_validation_error !== null"
+        v-if="message_validation_error.some"
         class="chat-input__error"
       >
-        {{ message_validation_error }}
+        {{ message_validation_error.val }}
       </div>
     </div>
   </div>

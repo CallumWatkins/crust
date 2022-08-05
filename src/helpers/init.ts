@@ -8,12 +8,12 @@ export default async function init() {
 
   const task_load_avatar = load_avatar();
 
-  const task_shortcut_mute = (db.value.shortcut_mute.length > 0)
-    ? register_shortcut(db.value.shortcut_mute, use_global_store().toggle_audio_input_status_mute)
+  const task_shortcut_mute = (db.value.shortcut_mute.some)
+    ? register_shortcut(db.value.shortcut_mute.val, use_global_store().toggle_audio_input_status_mute)
     : Promise.resolve();
 
-  const task_shortcut_deafen = (db.value.shortcut_deafen.length > 0)
-    ? register_shortcut(db.value.shortcut_deafen, use_global_store().toggle_audio_output_status_deafened)
+  const task_shortcut_deafen = (db.value.shortcut_deafen.some)
+    ? register_shortcut(db.value.shortcut_deafen.val, use_global_store().toggle_audio_output_status_deafened)
     : Promise.resolve();
 
   await Promise.all([

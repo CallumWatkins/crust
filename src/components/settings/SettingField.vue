@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Option, None, Some } from 'ts-results';
 import { Ref, ref, watch } from 'vue';
 import { Setting } from '../../model/Setting';
 import PopupModal from '../PopupModal.vue';
@@ -14,13 +15,14 @@ const emit = defineEmits(['changed']);
 
 const string_val = ref(typeof props.setting.value === 'string' ? props.setting.value : '');
 const bool_val = ref(typeof props.setting.value === 'boolean' ? props.setting.value : false);
-const error_message: Ref<string | null> = ref(null);
+const error_message: Ref<Option<string>> = ref(None);
 const show_edit_string_modal = ref(false);
 
 watch(
   () => string_val.value,
   async (val) => {
-    error_message.value = await props.setting.is_valid(val.trim());
+    const valid = await props.setting.is_valid(val.trim());
+    error_message.value = valid.err ? Some(valid.val) : None;
   },
 );
 
@@ -38,8 +40,8 @@ function close_edit_string_modal(save: boolean) {
 
 async function edit_bool(newVal: boolean) {
   const valid = await props.setting.is_valid(newVal);
-  error_message.value = valid;
-  if (valid === null) {
+  error_message.value = valid.err ? Some(valid.val) : None;
+  if (valid.ok) {
     emit('changed', newVal);
   } else {
     bool_val.value = props.setting.value;
@@ -48,7 +50,7 @@ async function edit_bool(newVal: boolean) {
 </script>
 
 <template>
-  <div v-if="setting.possible_values !== null">
+  <div v-if="setting.possible_values.some">
     <div class="level mb-0">
       <div class="overflow-x-hidden">
         <div class="label mb-0">
@@ -82,7 +84,7 @@ async function edit_bool(newVal: boolean) {
               <div class="dropdown-content">
                 <ItemList
                   layout="dropdown-select"
-                  :list="setting.possible_values"
+                  :list="setting.possible_values.val"
                   :default_item="setting.value"
                   :get_key="(val: any) => val"
                   @changed="(val: any) => { emit('changed', val); close(); }"
@@ -131,15 +133,15 @@ async function edit_bool(newVal: boolean) {
           :aria-label="setting.name"
         >
         <p
-          v-if="error_message !== null"
+          v-if="error_message.some"
           class="block has-text-danger"
         >
-          {{ error_message }}
+          {{ error_message.val }}
         </p>
         <div class="block buttons">
           <button
             class="button is-success"
-            :disabled="error_message !== null"
+            :disabled="error_message.some"
             @click="close(true)"
           >
             Save
@@ -183,10 +185,10 @@ async function edit_bool(newVal: boolean) {
       </div>
     </div>
     <p
-      v-if="error_message !== null"
+      v-if="error_message.some"
       class="help has-text-danger"
     >
-      {{ error_message }}
+      {{ error_message.val }}
     </p>
   </div>
 </template>

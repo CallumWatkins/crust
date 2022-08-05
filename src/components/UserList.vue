@@ -23,7 +23,7 @@ const { users } = use_users();
           <UserAvatar />
         </div>
         <p class="mr-2">
-          {{ user.connection.alias ?? user.username ?? user.connection.ip }}
+          {{ user.connection.alias.unwrapOr(null) ?? user.username ?? user.connection.ip }}
         </p>
         <font-awesome-icon
           v-if="user.flags.includes(UserFlag.Host)"

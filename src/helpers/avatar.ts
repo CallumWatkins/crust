@@ -1,5 +1,5 @@
 import { open } from '@tauri-apps/api/dialog';
-import { Ok, Err, Result } from 'ts-results';
+import { Ok, Err, Result, Some, None } from 'ts-results';
 import { read_blob_from_file, write_blob_to_file, get_mime_type } from './blob';
 import { BaseDirectory, delete_file } from './fs';
 import { Database } from '../database';
@@ -19,12 +19,12 @@ const FILE_NAME = 'avatar';
  */
 export async function load_avatar() {
   const ext = db.value.avatar_file_ext;
-  if (ext == null) return;
-  const mime_type = get_mime_type(ext);
-  if (mime_type == null) return;
-  const blob = await read_blob_from_file(mime_type, '', `${FILE_NAME}.${ext}`, BaseDirectory.App);
-  if (blob == null) return;
-  object_url_store.create('avatar-image', blob);
+  if (ext.none) return;
+  const mime_type = get_mime_type(ext.val);
+  if (mime_type.none) return;
+  const blob = await read_blob_from_file(mime_type.val, '', `${FILE_NAME}.${ext}`, Some(BaseDirectory.App));
+  if (blob.none) return;
+  object_url_store.create('avatar-image', blob.val);
 }
 
 /**
@@ -50,8 +50,8 @@ export async function set_new_avatar(): Promise<Result<boolean, string>> {
   const image_blob: Blob = is_valid.val;
   const ext = full_path.substring(full_path.lastIndexOf('.') + 1).toLowerCase();
   await delete_current_avatar_image();
-  write_blob_to_file(image_blob, '', `${FILE_NAME}.${ext}`, BaseDirectory.App);
-  db.value.avatar_file_ext = ext;
+  write_blob_to_file(image_blob, '', `${FILE_NAME}.${ext}`, Some(BaseDirectory.App));
+  db.value.avatar_file_ext = Some(ext);
   db.value.save();
   object_url_store.create('avatar-image', image_blob);
   return Ok(true);
@@ -68,11 +68,11 @@ async function is_valid_avatar_image(full_path: string): Promise<Result<Blob, st
   const path = file_name_start_index === 0 ? '' : full_path.substring(0, file_name_start_index);
   const file_name = full_path.substring(file_name_start_index);
 
-  const blob = await read_blob_from_file(/^image\//, path, file_name, undefined, false);
-  if (blob === null) return Err('Not a valid image!');
-  if (blob.size > MAX_FILE_SIZE_BYTES) return Err(`File too large (> ${MAX_FILE_SIZE_BYTES / (1000 * 1000)}MB)`);
+  const blob = await read_blob_from_file(/^image\//, path, file_name, None, false);
+  if (blob.none) return Err('Not a valid image!');
+  if (blob.val.size > MAX_FILE_SIZE_BYTES) return Err(`File too large (> ${MAX_FILE_SIZE_BYTES / (1000 * 1000)}MB)`);
 
-  const url = object_url_store.create('new-avatar-image', blob);
+  const url = object_url_store.create('new-avatar-image', blob.val);
   const valid = await new Promise<boolean>((resolve) => {
     const image = new Image();
     image.onload = () => resolve(true);
@@ -83,7 +83,7 @@ async function is_valid_avatar_image(full_path: string): Promise<Result<Blob, st
   object_url_store.revoke('new-avatar-image');
 
   if (!valid) return Err('Not a valid image!');
-  return Ok(blob);
+  return Ok(blob.val);
 }
 
 /**
@@ -91,10 +91,10 @@ async function is_valid_avatar_image(full_path: string): Promise<Result<Blob, st
  */
 async function delete_current_avatar_image() {
   const ext = db.value.avatar_file_ext;
-  if (ext == null) return;
+  if (ext.none) return;
 
   try {
-    await delete_file('', `${FILE_NAME}.${ext}`, BaseDirectory.App);
+    await delete_file('', `${FILE_NAME}.${ext}`, Some(BaseDirectory.App));
   } catch {
     // not a problem
   }

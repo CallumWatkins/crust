@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { Ref, ref } from 'vue';
+import { None, Option, Some } from 'ts-results';
 import { use_object_url_store } from '../../stores/objects';
 import { set_new_avatar } from '../../helpers/avatar';
 import { DatabaseSetting, theme_setting, username_setting, setting_on_changed } from '../../model/Setting';
@@ -15,13 +16,13 @@ const profile_settings: Ref<DatabaseSetting<any>[]> = ref([
 const object_url_store = use_object_url_store();
 
 const loading_new_avatar = ref(false);
-const loading_new_avatar_error = ref('');
+const loading_new_avatar_error: Ref<Option<string>> = ref(None);
 
 async function change_avatar() {
-  loading_new_avatar_error.value = '';
+  loading_new_avatar_error.value = None;
   loading_new_avatar.value = true;
   const result = await set_new_avatar();
-  if (!result.ok) loading_new_avatar_error.value = result.val;
+  if (!result.ok) loading_new_avatar_error.value = Some(result.val);
   loading_new_avatar.value = false;
 }
 </script>
@@ -30,7 +31,7 @@ async function change_avatar() {
   <div class="block">
     <div class="avatar-container">
       <UserAvatar
-        :src="object_url_store.get('avatar-image')"
+        :src="object_url_store.get('avatar-image').unwrapOr(undefined)"
         class="avatar"
       />
       <div class="is-flex is-align-items-center is-relative is-align-self-stretch">
@@ -46,8 +47,8 @@ async function change_avatar() {
             Change avatar
           </span>
         </button>
-        <p v-if="loading_new_avatar_error !== null">
-          {{ loading_new_avatar_error }}
+        <p v-if="loading_new_avatar_error.some">
+          {{ loading_new_avatar_error.val }}
         </p>
       </div>
     </div>

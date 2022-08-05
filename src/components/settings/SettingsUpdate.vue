@@ -2,6 +2,7 @@
 import { app, updater, process } from '@tauri-apps/api';
 import { ref } from 'vue';
 import type { Ref } from 'vue';
+import { None, Option, Some } from 'ts-results';
 
 enum UpdateState {
   Unchecked,
@@ -14,14 +15,18 @@ enum UpdateState {
 
 const app_version = await app.getVersion();
 
-const available_update_manifest: Ref<updater.UpdateManifest | undefined> = ref(undefined);
+const available_update_manifest: Ref<Option<updater.UpdateManifest>> = ref(None);
 
 const update_state = ref(UpdateState.Unchecked);
 
 async function check_for_updates() {
   const { shouldUpdate, manifest } = await updater.checkUpdate();
   if (shouldUpdate) {
-    available_update_manifest.value = manifest;
+    if (manifest === undefined) {
+      console.error('Update manifest is undefined');
+      return;
+    }
+    available_update_manifest.value = Some(manifest);
     update_state.value = UpdateState.UpdateAvailable;
   } else {
     update_state.value = UpdateState.UpToDate;
@@ -52,7 +57,7 @@ export default {
       <p>App version: {{ app_version }}</p>
       <div class="has-text-success has-text-weight-bold mt-2">
         <p v-if="update_state === UpdateState.UpdateAvailable">
-          New version available: {{ available_update_manifest!.version }} ({{ available_update_manifest!.date }})
+          New version available: {{ available_update_manifest.unwrap().version }} ({{ available_update_manifest.unwrap().date }})
         </p>
         <p v-else-if="update_state === UpdateState.UpToDate">
           App is up to date

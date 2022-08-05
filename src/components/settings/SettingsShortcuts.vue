@@ -3,7 +3,7 @@ import { Ref, ref } from 'vue';
 import { BasicSetting, shortcut_mute_setting, shortcut_deafen_setting, setting_on_changed } from '../../model/Setting';
 import SettingField from './SettingField.vue';
 
-const shortcut_settings: Ref<BasicSetting<any>[]> = ref([
+const shortcut_settings: Ref<BasicSetting<string>[]> = ref([
   shortcut_mute_setting,
   shortcut_deafen_setting,
 ]);

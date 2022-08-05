@@ -15,7 +15,7 @@ const props = defineProps<Props>();
       <UserAvatar />
     </div>
     <p class="is-size-4">
-      <strong>{{ props.user.connection.alias ?? props.user.username ?? props.user.connection.ip }}</strong>
+      <strong>{{ props.user.connection.alias.unwrapOr(null) ?? props.user.username ?? props.user.connection.ip }}</strong>
     </p>
   </div>
 </template>

@@ -157,7 +157,7 @@ const current_tab = ref(Tabs.Join);
                           :addons="['view-more']"
                           :list="recent_connections"
                           :get_key="(conn) => conn.ip"
-                          :get_value="(conn) => conn.alias ?? conn.ip"
+                          :get_value="(conn) => conn.alias.unwrapOr(null) ?? conn.ip"
                           @changed="conn => { fill_input(conn); close(); }"
                         />
                       </div>
