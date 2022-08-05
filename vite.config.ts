@@ -37,6 +37,7 @@ export default defineConfig({
       },
     },
     target: ['edge89', 'safari15'],
+    assetsInlineLimit: 0,
   },
   css: {
     preprocessorOptions: {
