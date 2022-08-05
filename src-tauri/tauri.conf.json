@@ -7,7 +7,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "crust",
+    "productName": "Crust",
     "version": "0.1.0"
   },
   "tauri": {
