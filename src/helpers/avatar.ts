@@ -22,7 +22,7 @@ export async function load_avatar() {
   if (ext.none) return;
   const mime_type = get_mime_type(ext.val);
   if (mime_type.none) return;
-  const blob = await read_blob_from_file(mime_type.val, '', `${FILE_NAME}.${ext}`, Some(BaseDirectory.App));
+  const blob = await read_blob_from_file(mime_type.val, '', `${FILE_NAME}.${ext.val}`, Some(BaseDirectory.App));
   if (blob.none) return;
   object_url_store.create('avatar-image-host', blob.val);
 }
