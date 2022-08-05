@@ -13,10 +13,10 @@ const props = defineProps<Props>();
 <template>
   <div class="user-profile p-5">
     <div class="avatar mb-5">
-      <UserAvatar :src="use_object_url_store().get(`avatar-image-${props.user.connection.ip}`)" />
+      <UserAvatar :src="use_object_url_store().get(`avatar-image-${props.user.connection.ip}`).unwrapOr(undefined)" />
     </div>
     <p class="is-size-4">
-      <strong>{{ props.user.connection.alias ?? props.user.username ?? props.user.connection.ip }}</strong>
+      <strong>{{ props.user.connection.alias.unwrapOr(null) ?? props.user.username ?? props.user.connection.ip }}</strong>
     </p>
   </div>
 </template>

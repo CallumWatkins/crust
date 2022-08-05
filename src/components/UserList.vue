@@ -21,10 +21,10 @@ const { users } = use_users();
     >
       <div class="user px-3 py-2">
         <div class="avatar mr-3">
-          <UserAvatar :src="use_object_url_store().get(`avatar-image-${user.connection.ip}`)" />
+          <UserAvatar :src="use_object_url_store().get(`avatar-image-${user.connection.ip}`).unwrapOr(undefined)" />
         </div>
         <p class="mr-2">
-          {{ user.connection.alias ?? user.username ?? user.connection.ip }}
+          {{ user.connection.alias.unwrapOr(null) ?? user.username ?? user.connection.ip }}
         </p>
         <font-awesome-icon
           v-if="user.flags.includes(UserFlag.Host)"

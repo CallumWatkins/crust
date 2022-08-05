@@ -6,7 +6,7 @@ import { sort_by_property } from '../helpers/sort';
 export function use_connections() {
   function get_recent_connections() {
     return [...connections_setting.value]
-      .filter((conn) => conn.last_connected !== null)
+      .filter((conn) => conn.last_connected.some)
       .sort(sort_by_property<Connection>('last_connected', false))
       .slice(0, 5);
   }

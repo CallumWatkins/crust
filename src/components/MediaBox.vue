@@ -45,7 +45,7 @@ const relevant_users = computed(() => users.value.filter((user) => user.state ==
         ]"
       >
         <div class="avatar">
-          <UserAvatar :src="use_object_url_store().get(`avatar-image-${user.connection.ip}`)" />
+          <UserAvatar :src="use_object_url_store().get(`avatar-image-${user.connection.ip}`).unwrapOr(undefined)" />
         </div>
       </div>
     </div>

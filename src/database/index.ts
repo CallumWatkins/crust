@@ -1,11 +1,13 @@
 /* eslint-disable max-classes-per-file */
 import { Mutex } from 'async-mutex';
-import { plainToInstance, instanceToPlain, Expose, Type } from 'class-transformer';
+import { plainToInstance, instanceToPlain, Expose, Type, Transform } from 'class-transformer';
 import { gt as semVerGt, neq as semVerNeq, satisfies as semVerSatisfies, valid as semVerValid, clean as semVerClean } from 'semver';
 import { Ref, ref } from 'vue';
+import { None, Option, Some } from 'ts-results';
 import { Theme } from '../model/enum';
 import { BaseDirectory, read_text_file, write_text_file } from '../helpers/fs';
 import Connection from '../model/Connection';
+import { option_to_class, option_to_plain } from './transformers';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type Fields<T> = Pick<T, { [K in keyof T]: T[K] extends Function ? never : K }[keyof T]>;
@@ -50,10 +52,10 @@ export abstract class Database {
    *
    * @private
    * @static
-   * @type {(DatabaseLatest | null)}
+   * @type {Option<Ref<DatabaseLatest>>}
    * @memberof Database
    */
-  private static singleton: Ref<DatabaseLatest> | null = null;
+  private static singleton: Option<Ref<DatabaseLatest>> = None;
 
   /**
    * A mutex for asynchronous operations.
@@ -72,8 +74,8 @@ export abstract class Database {
    * @return The contents of the database file, or null if the file does not exist.
    * @memberof Database
    */
-  private static async read_database_file(): Promise<string | null> {
-    return read_text_file(Database.DB_PATH, Database.DB_FILE_NAME, Database.DB_BASE_DIR);
+  private static async read_database_file(): Promise<Option<string>> {
+    return read_text_file(Database.DB_PATH, Database.DB_FILE_NAME, Some(Database.DB_BASE_DIR));
   }
 
   /**
@@ -84,7 +86,7 @@ export abstract class Database {
    * @memberof Database
    */
   private static async write_database_file(contents: string) {
-    await write_text_file(contents, Database.DB_PATH, Database.DB_FILE_NAME, Database.DB_BASE_DIR);
+    await write_text_file(contents, Database.DB_PATH, Database.DB_FILE_NAME, Some(Database.DB_BASE_DIR));
   }
 
   /**
@@ -104,19 +106,19 @@ export abstract class Database {
     const version = semVerClean(obj?.db_version);
     if (version === null || semVerValid(version) === null) throw new Error('Data is missing a valid version number');
 
-    let db: Database | null = null;
-    if (semVerSatisfies(version, '0.0.0')) db = Database_v0.deserialize(serialized);
+    let db: Option<Database> = None;
+    if (semVerSatisfies(version, '0.0.0')) db = Some(Database_v0.deserialize(serialized));
 
-    if (db === null) {
+    if (db.none) {
       if (semVerGt(version, Database.LATEST_VERSION)) throw new FutureVersionError(version);
       else throw new Error(`Compatible database model for version "${version}" not found`);
     }
 
-    while (semVerNeq(semVerClean(db.db_version) ?? '', Database.LATEST_VERSION)) {
-      db = db.upgrade_version();
+    while (semVerNeq(semVerClean(db.val.db_version) ?? '', Database.LATEST_VERSION)) {
+      db = Some(db.val.upgrade_version());
     }
 
-    return db;
+    return db.val;
   }
 
   /**
@@ -129,20 +131,20 @@ export abstract class Database {
   static async load(): Promise<Ref<DatabaseLatest>> {
     const releaseMutex = await Database.mutex.acquire();
     try {
-      if (Database.singleton !== null) return Database.singleton as Ref<DatabaseLatest>;
+      if (Database.singleton.some) return Database.singleton.val as Ref<DatabaseLatest>;
 
-      const serialized: string | null = await Database.read_database_file();
+      const serialized: Option<string> = await Database.read_database_file();
       let db: DatabaseLatest;
-      if (serialized === null) {
+      if (serialized.none) {
         // Database file does not exist
         db = new DatabaseLatest();
         db.save();
       } else {
-        db = Database.construct_database(serialized) as DatabaseLatest;
+        db = Database.construct_database(serialized.val) as DatabaseLatest;
       }
 
-      Database.singleton = ref(db);
-      return Database.singleton;
+      Database.singleton = Some(ref(db));
+      return Database.singleton.val;
     } finally {
       releaseMutex();
     }
@@ -190,19 +192,34 @@ export class Database_v0 extends Database {
 
   @Expose() username = 'example data';
   @Expose() theme: Theme = Theme.Dark;
-  @Expose() avatar_file_ext: string | null = null;
-  @Expose() shortcut_mute = '';
-  @Expose() shortcut_deafen = '';
+
+  @Transform(...option_to_class)
+  @Transform(...option_to_plain)
+  @Type(() => String)
+  @Expose()
+    avatar_file_ext: Option<string> = None;
+
+  @Transform(...option_to_class)
+  @Transform(...option_to_plain)
+  @Type(() => String)
+  @Expose()
+    shortcut_mute: Option<string> = None;
+
+  @Transform(...option_to_class)
+  @Transform(...option_to_plain)
+  @Type(() => String)
+  @Expose()
+    shortcut_deafen: Option<string> = None;
 
   @Type(() => Connection)
   @Expose()
     connections: Connection[] = [
-      new Connection('206.15.168.235', 'John Doe', new Date('2022-01-16')),
-      new Connection('3.66.149.79', 'James Smith', new Date('2022-03-22')),
-      new Connection('62.109.37.164'),
-      new Connection('34.61.123.222'),
-      new Connection('215.4.207.51', undefined, new Date('2022-04-01')),
-      new Connection('39.6.121.89', 'Charles Smith', new Date('2022-05-12')),
+      new Connection('206.15.168.235', Some('John Doe'), Some(new Date('2022-01-16'))),
+      new Connection('3.66.149.79', Some('James Smith'), Some(new Date('2022-03-22'))),
+      new Connection('62.109.37.164', None, None),
+      new Connection('34.61.123.222', None, None),
+      new Connection('215.4.207.51', None, Some(new Date('2022-04-01'))),
+      new Connection('39.6.121.89', Some('Charles Smith'), Some(new Date('2022-05-12'))),
     ];
 
   serialize(): string {

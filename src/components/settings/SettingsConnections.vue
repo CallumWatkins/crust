@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Option, None, Some, Ok, Err } from 'ts-results';
 import { ref, Ref, watch } from 'vue';
 import { use_connections } from '../../composables/connections';
 import Connection from '../../model/Connection';
@@ -9,36 +10,36 @@ import { BasicSetting, setting_on_changed, connections_setting } from '../../mod
 import SettingField from './SettingField.vue';
 
 const { add_connection, delete_connection } = use_connections();
-const selected_conn: Ref<Connection | null> = ref(null);
+const selected_conn: Ref<Option<Connection>> = ref(None);
 
-const alias_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
+const alias_setting: Ref<BasicSetting<string>> = ref(new BasicSetting<string>(
   'alias',
   'Alias',
-  selected_conn.value?.alias ?? '',
-  null,
-  async (_) => null,
+  '',
+  None,
+  async (_) => Ok.EMPTY,
   async (_, val: string): Promise<void> => {
-    if (selected_conn.value !== null) {
-      selected_conn.value.alias = (val.length === 0) ? null : val;
+    if (selected_conn.value.some) {
+      selected_conn.value.val.alias = (val.length === 0) ? None : Some(val);
       connections_setting.save();
     }
   },
 ));
 
-const ip_setting: Ref<BasicSetting<string>> = ref(new BasicSetting(
+const ip_setting: Ref<BasicSetting<string>> = ref(new BasicSetting<string>(
   'ip',
   'IP',
-  selected_conn.value?.alias ?? '',
-  null,
+  '',
+  None,
   async (val: string) => {
     if (val.length < 1) {
-      return 'IP is required.';
+      return Err('IP is required.');
     }
-    return null;
+    return Ok.EMPTY;
   },
   async (_, val: string): Promise<void> => {
-    if (selected_conn.value) {
-      selected_conn.value.ip = val;
+    if (selected_conn.value.some) {
+      selected_conn.value.val.ip = val;
       connections_setting.save();
     }
   },
@@ -64,8 +65,8 @@ const sorters = ref([
 ]);
 
 const search = ref('');
-const validation_error: Ref<string | null> = ref(null);
-const modal_input_alias: Ref<string | null> = ref(null);
+const validation_error: Ref<Option<string>> = ref(None);
+const modal_input_alias: Ref<string> = ref('');
 const modal_input_ip = ref('');
 const show_add_modal = ref(false);
 const show_delete_modal = ref(false);
@@ -73,7 +74,8 @@ const show_delete_modal = ref(false);
 watch(
   () => modal_input_ip.value,
   async (val) => {
-    validation_error.value = await ip_setting.value.is_valid(val);
+    const valid = await ip_setting.value.is_valid(val);
+    validation_error.value = valid.err ? Some(valid.val) : None;
   },
   {
     immediate: true,
@@ -81,13 +83,13 @@ watch(
 );
 
 function selected_conn_changed(conn: Connection) {
-  selected_conn.value = conn;
-  alias_setting.value.value = conn.alias ?? '';
+  selected_conn.value = Some(conn);
+  alias_setting.value.value = conn.alias.some ? conn.alias.val : '';
   ip_setting.value.value = conn.ip;
 }
 
 function open_add_modal() {
-  modal_input_alias.value = null;
+  modal_input_alias.value = '';
   modal_input_ip.value = '';
   show_add_modal.value = true;
 }
@@ -99,20 +101,20 @@ function open_delete_modal() {
 function close_add_modal(data?: boolean) {
   if (data === true) {
     const conn: Connection = {
-      alias: modal_input_alias.value,
+      alias: modal_input_alias.value.length === 0 ? None : Some(modal_input_alias.value),
       ip: modal_input_ip.value,
-      last_connected: null,
+      last_connected: None,
     };
     add_connection(conn);
-    selected_conn.value = conn;
+    selected_conn.value = Some(conn);
   }
   show_add_modal.value = false;
 }
 
 function close_delete_modal(data?: boolean) {
-  if (data === true && selected_conn.value) {
-    delete_connection(selected_conn.value);
-    selected_conn.value = null;
+  if (data === true && selected_conn.value.some) {
+    delete_connection(selected_conn.value.val);
+    selected_conn.value = None;
   }
   show_delete_modal.value = false;
 }
@@ -172,9 +174,9 @@ function close_delete_modal(data?: boolean) {
         <div class="connections-list">
           <ItemList
             layout="panel-list"
-            :list="connections_setting.value.filter(conn => conn.alias?.includes(search) || conn.ip.includes(search))"
+            :list="connections_setting.value.filter(conn => conn.alias.unwrapOr(null)?.includes(search) || conn.ip.includes(search))"
             :get_key="conn => conn.ip"
-            :get_value="conn => conn.alias ?? conn.ip"
+            :get_value="conn => conn.alias.unwrapOr(null) ?? conn.ip"
             @changed="selected_conn_changed"
           />
         </div>
@@ -239,15 +241,15 @@ function close_delete_modal(data?: boolean) {
         aria-label="IP Address"
       >
       <p
-        v-if="validation_error !== null"
+        v-if="validation_error.some"
         class="block has-text-danger"
       >
-        {{ validation_error }}
+        {{ validation_error.val }}
       </p>
       <div class="block buttons">
         <button
           class="button is-success"
-          :disabled="validation_error !== null"
+          :disabled="validation_error.some"
           @click="close(true)"
         >
           Save
@@ -267,8 +269,11 @@ function close_delete_modal(data?: boolean) {
     @closed="close_delete_modal"
   >
     <div class="box">
-      <p class="block title is-4">
-        Are you sure you want to delete "{{ selected_conn?.alias ?? selected_conn?.ip }}"?
+      <p
+        v-if="selected_conn.some"
+        class="block title is-4"
+      >
+        Are you sure you want to delete "{{ selected_conn.val.alias.unwrapOr(null) ?? selected_conn.val.ip }}"?
       </p>
       <div class="block buttons">
         <button

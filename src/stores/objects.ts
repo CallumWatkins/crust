@@ -1,4 +1,5 @@
 import { defineStore, acceptHMRUpdate } from 'pinia';
+import { None, Option, Some } from 'ts-results';
 
 interface State {
   object_urls: Map<string, string>
@@ -17,8 +18,9 @@ export const use_object_url_store = defineStore({
       this.object_urls.set(key, url);
       return url;
     },
-    get(key: string): string | undefined {
-      return this.object_urls.get(key);
+    get(key: string): Option<string> {
+      const obj = this.object_urls.get(key);
+      return obj !== undefined ? Some(obj) : None;
     },
     revoke(key: string) {
       const url = this.object_urls.get(key);
