@@ -9,9 +9,10 @@ const { users, host, call } = use_users();
 
 const relevant_users = computed(() => users.value.filter((user) => user.state === UserState.Active || user.state === UserState.Pending));
 
-const is_call = ref(relevant_users.value.length > 0);
 const height = ref(0);
+const is_call = ref(relevant_users.value.length > 0);
 const is_resize = ref(false);
+const min_height = '50px';
 
 watch(
   () => relevant_users.value.length,
@@ -25,7 +26,7 @@ watch(
 
 function on_mouse_move(e: MouseEvent) {
   if (is_resize.value) {
-    height.value = e.clientY;
+    height.value = Math.min(window.innerHeight - 200, e.clientY - parseInt(min_height, 10));
   }
   if (!is_call.value) {
     height.value = 0;
@@ -50,7 +51,6 @@ onUnmounted(() => {
 
 <template>
   <div
-    id="media-box"
     class="media-box py-3 px-4"
     :class="{ 'is-call p-4': is_call }"
     :style="{ height: `${height}px` }"
@@ -156,7 +156,7 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   gap: calc(var(--spacing) * 3);
-  min-height: 50px;
+  min-height: v-bind(min_height);
   position: relative;
 }
 
