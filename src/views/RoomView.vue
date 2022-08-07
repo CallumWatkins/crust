@@ -18,8 +18,8 @@ import MediaBox from '../components/MediaBox.vue';
 
 <style scoped lang="scss">
 .content-wrapper {
-  overflow-y: auto;
   flex-shrink: 100;
+  overflow-y: auto;
 }
 
 .user-list-wrapper {
