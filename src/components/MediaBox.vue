@@ -39,7 +39,9 @@ function on_mouse_up() {
 }
 
 function on_resize() {
-  height.value = Math.min(window.innerHeight - 200, height.value);
+  if (is_call.value) {
+    height.value = Math.min(window.innerHeight - 200, height.value);
+  }
 }
 
 onMounted(() => {
