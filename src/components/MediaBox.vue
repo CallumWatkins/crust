@@ -38,14 +38,20 @@ function on_mouse_up() {
   is_resize.value = false;
 }
 
+function on_resize() {
+  height.value = Math.min(window.innerHeight - 200, height.value);
+}
+
 onMounted(() => {
   document.addEventListener('mousemove', on_mouse_move);
   document.addEventListener('mouseup', on_mouse_up);
+  window.addEventListener('resize', on_resize);
 });
 
 onUnmounted(() => {
   document.removeEventListener('mousemove', on_mouse_move);
   document.removeEventListener('mouseup', on_mouse_up);
+  window.removeEventListener('resize', on_resize);
 });
 </script>
 
