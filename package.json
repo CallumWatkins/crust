@@ -16,7 +16,7 @@
     "clippy": "cargo clippy --manifest-path .\\src-tauri\\Cargo.toml"
   },
   "dependencies": {
-    "@fontsource/roboto": "^4.5.7",
+    "@fontsource/roboto": "^4.5.8",
     "@fortawesome/fontawesome-svg-core": "^6.1.2",
     "@fortawesome/free-brands-svg-icons": "^6.1.2",
     "@fortawesome/free-regular-svg-icons": "^6.1.2",
