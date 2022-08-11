@@ -10,9 +10,9 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "eslint": "npx eslint \"{src/**/,}*.{js,ts,json,vue}\"",
-    "eslint-fix": "npx eslint \"{src/**/,}*.{js,ts,json,vue}\" --fix",
+    "eslint-fix": "npm run eslint -- --fix",
     "stylelint": "npx stylelint \"{src/**/,}*.{vue,scss,css}\"",
-    "stylelint-fix": "npx stylelint \"{src/**/,}*.{vue,scss,css}\" --fix",
+    "stylelint-fix": "npm run stylelint -- --fix",
     "clippy": "cargo clippy --manifest-path .\\src-tauri\\Cargo.toml"
   },
   "dependencies": {
@@ -54,7 +54,7 @@
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-vue": "^9.3.0",
     "sass": "^1.54.3",
-    "stylelint": "^14.9.1",
+    "stylelint": "^14.10.0",
     "stylelint-config-recommended-vue": "^1.4.0",
     "stylelint-config-standard-scss": "^5.0.0",
     "stylelint-scss": "^4.3.0",
