@@ -27,7 +27,7 @@ watch(
   { immediate: true },
 );
 
-function close(data?: any) {
+function close(data?: unknown) {
   is_active.value = false;
   emit('closed', data);
 }

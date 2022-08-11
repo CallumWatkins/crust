@@ -20,7 +20,15 @@
         "scope": ["$APP", "$APP/*"],
         "createDir": true,
         "readFile": true,
-        "writeFile": true
+        "writeFile": true,
+        "readDir": true,
+        "removeFile": true
+      },
+      "dialog": {
+        "open": true
+      },
+      "globalShortcut": {
+        "all": true
       }
     },
     "bundle": {

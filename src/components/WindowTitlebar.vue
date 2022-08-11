@@ -2,7 +2,7 @@
 import { appWindow } from '@tauri-apps/api/window';
 import { onUnmounted, ref } from 'vue';
 
-const emit = defineEmits(['toggleTheme', 'toggleSettings']);
+const emit = defineEmits(['toggleSettings']);
 const is_maximized = ref(await appWindow.isMaximized());
 const is_focused = ref(true);
 
@@ -36,17 +36,6 @@ onUnmounted(() => {
         <FontAwesomeIcon
           icon="fa-solid fa-bars"
           alt="settings"
-        />
-      </div>
-      <div
-        class="square-icon-button"
-        tabindex="0"
-        @click="emit('toggleTheme')"
-        @keypress.enter="emit('toggleTheme')"
-      >
-        <FontAwesomeIcon
-          icon="fa-solid fa-lightbulb"
-          alt="theme"
         />
       </div>
     </div>

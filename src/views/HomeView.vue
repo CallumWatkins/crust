@@ -1,13 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import ChevronDown from '../components/ChevronDown.vue';
 import InlineHelpTip from '../components/InlineHelpTip.vue';
-import { Connection, use_connections } from '../composables/connections';
+import Connection from '../model/Connection';
+import { use_connections } from '../composables/connections';
+import ItemList from '../components/ItemList.vue';
 
-const { recent_connections } = use_connections();
+const { get_recent_connections } = use_connections();
 
 const input_ip = ref('');
 const input_public = ref(false);
+const recent_connections = get_recent_connections();
 
 function fill_input(conn: Connection) {
   input_ip.value = conn.ip;
@@ -19,10 +23,13 @@ function join() {
   // TODO
 }
 
+const router = useRouter();
+
 function host() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const is_public = input_public.value;
   // TODO
+  router.push({ name: 'Room', params: { id: 1 } });
 }
 
 enum Tabs {
@@ -145,21 +152,14 @@ const current_tab = ref(Tabs.Join);
                       role="menu"
                     >
                       <div class="dropdown-content">
-                        <a
-                          v-for="conn in recent_connections"
-                          :key="conn.ip"
-                          class="dropdown-item"
-                          role="button"
-                          href="#"
-                          @click="fill_input(conn); close();"
-                        >
-                          {{ conn.alias ?? conn.ip }}
-                        </a>
-                        <hr class="dropdown-divider">
-                        <a
-                          id="view-more"
-                          class="dropdown-item"
-                        >View more</a>
+                        <ItemList
+                          layout="dropdown-fill"
+                          :addons="['view-more']"
+                          :list="recent_connections"
+                          :get_key="(conn) => conn.ip"
+                          :get_value="(conn) => conn.alias.unwrapOr(null) ?? conn.ip"
+                          @changed="conn => { fill_input(conn); close(); }"
+                        />
                       </div>
                     </div>
                   </template>
@@ -189,28 +189,11 @@ const current_tab = ref(Tabs.Join);
   width: 100%;
   max-width: 400px;
   min-height: 250px;
-
-  #make-public + label {
-    padding-left: 3.75rem !important;
-
-    &::before {
-      top: 13px !important;
-    }
-
-    &::after {
-      top: 17px !important;
-    }
-  }
 }
 
 #logo {
   display: block;
   width: 270px;
-}
-
-#view-more {
-  width: 100%;
-  text-align: center;
 }
 
 #dropdown-button {

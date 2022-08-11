@@ -1,124 +1,66 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import type { Ref } from 'vue';
-import PopupModal from '../PopupModal.vue';
+import { Ref, ref } from 'vue';
+import { None, Option, Some } from 'ts-results';
+import { use_object_url_store } from '../../stores/objects';
+import { set_new_avatar } from '../../helpers/avatar';
+import { DatabaseSetting, theme_setting, username_setting, setting_on_changed } from '../../model/Setting';
 import UserAvatar from '../UserAvatar.vue';
+import SettingField from './SettingField.vue';
 
-interface Setting {
-  key: string,
-  name: string,
-  value: any,
-  valid: (val: any) => string | null
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const profile_settings: Ref<DatabaseSetting<any>[]> = ref([
+  username_setting,
+  theme_setting,
+]);
 
-const profile_settings: Setting[] = [
-  {
-    key: 'username',
-    name: 'Username',
-    value: '',
-    valid: (val: string) => {
-      if (val.length < 3 || val.length > 50) {
-        return 'Username must be between 3 and 50 characters.';
-      }
-      return null;
-    },
-  },
-];
+const object_url_store = use_object_url_store();
 
-const current_setting: Ref<Setting | null> = ref(null);
-const text_modal_input = ref('');
-const validation_error: Ref<string | null> = ref('');
-const show_text_modal = ref(false);
+const loading_new_avatar = ref(false);
+const loading_new_avatar_error: Ref<Option<string>> = ref(None);
 
-watch(
-  () => text_modal_input.value,
-  (val) => {
-    if (current_setting.value !== null) {
-      validation_error.value = current_setting.value.valid(val.trim());
-    }
-  },
-);
-
-function open_text_modal(profile_setting: Setting) {
-  current_setting.value = profile_setting;
-  text_modal_input.value = profile_setting.value;
-  show_text_modal.value = true;
-}
-
-function close_text_modal(data: any) {
-  if (data === true) {
-    current_setting.value!.value = text_modal_input.value.trim();
-    // TODO: persist(current_setting.value.key, current_setting.value.value)
-  }
-  current_setting.value = null;
-  show_text_modal.value = false;
+async function change_avatar() {
+  loading_new_avatar_error.value = None;
+  loading_new_avatar.value = true;
+  const result = await set_new_avatar();
+  if (!result.ok) loading_new_avatar_error.value = Some(result.val);
+  loading_new_avatar.value = false;
 }
 </script>
 
 <template>
-  <div class="avatar-container">
-    <UserAvatar class="avatar" />
-    <button class="button">
-      Upload Profile Picture
-    </button>
-  </div>
-  <div class="profile-container">
-    <div
-      v-for="profile_setting in profile_settings"
-      :key="profile_setting.key"
-      class="block field-container"
-    >
-      <div>
-        <strong>{{ profile_setting.name }}</strong>
-        <p>{{ profile_setting.value }}</p>
-      </div>
-      <button
-        class="button"
-        @click="open_text_modal(profile_setting)"
-      >
-        Edit
-      </button>
-    </div>
-  </div>
-  <PopupModal
-    id="text-modal"
-    v-slot="{ close }"
-    :is_open="show_text_modal"
-    @closed="close_text_modal"
-  >
-    <div class="box">
-      <p class="block title is-4">
-        {{ current_setting?.name ?? "" }}
-      </p>
-      <input
-        v-model="text_modal_input"
-        class="block input"
-        type="text"
-        :aria-label="current_setting?.name"
-      >
-      <p
-        v-if="validation_error !== null"
-        class="block has-text-danger"
-      >
-        {{ validation_error }}
-      </p>
-      <div class="block buttons">
-        <button
-          class="button is-success"
-          :disabled="validation_error !== null"
-          @click="close(true)"
-        >
-          Save
-        </button>
+  <div class="block">
+    <div class="avatar-container">
+      <UserAvatar
+        :src="object_url_store.get('avatar-image-host').unwrapOr(undefined)"
+        class="avatar"
+      />
+      <div class="is-flex is-align-items-center is-relative is-align-self-stretch">
         <button
           class="button"
-          @click="close(false)"
+          :class="{ 'is-loading': loading_new_avatar }"
+          @click="change_avatar"
         >
-          Cancel
+          <span class="icon">
+            <FontAwesomeIcon icon="fa-solid fa-image" />
+          </span>
+          <span>
+            Change avatar
+          </span>
         </button>
+        <p v-if="loading_new_avatar_error.some">
+          {{ loading_new_avatar_error.val }}
+        </p>
       </div>
     </div>
-  </PopupModal>
+  </div>
+  <div class="block settings-block">
+    <SettingField
+      v-for="profile_setting in profile_settings"
+      :key="profile_setting.key"
+      :setting="profile_setting"
+      @changed="(newVal) => setting_on_changed(profile_setting, newVal)"
+    />
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -127,15 +69,20 @@ function close_text_modal(data: any) {
   align-items: center;
   margin-bottom: calc(var(--spacing) * 4);
   gap: calc(var(--spacing) * 4);
+
+  p {
+    position: absolute;
+    bottom: 0;
+    white-space: nowrap;
+    color: var(--text-color-danger);
+  }
 }
 
 .avatar {
   width: 96px;
 }
 
-.profile-container {
-  display: flex;
-  flex-direction: column;
+.settings-block {
   max-width: 450px;
 }
 </style>

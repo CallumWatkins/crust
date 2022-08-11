@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { shallowRef, ref } from 'vue';
+import type { Component } from 'vue';
 import PlaceholderComponent from './PlaceholderComponent.vue';
 import SettingsAbout from './settings/SettingsAbout.vue';
 import SettingsUpdate from './settings/SettingsUpdate.vue';
 import SettingsProfile from './settings/SettingsProfile.vue';
 import SettingsAudio from './settings/SettingsAudio.vue';
 import SettingsConnections from './settings/SettingsConnections.vue';
+import SettingsShortcuts from './settings/SettingsShortcuts.vue';
 
 interface Tab {
   name: string;
-  component: any;
+  component: Component;
 }
 
 interface MenuElement {
@@ -32,6 +34,10 @@ const menu_elements: MenuElement[] = [
       {
         name: 'Connections',
         component: SettingsConnections,
+      },
+      {
+        name: 'Shortcuts',
+        component: SettingsShortcuts,
       },
     ],
   },
@@ -92,33 +98,31 @@ function changes(flag: boolean) {
       <section class="is-flex-grow-1 p-5">
         <div class="columns is-marginless">
           <div class="column is-one-third settings-tabs">
-            <div class="menu-wrapper">
-              <aside class="menu">
-                <template
-                  v-for="menu_element in menu_elements"
-                  :key="menu_element.name"
-                >
-                  <p class="menu-label">
-                    {{ menu_element.name }}
-                  </p>
-                  <ul class="menu-list">
-                    <li
-                      v-for="tab in menu_element.tabs"
-                      :key="tab.name"
-                    >
-                      <a
-                        :class="{ 'is-active': tab == current_tab }"
-                        href="#"
-                        @click="setTab(tab)"
-                      >{{ tab.name }}</a>
-                    </li>
-                  </ul>
-                </template>
-              </aside>
-            </div>
+            <aside class="menu">
+              <template
+                v-for="menu_element in menu_elements"
+                :key="menu_element.name"
+              >
+                <p class="menu-label">
+                  {{ menu_element.name }}
+                </p>
+                <ul class="menu-list">
+                  <li
+                    v-for="tab in menu_element.tabs"
+                    :key="tab.name"
+                  >
+                    <a
+                      :class="{ 'is-active': tab == current_tab }"
+                      href="#"
+                      @click="setTab(tab)"
+                    >{{ tab.name }}</a>
+                  </li>
+                </ul>
+              </template>
+            </aside>
           </div>
           <div class="column is-narrow" />
-          <div class="column">
+          <div class="column settings-panel">
             <h1 class="title">
               {{ current_tab.name }}
             </h1>
@@ -146,13 +150,14 @@ function changes(flag: boolean) {
   overflow-y: auto;
 }
 
-.section,
-.columns {
-  height: 100%;
+.settings-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-.section {
-  flex-grow: 1;
+.columns {
+  height: 100%;
 }
 
 .container {
@@ -166,9 +171,5 @@ function changes(flag: boolean) {
       width: 0;
     }
   }
-}
-
-.menu-wrapper {
-  overflow-y: auto;
 }
 </style>
