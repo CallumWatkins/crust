@@ -53,7 +53,7 @@
     "eslint-import-resolver-typescript": "^3.4.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-vue": "^9.3.0",
-    "sass": "^1.54.3",
+    "sass": "^1.54.4",
     "stylelint": "^14.10.0",
     "stylelint-config-recommended-vue": "^1.4.0",
     "stylelint-config-standard-scss": "^5.0.0",
