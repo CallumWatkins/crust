@@ -43,7 +43,7 @@
     "@types/mime": "^3.0.1",
     "@types/node": "^18.7.13",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
-    "@typescript-eslint/parser": "^5.35.1",
+    "@typescript-eslint/parser": "^5.36.2",
     "@vitejs/plugin-vue": "^3.0.3",
     "@vue/devtools": "^6.2.1",
     "@vue/eslint-config-airbnb": "^6.0.0",
