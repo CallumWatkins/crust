@@ -47,7 +47,7 @@
     "@vitejs/plugin-vue": "^3.1.0",
     "@vue/devtools": "^6.2.1",
     "@vue/eslint-config-airbnb": "^6.0.0",
-    "@vue/eslint-config-typescript": "^11.0.0",
+    "@vue/eslint-config-typescript": "^11.0.1",
     "eslint": "^8.23.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-import-resolver-typescript": "^3.5.0",
