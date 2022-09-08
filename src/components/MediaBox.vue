@@ -2,10 +2,10 @@
 import { ref, computed, onMounted, watch, onUnmounted } from 'vue';
 import use_users from '../composables/users.js';
 import UserAvatar from './UserAvatar.vue';
-import { UserState } from '../model/enum.js';
+import { UserState, UserFlag } from '../model/enum.js';
 import { use_object_url_store } from '../stores/objects.js';
 
-const { users, host, call } = use_users();
+const { users, host, call, toggle_flag } = use_users();
 
 const relevant_users = computed(() => users.value.filter((user) => user.state === UserState.Active || user.state === UserState.Pending));
 
@@ -101,8 +101,18 @@ onUnmounted(() => {
       v-if="is_call && host && host.state === UserState.Active"
       class="call-icons"
     >
-      <FontAwesomeLayers class="call-icon">
-        <FontAwesomeIcon icon="fa-solid fa-microphone" />
+      <FontAwesomeLayers
+        class="call-icon"
+        @click="() => { if (host) toggle_flag(host, UserFlag.Mute) }"
+      >
+        <FontAwesomeIcon
+          v-if="!host.flags.includes(UserFlag.Mute)"
+          icon="fa-solid fa-microphone"
+        />
+        <FontAwesomeIcon
+          v-else
+          icon="fa-solid fa-microphone-slash"
+        />
       </FontAwesomeLayers>
       <FontAwesomeLayers
         class="call-icon end-call-icon"

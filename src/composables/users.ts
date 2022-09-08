@@ -84,9 +84,19 @@ export default function use_users() {
     });
   }
 
+  function toggle_flag(user: User, flag: UserFlag) {
+    const index = user.flags.findIndex((inner_flag) => inner_flag === flag);
+    if (index > -1) {
+      user.flags.splice(index, 1);
+    } else {
+      user.flags.push(flag);
+    }
+  }
+
   return {
     users,
     host,
     call,
+    toggle_flag,
   };
 }
