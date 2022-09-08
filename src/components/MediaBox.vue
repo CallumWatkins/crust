@@ -81,7 +81,7 @@ onUnmounted(() => {
     </div>
     <div
       v-if="is_call"
-      class="is-flex is-justify-content-center is-align-items-center is-flex-grow-1"
+      class="avatars-container is-flex is-justify-content-center is-align-items-center is-flex-grow-1 is-flex-wrap-wrap"
     >
       <div
         v-for="user in relevant_users"
@@ -183,6 +183,10 @@ onUnmounted(() => {
   border-bottom: unset;
   box-shadow: unset;
   min-height: 220px;
+}
+
+.avatars-container {
+  overflow-y: auto;
 }
 
 .call-icons {
