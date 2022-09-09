@@ -13,6 +13,7 @@ const height = ref(0);
 const is_call = ref(relevant_users.value.length > 0);
 const is_resize = ref(false);
 const min_height = '50px';
+const titlebar_height = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--titlebar-height'), 10);
 
 watch(
   () => relevant_users.value.length,
@@ -26,7 +27,7 @@ watch(
 
 function on_mouse_move(e: MouseEvent) {
   if (is_resize.value) {
-    height.value = Math.min(window.innerHeight - 200, e.clientY - parseInt(min_height, 10));
+    height.value = Math.min(window.innerHeight - 200, e.clientY - titlebar_height);
   }
   if (!is_call.value) {
     height.value = 0;
