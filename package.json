@@ -39,7 +39,7 @@
     "vue3-popper": "^1.5.0"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "^1.0.5",
+    "@tauri-apps/cli": "^1.1.1",
     "@types/mime": "^3.0.1",
     "@types/node": "^18.7.16",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
