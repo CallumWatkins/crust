@@ -24,7 +24,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "@tauri-apps/api": "^1.1.0",
     "@types/semver": "^7.3.12",
-    "async-mutex": "^0.3.2",
+    "async-mutex": "^0.4.0",
     "bulma": "^0.9.4",
     "bulma-switch": "^2.0.4",
     "class-transformer": "^0.5.1",
