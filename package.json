@@ -22,7 +22,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^3.0.1",
-    "@tauri-apps/api": "^1.0.2",
+    "@tauri-apps/api": "^1.1.0",
     "@types/semver": "^7.3.12",
     "async-mutex": "^0.3.2",
     "bulma": "^0.9.4",
@@ -52,14 +52,14 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-import-resolver-typescript": "^3.5.1",
     "eslint-plugin-json": "^3.1.0",
-    "eslint-plugin-vue": "^9.4.0",
+    "eslint-plugin-vue": "^9.5.1",
     "sass": "^1.54.9",
-    "stylelint": "^14.11.0",
+    "stylelint": "^14.12.1",
     "stylelint-config-recommended-vue": "^1.4.0",
     "stylelint-config-standard-scss": "^5.0.0",
     "stylelint-scss": "^4.3.0",
     "typescript": "^4.8.3",
-    "vite": "^3.1.2",
+    "vite": "^3.1.3",
     "vue-tsc": "^0.40.13"
   }
 }
