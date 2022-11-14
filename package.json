@@ -34,7 +34,7 @@
     "semver": "^7.3.8",
     "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log#faf75b6e8ef59633da41bc2da297536ea76bb231",
     "ts-results": "^3.3.0",
-    "vue": "^3.2.40",
+    "vue": "^3.2.45",
     "vue-router": "^4.1.5",
     "vue3-popper": "^1.5.0"
   },
