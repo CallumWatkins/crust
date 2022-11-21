@@ -23,7 +23,7 @@ tauri-build = { version = "1.1", features = [] }
 [dependencies]
 serde_json = "1"
 serde = { version = "1", features = ["derive"] }
-tauri = { version = "1.1", features = ["clipboard-write-text", "dialog-open", "fs-create-dir", "fs-read-dir", "fs-read-file", "fs-remove-file", "fs-write-file", "global-shortcut-all", "os-all", "process-all", "system-tray", "window-all"] }
+tauri = { version = "1.2", features = ["clipboard-write-text", "dialog-open", "fs-create-dir", "fs-read-dir", "fs-read-file", "fs-remove-file", "fs-write-file", "global-shortcut-all", "os-all", "process-all", "system-tray", "window-all"] }
 tauri-plugin-log = { git = "https://github.com/tauri-apps/tauri-plugin-log", rev="01374ddaa7327eb3fb1f714ee0c46519a16400d5" }
 
 [features]
