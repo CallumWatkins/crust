@@ -23,7 +23,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "@tauri-apps/api": "^1.1.0",
-    "@types/semver": "^7.3.12",
+    "@types/semver": "^7.3.13",
     "async-mutex": "^0.4.0",
     "bulma": "^0.9.4",
     "bulma-switch": "^2.0.4",
