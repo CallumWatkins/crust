@@ -29,7 +29,7 @@
     "bulma-switch": "^2.0.4",
     "class-transformer": "^0.5.1",
     "mime": "^3.0.0",
-    "pinia": "^2.0.24",
+    "pinia": "^2.0.29",
     "reflect-metadata": "^0.1.13",
     "semver": "^7.3.8",
     "tauri-plugin-log-api": "github:tauri-apps/tauri-plugin-log#faf75b6e8ef59633da41bc2da297536ea76bb231",
