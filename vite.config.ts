@@ -12,6 +12,10 @@ export default defineConfig({
         find: '@',
         replacement: '/src',
       },
+      {
+        find: 'simple-peer',
+        replacement: 'simple-peer/simplepeer.min.js',
+      },
     ],
   },
   build: {
